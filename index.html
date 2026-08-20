@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Primary SEO Metadata -->
+    <title>Irgendeinwer | NixOS Dotfiles & Developer Hub</title>
+    <meta name="title" content="Irgendeinwer | NixOS Dotfiles & Developer Hub">
+    <meta name="description" content="Personal developer hub of Irgendeinwer. Declarative NixOS dotfiles, custom namespace architecture, Hyprland, and multi-host fleet configurations (junixos & junixbook).">
+    <meta name="keywords" content="irgendeinwer, NixOS, dotfiles, junixos, junixbook, nix-flakes, home-manager, hyprland, Linux, gruvbox, zsh, kitty, intel core i5">
+    <meta name="author" content="Irgendeinwer">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://irgendeinwer.github.io/">
+
+    <!-- Zero-Dependency SVG Favicon (Perfect Centered Gruvbox Lambda) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23282828'/><text x='50' y='54' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-weight='900' font-size='62' fill='%23b8bb26'>λ</text></svg>">
+
+    <!-- Google Search Console Verification Placeholder -->
+    <!-- PASTE YOUR GSC META TAG BELOW: -->
+    <!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_KEY" /> -->
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://irgendeinwer.github.io/">
+    <meta property="og:title" content="Irgendeinwer | NixOS Dotfiles & Developer Hub">
+    <meta property="og:description" content="Modular, flake-driven NixOS dotfiles with custom namespaces and declarative multi-host configurations.">
+    <meta property="og:site_name" content="Irgendeinwer">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://irgendeinwer.github.io/#person",
+          "name": "Irgendeinwer",
+          "url": "https://irgendeinwer.github.io/",
+          "sameAs": [
+            "https://github.com/irgendeinwer",
+            "https://github.com/Irgendeinwer/NixOS-Dotfiles",
+            "https://discord.com/users/775352250209796106"
+          ],
+          "jobTitle": "Linux & Systems Tinkerer",
+          "knowsAbout": ["NixOS", "Nix Flakes", "Home-Manager", "Linux", "Hyprland"]
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "@id": "https://irgendeinwer.github.io/#dotfiles",
+          "name": "NixOS-Dotfiles",
+          "description": "Modular Flake-based NixOS and Home-Manager configuration with dynamic module auto-importing and custom namespace toggles.",
+          "codeRepository": "https://github.com/Irgendeinwer/NixOS-Dotfiles",
+          "programmingLanguage": "Nix",
+          "runtimePlatform": "NixOS",
+          "author": {
+            "@id": "https://irgendeinwer.github.io/#person"
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        /* Gruvbox Dark Palette */
+        :root {
+            --bg-hard: #1d2021;
+            --bg: #282828;
+            --bg-soft: #32302f;
+            --bg-card: #3c3836;
+            --bg-hover: #504945;
+            
+            --fg-0: #fbf1c7;
+            --fg-1: #ebdbb2;
+            --fg-4: #a89984;
+            
+            --red: #fb4934;
+            --green: #b8bb26;
+            --yellow: #fabd2f;
+            --blue: #83a598;
+            --purple: #d3869b;
+            --aqua: #8ec07c;
+            --orange: #fe8019;
+            --gray: #928374;
+
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+        }
+
+        /* Contrast Modes */
+        body[data-contrast="hard"] {
+            --bg: #1d2021;
+            --bg-soft: #282828;
+            --bg-card: #32302f;
+            --bg-hover: #3c3836;
+        }
+        body[data-contrast="soft"] {
+            --bg: #32302f;
+            --bg-soft: #3c3836;
+            --bg-card: #504945;
+            --bg-hover: #665c54;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--fg-1);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.25rem;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .container {
+            max-width: 880px;
+            width: 100%;
+            margin: 0 auto;
+            flex: 1;
+            padding: 3rem 0;
+        }
+
+        /* Top Nav & Contrast Switcher */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-soft);
+            border: 1px solid var(--bg-hover);
+            color: var(--green);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--green);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px var(--green);
+        }
+
+        .contrast-switcher {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-soft);
+            border: 1px solid var(--bg-card);
+            border-radius: 6px;
+            padding: 0.2rem 0.3rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+        }
+
+        .contrast-switcher span {
+            color: var(--fg-4);
+            padding: 0 0.4rem;
+        }
+
+        .contrast-btn {
+            background: transparent;
+            border: none;
+            color: var(--fg-4);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: inherit;
+            transition: all 0.15s ease;
+        }
+
+        .contrast-btn:hover {
+            color: var(--fg-0);
+        }
+
+        .contrast-btn.active {
+            background: var(--bg-card);
+            color: var(--yellow);
+            font-weight: bold;
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 3rem;
+            border-bottom: 2px dashed var(--bg-hover);
+            padding-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: var(--fg-0);
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            margin-bottom: 0.6rem;
+        }
+
+        h1 .accent {
+            color: var(--orange);
+        }
+
+        .lead {
+            font-size: 1.15rem;
+            color: var(--fg-4);
+            max-width: 680px;
+        }
+
+        /* Section Headings */
+        h2 {
+            font-size: 1.3rem;
+            color: var(--fg-0);
+            font-family: var(--font-mono);
+            margin: 2.5rem 0 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        h2::before {
+            content: "λ";
+            color: var(--aqua);
+            font-weight: bold;
+        }
+
+        /* Grids & Cards */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .card {
+            background: var(--bg-soft);
+            border: 1px solid var(--bg-card);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            border-color: var(--yellow);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--fg-0);
+        }
+
+        .card-title a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .card-title a:hover {
+            color: var(--orange);
+        }
+
+        .card-desc {
+            color: var(--fg-1);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Tags */
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+        }
+
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            background: var(--bg-card);
+            color: var(--aqua);
+            border: 1px solid var(--bg-hover);
+        }
+
+        .tag.accent {
+            color: var(--orange);
+            background: rgba(254, 128, 25, 0.12);
+            border-color: rgba(254, 128, 25, 0.3);
+        }
+
+        .tag.green {
+            color: var(--green);
+            background: rgba(184, 187, 38, 0.12);
+            border-color: rgba(184, 187, 38, 0.3);
+        }
+
+        /* Fastfetch Terminal Container */
+        .terminal-box {
+            background: var(--bg-hard);
+            border: 1px solid var(--bg-card);
+            border-radius: 8px;
+            margin-top: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+        }
+
+        .terminal-header {
+            background: var(--bg-soft);
+            padding: 0.6rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--bg-card);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--fg-4);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dot.red { background-color: var(--red); }
+        .dot.yellow { background-color: var(--yellow); }
+        .dot.green { background-color: var(--green); }
+
+        .terminal-quote {
+            color: var(--yellow);
+            font-style: italic;
+            font-size: 0.76rem;
+            transition: all 0.2s ease;
+        }
+
+        .host-tabs {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .tab-btn {
+            background: var(--bg-card);
+            color: var(--fg-4);
+            border: 1px solid var(--bg-hover);
+            padding: 0.25rem 0.65rem;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .tab-btn:hover {
+            color: var(--fg-0);
+        }
+
+        .tab-btn.active {
+            background: var(--blue);
+            color: var(--bg-hard);
+            border-color: var(--blue);
+            font-weight: bold;
+        }
+
+        /* Two-Column Fastfetch Layout */
+        .terminal-body {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            overflow-x: auto;
+        }
+
+        .nix-logo {
+            color: var(--aqua);
+            font-size: 0.8rem;
+            line-height: 1.15;
+            user-select: none;
+            white-space: pre;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
+        }
+
+        .nix-logo:hover {
+            transform: scale(1.03);
+            filter: drop-shadow(0 0 8px var(--aqua));
+        }
+
+        .nix-logo:active {
+            transform: scale(0.96) rotate(-2deg);
+        }
+
+        .fetch-specs {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            white-space: nowrap;
+        }
+
+        .fetch-header {
+            color: var(--yellow);
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 0.15rem;
+        }
+
+        .fetch-divider {
+            color: var(--gray);
+            margin-bottom: 0.35rem;
+        }
+
+        .spec-line {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .spec-key {
+            color: var(--blue);
+            font-weight: 600;
+            min-width: 90px;
+        }
+
+        .spec-val {
+            color: var(--fg-1);
+        }
+
+        .spec-val.accent {
+            color: var(--orange);
+        }
+
+        /* Interactive Namespace Builder Widget */
+        .playground-container {
+            background: var(--bg-soft);
+            border: 1px solid var(--bg-card);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 720px) {
+            .playground-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .toggles-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        .toggle-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--fg-1);
+            user-select: none;
+        }
+
+        .toggle-item input {
+            cursor: pointer;
+            accent-color: var(--green);
+            width: 16px;
+            height: 16px;
+        }
+
+        .live-code-preview {
+            background: var(--bg-hard);
+            border: 1px solid var(--bg-card);
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--fg-1);
+            overflow-x: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .code-nix-key { color: var(--blue); }
+        .code-nix-val { color: var(--green); }
+        .code-nix-comment { color: var(--gray); font-style: italic; }
+
+        /* Clone Snippet Box */
+        .clone-box {
+            background: var(--bg-hard);
+            border: 1px solid var(--bg-card);
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .clone-cmd {
+            color: var(--green);
+            overflow-x: auto;
+            word-break: break-all;
+        }
+
+        .clone-cmd::before {
+            content: "$ ";
+            color: var(--fg-4);
+        }
+
+        .btn-copy-small {
+            background: var(--bg-card);
+            color: var(--fg-0);
+            border: 1px solid var(--bg-hover);
+            padding: 0.35rem 0.75rem;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-copy-small:hover {
+            background: var(--bg-hover);
+            border-color: var(--yellow);
+            color: var(--yellow);
+        }
+
+        /* Action Buttons & Socials */
+        .action-bar {
+            display: flex;
+            gap: 0.85rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.75rem 1.25rem;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-accent {
+            background: var(--green);
+            color: var(--bg-hard);
+            border: 1px solid var(--green);
+            font-weight: 700;
+        }
+        .btn-accent:hover {
+            background: var(--yellow);
+            border-color: var(--yellow);
+            transform: translateY(-1px);
+        }
+
+        .btn-subtle {
+            background: var(--bg-card);
+            color: var(--fg-0);
+            border: 1px solid var(--bg-hover);
+        }
+        .btn-subtle:hover {
+            background: var(--bg-hover);
+            border-color: var(--fg-4);
+        }
+
+        .btn-discord {
+            background: #5865F2;
+            color: #ffffff;
+            border: 1px solid #5865F2;
+            font-weight: 600;
+        }
+        .btn-discord:hover {
+            background: #4752C4;
+            border-color: #4752C4;
+            transform: translateY(-1px);
+        }
+
+        /* Toast feedback */
+        #toast {
+            visibility: hidden;
+            min-width: 260px;
+            background-color: var(--bg-hard);
+            color: var(--green);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            border: 1px solid var(--green);
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px 16px;
+            position: fixed;
+            z-index: 1000;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.3s, fadeout 0.3s 2.2s;
+        }
+
+        @keyframes fadein {
+            from { bottom: 0; opacity: 0; }
+            to { bottom: 30px; opacity: 1; }
+        }
+
+        @keyframes fadeout {
+            from { bottom: 30px; opacity: 1; }
+            to { bottom: 0; opacity: 0; }
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            border-top: 1px solid var(--bg-card);
+            padding: 2.5rem 0 1.5rem;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--fg-4);
+        }
+
+        footer a {
+            color: var(--fg-1);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--orange);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <!-- Top Nav with Live Status & Gruvbox Contrast Switcher -->
+        <nav class="top-nav" aria-label="Quick Settings">
+            <div class="status-pill">
+                <span class="status-dot"></span>
+                <span>nix-daemon active // flakes enabled</span>
+            </div>
+
+            <div class="contrast-switcher">
+                <span>Contrast:</span>
+                <button class="contrast-btn" onclick="setContrast('hard')">Hard</button>
+                <button class="contrast-btn active" onclick="setContrast('medium')">Medium</button>
+                <button class="contrast-btn" onclick="setContrast('soft')">Soft</button>
+            </div>
+        </nav>
+
+        <!-- Header -->
+        <header>
+            <h1>Irgendeinwer<span class="accent">.</span></h1>
+            <p class="lead">
+                Building declarative, fully reproducible Linux systems with NixOS, Flakes, Home-Manager, and custom namespace architectures.
+            </p>
+        </header>
+
+        <!-- Interactive Fastfetch Section with Clickable Snowflake Easter Egg -->
+        <section aria-labelledby="fleet-fetch">
+            <h2 id="fleet-fetch">The Fleet (Fastfetch Preview)</h2>
+            <div class="terminal-box">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="terminal-quote" id="nix-quote">❄️ click snowflake to cycle status</span>
+                    <div class="host-tabs">
+                        <button class="tab-btn active" id="tab-junixos" onclick="switchHost('junixos')">🖥️ junixos</button>
+                        <button class="tab-btn" id="tab-junixbook" onclick="switchHost('junixbook')">💻 junixbook</button>
+                    </div>
+                </div>
+                <div class="terminal-body">
+                    <!-- Real Unicode NixOS ASCII Logo (Clickable Easter Egg) -->
+                    <pre class="nix-logo" id="snowflake-btn" onclick="triggerSnowflakeEgg()" title="Click me for a Nix fortune!">
+          ▗▄▄▄       ▗▄▄▄▄    ▄▄▄▖
+          ▜███▙       ▜███▙  ▟███▛
+           ▜███▙       ▜███▙▟███▛
+            ▜███▙       ▜██████▛
+     ▟█████████████████▙ ▜████▛     ▟▙
+    ▟███████████████████▙ ▜███▙    ▟██▙
+           ▄▄▄▄▖           ▜███▙  ▟███▛
+          ▟███▛             ▜██▛ ▟███▛
+         ▟███▛               ▜▛ ▟███▛
+▟███████████▛                  ▟██████████▙
+▜██████████▛                  ▟███████████▛
+      ▟███▛ ▟▙               ▟███▛
+     ▟███▛ ▟██▙             ▟███▛
+    ▟███▛  ▜███▙           ▝▀▀▀▀
+    ▜██▛    ▜███▙ ▜██████████████████▛
+     ▜▛     ▟████▙ ▜████████████████▛
+           ▟██████▙         ▜███▙
+          ▟███▛▜███▙         ▜███▙
+         ▟███▛  ▜███▙         ▜███▙
+         ▝▀▀▀    ▀▀▀▀▘         ▀▀▀▘</pre>
+                    
+                    <!-- Dynamic Fastfetch Key-Values -->
+                    <div class="fetch-specs" id="specs-container"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Repositories -->
+        <section aria-labelledby="repos-section">
+            <h2 id="repos-section">Featured Repositories</h2>
+            <div class="grid-2">
+                <!-- NixOS Dotfiles Card -->
+                <article class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <a href="https://github.com/Irgendeinwer/NixOS-Dotfiles" target="_blank" rel="noopener noreferrer">
+                                NixOS-Dotfiles ↗
+                            </a>
+                        </h3>
+                        <span class="tag green">Main Repository</span>
+                    </div>
+                    <p class="card-desc">
+                        Declarative multi-host setup with auto-importing modules, custom service definitions, and clean hardware abstraction.
+                    </p>
+                    <div class="tag-list">
+                        <span class="tag">nixos</span>
+                        <span class="tag">flakes</span>
+                        <span class="tag">hyprland</span>
+                        <span class="tag">home-manager</span>
+                        <span class="tag">kitty</span>
+                    </div>
+                </article>
+
+                <!-- GitHub Profile Card -->
+                <article class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <a href="https://github.com/irgendeinwer" target="_blank" rel="me noopener noreferrer">
+                                GitHub Profile ↗
+                            </a>
+                        </h3>
+                        <span class="tag">Developer Hub</span>
+                    </div>
+                    <p class="card-desc">
+                        Explore public contributions, dotfiles, discussions, and open-source developer activity.
+                    </p>
+                    <div class="tag-list">
+                        <span class="tag">open-source</span>
+                        <span class="tag">contributions</span>
+                        <span class="tag">git</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Interactive Custom Namespace Playground -->
+        <section aria-labelledby="arch-section">
+            <h2 id="arch-section">Architecture & Custom Namespace Builder</h2>
+            <p style="color: var(--fg-4); font-size: 0.95rem; margin-bottom: 0.5rem;">
+                All configurations are modularized under <code>custom.&lt;domain&gt;.&lt;feature&gt;</code>. Try toggling modules below to preview the generated declaration:
+            </p>
+            <div class="playground-container">
+                <div class="toggles-panel">
+                    <label class="toggle-item">
+                        <input type="checkbox" id="chk-hyprland" checked onchange="updateLiveConfig()">
+                        <span>custom.desktop.hyprland.enable</span>
+                    </label>
+                    <label class="toggle-item">
+                        <input type="checkbox" id="chk-theme" checked onchange="updateLiveConfig()">
+                        <span>custom.theme.gruvbox.enable</span>
+                    </label>
+                    <label class="toggle-item">
+                        <input type="checkbox" id="chk-shell" checked onchange="updateLiveConfig()">
+                        <span>custom.system.zsh.enable</span>
+                    </label>
+                    <label class="toggle-item">
+                        <input type="checkbox" id="chk-terminal" checked onchange="updateLiveConfig()">
+                        <span>custom.desktop.kitty.enable</span>
+                    </label>
+                    <label class="toggle-item">
+                        <input type="checkbox" id="chk-power" onchange="updateLiveConfig()">
+                        <span>custom.system.power-profiles.enable</span>
+                    </label>
+                </div>
+                <div class="live-code-preview">
+                    <pre><code id="live-nix-code"></code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Clone Snippet -->
+        <section aria-labelledby="clone-section">
+            <h2 id="clone-section">Explore Configuration</h2>
+            <div class="clone-box">
+                <code class="clone-cmd" id="git-clone-cmd">git clone https://github.com/Irgendeinwer/NixOS-Dotfiles.git</code>
+                <button class="btn-copy-small" onclick="copyCloneCommand()">Copy Clone Command</button>
+            </div>
+        </section>
+
+        <!-- Connect & Socials -->
+        <section aria-labelledby="connect-section">
+            <h2 id="connect-section">Connect & Collaborate</h2>
+            <div class="action-bar">
+                <a href="https://github.com/Irgendeinwer/NixOS-Dotfiles" class="btn btn-accent" target="_blank" rel="noopener noreferrer">
+                    ★ View Dotfiles on GitHub
+                </a>
+                <a href="https://github.com/irgendeinwer" class="btn btn-subtle" target="_blank" rel="me noopener noreferrer">
+                    GitHub @irgendeinwer
+                </a>
+                <!-- Discord User Link & Copy Handler -->
+                <a href="https://discord.com/users/775352250209796106" class="btn btn-discord" target="_blank" rel="noopener noreferrer" onclick="copyDiscord(event)">
+                    <span>💬 Discord: @irgendeinwer</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast">Copied to clipboard!</div>
+
+    <!-- Semantic Footer -->
+    <footer>
+        <p>
+            Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a> • Styled with Gruvbox Dark • Built for <a href="https://github.com/irgendeinwer">Irgendeinwer</a>
+        </p>
+    </footer>
+
+    <!-- Interactive JavaScript -->
+    <script>
+        const hostSpecs = {
+            junixos: `
+                <div class="fetch-header">julian@junixos</div>
+                <div class="fetch-divider">-----------------------------</div>
+                <div class="spec-line"><span class="spec-key">OS:</span><span class="spec-val">NixOS (x86_64)</span></div>
+                <div class="spec-line"><span class="spec-key">Host:</span><span class="spec-val">Desktop Workstation</span></div>
+                <div class="spec-line"><span class="spec-key">Kernel:</span><span class="spec-val">Linux (CachyOS)</span></div>
+                <div class="spec-line"><span class="spec-key">Shell:</span><span class="spec-val">zsh</span></div>
+                <div class="spec-line"><span class="spec-key">WM:</span><span class="spec-val accent">Hyprland (Wayland)</span></div>
+                <div class="spec-line"><span class="spec-key">Terminal:</span><span class="spec-val">kitty</span></div>
+                <div class="spec-line"><span class="spec-key">Font:</span><span class="spec-val">FiraCode Nerd Font</span></div>
+                <div class="spec-line"><span class="spec-key">Theme:</span><span class="spec-val">gruvbox-dark-gtk</span></div>
+                <div class="spec-line"><span class="spec-key">Cursor:</span><span class="spec-val">BreezeX-RosePine-Linux</span></div>
+                <div class="spec-line"><span class="spec-key">CPU:</span><span class="spec-val">Intel Core i5-13600KF</span></div>
+                <div class="spec-line"><span class="spec-key">GPU:</span><span class="spec-val">AMD Radeon RX 9070</span></div>
+            `,
+            junixbook: `
+                <div class="fetch-header">julian@junixbook</div>
+                <div class="fetch-divider">-----------------------------</div>
+                <div class="spec-line"><span class="spec-key">OS:</span><span class="spec-val">NixOS (x86_64)</span></div>
+                <div class="spec-line"><span class="spec-key">Host:</span><span class="spec-val">Portable Laptop</span></div>
+                <div class="spec-line"><span class="spec-key">Kernel:</span><span class="spec-val">Linux (Latest)</span></div>
+                <div class="spec-line"><span class="spec-key">Shell:</span><span class="spec-val">zsh</span></div>
+                <div class="spec-line"><span class="spec-key">WM:</span><span class="spec-val accent">Hyprland (Wayland)</span></div>
+                <div class="spec-line"><span class="spec-key">Terminal:</span><span class="spec-val">kitty</span></div>
+                <div class="spec-line"><span class="spec-key">Font:</span><span class="spec-val">FiraCode Nerd Font</span></div>
+                <div class="spec-line"><span class="spec-key">Theme:</span><span class="spec-val">gruvbox-dark-gtk</span></div>
+                <div class="spec-line"><span class="spec-key">CPU:</span><span class="spec-val">10th Gen Intel Core i5 (Mobile)</span></div>
+                <div class="spec-line"><span class="spec-key">GPU:</span><span class="spec-val">Intel UHD Graphics</span></div>
+                <div class="spec-line"><span class="spec-key">Config:</span><span class="spec-val">Shared Flake Baseline</span></div>
+            `
+        };
+
+        function switchHost(host) {
+            document.getElementById('specs-container').innerHTML = hostSpecs[host];
+            document.getElementById('tab-junixos').classList.toggle('active', host === 'junixos');
+            document.getElementById('tab-junixbook').classList.toggle('active', host === 'junixbook');
+        }
+
+        // Initialize default host
+        switchHost('junixos');
+
+        // Snowflake Easter Egg Quotes
+        const quotes = [
+            "❄️ Purity check: 100% pure",
+            "🔒 flake.lock verified & clean",
+            "🚀 Zero side-effects detected",
+            "📦 Works on my machine? Everywhere.",
+            "🛠️ Declarative all the way down"
+        ];
+        let quoteIndex = 0;
+        function triggerSnowflakeEgg() {
+            quoteIndex = (quoteIndex + 1) % quotes.length;
+            const quoteEl = document.getElementById("nix-quote");
+            quoteEl.textContent = quotes[quoteIndex];
+            showToast("Evaluated flake expression!");
+        }
+
+        // Interactive Namespace Config Builder
+        function updateLiveConfig() {
+            const hypr = document.getElementById("chk-hyprland").checked;
+            const theme = document.getElementById("chk-theme").checked;
+            const zsh = document.getElementById("chk-shell").checked;
+            const kitty = document.getElementById("chk-terminal").checked;
+            const power = document.getElementById("chk-power").checked;
+
+            const code = 
+`<span class="code-nix-comment"># Generated module overrides</span>
+{
+  <span class="code-nix-key">custom</span> = {
+    <span class="code-nix-key">desktop</span> = {
+      <span class="code-nix-key">hyprland</span>.<span class="code-nix-key">enable</span> = <span class="code-nix-val">${hypr}</span>;
+      <span class="code-nix-key">kitty</span>.<span class="code-nix-key">enable</span>    = <span class="code-nix-val">${kitty}</span>;
+    };
+    <span class="code-nix-key">theme</span>.<span class="code-nix-key">gruvbox</span>.<span class="code-nix-key">enable</span> = <span class="code-nix-val">${theme}</span>;
+    <span class="code-nix-key">system</span> = {
+      <span class="code-nix-key">zsh</span>.<span class="code-nix-key">enable</span>            = <span class="code-nix-val">${zsh}</span>;
+      <span class="code-nix-key">power-profiles</span>.<span class="code-nix-key">enable</span> = <span class="code-nix-val">${power}</span>;
+    };
+  };
+}`;
+            document.getElementById("live-nix-code").innerHTML = code;
+        }
+        updateLiveConfig();
+
+        // Contrast Switcher
+        function setContrast(mode) {
+            document.body.setAttribute('data-contrast', mode);
+            document.querySelectorAll('.contrast-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.toLowerCase() === mode);
+            });
+            localStorage.setItem('gruvbox-contrast', mode);
+        }
+
+        // Load saved contrast
+        const savedContrast = localStorage.getItem('gruvbox-contrast');
+        if (savedContrast) {
+            setContrast(savedContrast);
+        }
+
+        // Toast feedback trigger
+        function showToast(msg) {
+            const toast = document.getElementById("toast");
+            toast.textContent = msg;
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2200);
+        }
+
+        function copyDiscord(e) {
+            const textToCopy = "@irgendeinwer (ID: 775352250209796106)";
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast("Copied Discord handle & ID!");
+            });
+        }
+
+        function copyCloneCommand() {
+            const cmd = document.getElementById('git-clone-cmd').innerText;
+            navigator.clipboard.writeText(cmd).then(() => {
+                showToast("Copied clone command!");
+            });
+        }
+    </script>
+</body>
+</html>
