@@ -24,5 +24,17 @@
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://irgendeinwer.github.io/recipes/</loc>
+    <lastmod>2026-08-30</lastmod>
+    <priority>0.85</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://irgendeinwer.github.io/recipes/microwave-mug-brownie</loc>
+    <lastmod>2026-08-30</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>
 

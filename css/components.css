@@ -897,3 +897,54 @@
     color: var(--fg-4);
     font-style: italic;
 }
+
+/* ==========================================================================
+   Custom SVG Icon System
+   ========================================================================== */
+.svg-icon {
+    display: inline-block;
+    vertical-align: -0.15em;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    flex-shrink: 0;
+}
+
+.tree-folder summary .svg-icon,
+.tree-header .svg-icon {
+    color: var(--yellow);
+}
+
+.tree-file .svg-icon {
+    color: currentColor;
+}
+
+.tree-file-nix .svg-icon { color: var(--aqua); }
+.tree-file-doc .svg-icon { color: var(--blue); }
+.tree-file-media .svg-icon { color: var(--purple); }
+.tree-file-config .svg-icon { color: var(--orange); }
+
+.tab-btn .svg-icon,
+.btn-action .svg-icon,
+.btn .svg-icon,
+.nav-pill .svg-icon,
+.post-meta .svg-icon {
+    margin-right: 0.35rem;
+}
+
+.tab-btn.active .svg-icon {
+    color: var(--bg-hard);
+}
+
+.btn-icon-star .svg-icon {
+    width: 1.05em;
+    height: 1.05em;
+    vertical-align: -0.12em;
+    color: var(--bg-hard);
+}
+
+.post-meta span {
+    display: inline-flex;
+    align-items: center;
+}
+

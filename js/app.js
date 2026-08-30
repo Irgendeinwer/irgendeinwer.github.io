@@ -39,7 +39,7 @@ function showToast(msg, icon = 'λ') {
     if (!toast) return;
 
     if (msgEl) msgEl.textContent = msg;
-    if (iconEl) iconEl.textContent = icon;
+    if (iconEl) iconEl.innerHTML = icon;
 
     toast.classList.add("show");
     if (toastTimeout) clearTimeout(toastTimeout);

@@ -93,7 +93,7 @@ def main():
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(output_data, f, indent=2)
 
-    print(f"✅ Generated {output_file} with {total_dirs} directories and {total_files} files.")
+    print(f"[OK] Generated {output_file} with {total_dirs} directories and {total_files} files.")
 
 if __name__ == "__main__":
     main()

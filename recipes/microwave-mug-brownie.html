@@ -1,0 +1,2076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+  <!-- Browser Theme Color -->
+  <meta name="theme-color" content="#282828" id="meta-theme-color" />
+
+  <!-- SEO Metadata -->
+  <title>Ultimate Microwave Mug Brownie (Pure Nix Derivation) | Irgendeinwer</title>
+  <meta name="title" content="Ultimate Microwave Mug Brownie (Pure Nix Derivation) | Irgendeinwer" />
+  <meta name="description" content="A purely functional, deterministic single-serve chocolate mug brownie executed in 60 seconds with live Nix overrides, serving scaler, interactive microwave visualizer, and Web Audio synthesis." />
+  <meta name="keywords" content="microwave mug brownie, nixos recipe, vegan mug brownie, gluten free mug brownie, functional cooking, gruvbox recipe, mug brownie 60s" />
+  <meta name="author" content="Irgendeinwer" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://irgendeinwer.github.io/recipes/microwave-mug-brownie" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="icon" href="../favicon.ico" sizes="any" />
+
+  <!-- Open Graph / Twitter Cards -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://irgendeinwer.github.io/recipes/microwave-mug-brownie" />
+  <meta property="og:title" content="Ultimate Microwave Mug Brownie | pkgs.recipe.microwave-mug-brownie" />
+  <meta property="og:description" content="Purely functional, deterministic single-serve chocolate execution in 60s with interactive Nix overrides and microwave visualizer." />
+  <meta property="og:site_name" content="Irgendeinwer" />
+  <meta property="og:image" content="https://irgendeinwer.github.io/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ultimate Microwave Mug Brownie | pkgs.recipe.microwave-mug-brownie" />
+  <meta name="twitter:description" content="Purely functional, deterministic single-serve chocolate execution in 60s." />
+
+  <!-- Schema.org Recipe JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Recipe",
+    "name": "Ultimate Microwave Mug Brownie",
+    "image": ["https://irgendeinwer.github.io/assets/og-image.png"],
+    "author": {
+      "@type": "Person",
+      "name": "Irgendeinwer"
+    },
+    "datePublished": "2026-08-30",
+    "description": "Purely functional, deterministic single-serve chocolate mug brownie executed in 60 seconds with vegan and gluten-free functional overrides.",
+    "prepTime": "PT3M",
+    "cookTime": "PT1M",
+    "totalTime": "PT6M",
+    "recipeYield": "1 serving",
+    "recipeCategory": "Dessert",
+    "recipeCuisine": "Nerd / Hacker Cuisine",
+    "suitableForDiet": "https://schema.org/VegetarianDiet",
+    "recipeIngredient": [
+      "25g (3 tbsp) All-purpose flour (or 1:1 GF blend)",
+      "12g (1.5 tbsp) Dutch cocoa powder",
+      "22g (1.5 tbsp) Brown sugar (packed)",
+      "12g (1 tbsp) Granulated sugar",
+      "0.5g (1 pinch) Fine sea salt",
+      "15g (1 tbsp) Unsalted butter or vegan block butter, melted",
+      "7g (0.5 tbsp) Neutral vegetable oil",
+      "30g (2 tbsp) Whole milk or oat milk",
+      "2g (0.5 tsp) Vanilla extract",
+      "10g (2 tsp) Dark chocolate chips"
+    ],
+    "recipeInstructions": [
+      {
+        "@type": "HowToStep",
+        "name": "unpackPhase",
+        "text": "Add flour, cocoa, brown sugar, white sugar, and salt directly into the mug. Whisk with fork until lump-free."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "configurePhase",
+        "text": "Inject liquid phases (melted butter, oil, whole milk, and vanilla extract)."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "buildPhase",
+        "text": "Stir gently for 20-30s until thick and glossy. Drop chocolate chips into center; submerge lightly."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "installPhase",
+        "text": "Place mug on outer turntable edge of microwave. Microwave for 50-55s at 1000W."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "fixupPhase",
+        "text": "Rest undisturbed for 2 minutes. Thermal inertia sets internal crumb while locking in molten fudge."
+      }
+    ]
+  }
+  </script>
+
+  <!-- Preconnect Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Gruvbox Dark Canonical Palette */
+      --bg-dim: #1d2021;
+      --bg0: #282828;
+      --bg1: #32302f;
+      --bg2: #3c3836;
+      --bg3: #504945;
+      --bg4: #665c54;
+
+      --fg0: #fbf1c7;
+      --fg1: #ebdbb2;
+      --fg2: #d5c4a1;
+      --fg4: #a89984;
+
+      --red: #fb4934;
+      --red-dim: rgba(251, 73, 52, 0.16);
+      --green: #b8bb26;
+      --green-dim: rgba(184, 187, 38, 0.16);
+      --yellow: #fabd2f;
+      --yellow-dim: rgba(250, 189, 47, 0.16);
+      --blue: #83a598;
+      --blue-dim: rgba(131, 165, 152, 0.16);
+      --purple: #d3869b;
+      --purple-dim: rgba(211, 134, 155, 0.16);
+      --aqua: #8ec07c;
+      --aqua-dim: rgba(142, 192, 124, 0.16);
+      --orange: #fe8019;
+      --orange-dim: rgba(254, 128, 25, 0.16);
+
+      --nix-cyan: #7ebae4;
+      --nix-blue: #5277c3;
+    }
+
+    body.light-theme {
+      --bg-dim: #f2e5bc;
+      --bg0: #fbf1c7;
+      --bg1: #ebdbb2;
+      --bg2: #d5c4a1;
+      --bg3: #bdae93;
+      --bg4: #a89984;
+
+      --fg0: #282828;
+      --fg1: #3c3836;
+      --fg2: #504945;
+      --fg4: #7c6f64;
+
+      --red: #cc241d;
+      --red-dim: rgba(204, 36, 29, 0.14);
+      --green: #79740e;
+      --green-dim: rgba(121, 116, 14, 0.14);
+      --yellow: #b57614;
+      --yellow-dim: rgba(181, 118, 20, 0.14);
+      --blue: #076678;
+      --blue-dim: rgba(7, 102, 120, 0.14);
+      --purple: #8f3f71;
+      --purple-dim: rgba(143, 63, 113, 0.14);
+      --aqua: #427b58;
+      --aqua-dim: rgba(66, 123, 88, 0.14);
+      --orange: #af3a03;
+      --orange-dim: rgba(175, 58, 3, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      background-color: var(--bg-dim);
+      color: var(--fg1);
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      position: relative;
+    }
+
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .top-breadcrumbs {
+      width: 100%;
+      max-width: 1060px;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+    }
+
+    .nav-link-pill {
+      background: var(--bg0);
+      border: 1px solid var(--bg3);
+      color: var(--fg2);
+      text-decoration: none;
+      padding: 4px 12px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .nav-link-pill:hover {
+      border-color: var(--yellow);
+      color: var(--yellow);
+      transform: translateY(-1px);
+    }
+
+    .card {
+      width: 100%;
+      max-width: 1060px;
+      background-color: var(--bg0);
+      border: 2px solid var(--bg3);
+      border-radius: 20px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Window Header / Flake Meta */
+    .window-bar {
+      background-color: var(--bg1);
+      border-bottom: 1px solid var(--bg3);
+      padding: 0.65rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.76rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .window-dots {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot.red { background-color: var(--red); }
+    .dot.yellow { background-color: var(--yellow); }
+    .dot.green { background-color: var(--green); }
+
+    .window-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-meta {
+      background: var(--bg0);
+      border: 1px solid var(--bg3);
+      color: var(--fg2);
+      padding: 3px 9px;
+      border-radius: 5px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-meta:hover {
+      border-color: var(--yellow);
+      color: var(--yellow);
+    }
+
+    .flake-channel-tag {
+      background: var(--blue-dim);
+      border: 1px solid var(--blue);
+      color: var(--blue);
+      padding: 2px 9px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.72rem;
+    }
+
+    /* HEADER */
+    .header {
+      padding: 1.3rem 1.6rem 1.1rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 1.5rem;
+      border-bottom: 2px dashed var(--bg3);
+    }
+
+    .title-box h1 {
+      font-size: 2.05rem;
+      font-weight: 800;
+      color: var(--fg0);
+      letter-spacing: -0.5px;
+      line-height: 1.15;
+    }
+
+    .title-box h1 span {
+      color: var(--yellow);
+    }
+
+    .subtitle {
+      color: var(--fg2);
+      font-size: 0.85rem;
+      font-family: 'Fira Code', monospace;
+      margin-top: 4px;
+    }
+
+    .meta-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .pill {
+      background: var(--bg1);
+      border: 1px solid var(--bg3);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-family: 'Fira Code', monospace;
+      font-weight: 600;
+      color: var(--fg2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .pill.highlight {
+      background: var(--yellow-dim);
+      border-color: var(--yellow);
+      color: var(--yellow);
+    }
+
+    .pill.lambda {
+      background: var(--purple-dim);
+      border-color: var(--purple);
+      color: var(--purple);
+    }
+
+    .scale-selector {
+      display: inline-flex;
+      background: var(--bg0);
+      border: 1px solid var(--bg3);
+      border-radius: 6px;
+      padding: 2px;
+      gap: 2px;
+    }
+
+    .scale-btn {
+      background: transparent;
+      border: none;
+      color: var(--fg2);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .scale-btn.active {
+      background: var(--aqua);
+      color: var(--bg-dim);
+    }
+
+    .nix-squircle-badge {
+      width: 76px;
+      height: 76px;
+      flex-shrink: 0;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+    }
+
+    /* MAIN TWO-COLUMN BODY */
+    .body-grid {
+      display: grid;
+      grid-template-columns: 440px 1fr;
+      gap: 1.3rem;
+      padding: 1.2rem 1.6rem;
+      align-items: start;
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .card-box {
+      background: var(--bg1);
+      border: 1px solid var(--bg3);
+      border-radius: 12px;
+      padding: 0.85rem 1.1rem;
+      box-sizing: border-box;
+    }
+
+    .box-heading {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .box-heading.red { color: var(--red); }
+    .box-heading.orange { color: var(--orange); }
+    .box-heading.aqua { color: var(--aqua); }
+    .box-heading.purple { color: var(--purple); }
+    .box-heading.green { color: var(--green); }
+
+    /* Hardware items */
+    .hw-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .hw-row {
+      background: var(--bg0);
+      border: 1px solid var(--bg2);
+      padding: 6px 10px;
+      font-size: 0.76rem;
+      font-family: 'Fira Code', monospace;
+      color: var(--fg1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      user-select: none;
+      transition: opacity 0.15s ease;
+    }
+
+    .hw-row.is-done {
+      opacity: 0.45;
+      text-decoration: line-through;
+    }
+
+    /* Ingredients Section: Flex Rows for True Right-Aligned Weights */
+    .chip {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.67rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 0.5rem;
+      margin-bottom: 0.3rem;
+    }
+    .chip.dry { background: var(--yellow-dim); color: var(--yellow); border: 1px solid var(--yellow); }
+    .chip.wet { background: var(--aqua-dim); color: var(--aqua); border: 1px solid var(--aqua); }
+    .chip.core { background: var(--red-dim); color: var(--red); border: 1px solid var(--red); }
+
+    .ing-table {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      font-size: 0.78rem;
+    }
+
+    .ing-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 2px;
+      border-bottom: 1px solid rgba(80, 73, 69, 0.35);
+      cursor: pointer;
+      user-select: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .ing-row:last-child {
+      border-bottom: none;
+    }
+
+    .ing-row.is-done {
+      opacity: 0.45;
+      text-decoration: line-through;
+    }
+
+    .ing-row.optional-inactive {
+      opacity: 0.35;
+    }
+
+    .ing-row.optional-inactive .ing-qty {
+      color: var(--fg4);
+    }
+
+    .ing-name {
+      color: var(--fg1);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .ing-prefix {
+      color: var(--fg2);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .ing-qty {
+      text-align: right;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--yellow);
+      white-space: nowrap;
+    }
+
+    .ing-sub {
+      color: var(--fg2);
+      font-weight: 500;
+    }
+
+    /* Full-Width Bottom Overrides Bar */
+    .override-full-box {
+      grid-column: 1 / -1;
+      width: 100%;
+    }
+
+    .override-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.5rem;
+    }
+
+    .toggle-row {
+      background: var(--bg0);
+      border: 1px solid var(--bg3);
+      border-radius: 8px;
+      padding: 0.5rem 0.65rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      cursor: pointer;
+      user-select: none;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.72rem;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .toggle-row:hover {
+      background: var(--bg2);
+      border-color: var(--yellow);
+      transform: translateY(-1px);
+    }
+
+    .toggle-row.active {
+      background: var(--purple-dim);
+      border-color: var(--purple);
+    }
+
+    .toggle-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--blue);
+      font-weight: 600;
+    }
+
+    .toggle-val {
+      color: var(--fg4);
+      font-weight: 700;
+      transition: color 0.15s ease;
+    }
+
+    .toggle-row.active .toggle-val {
+      color: var(--green);
+    }
+
+    /* Pipeline / Execution Steps */
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .step-item {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.82rem;
+      line-height: 1.4;
+      padding: 5px 6px;
+      border-radius: 6px;
+      cursor: pointer;
+      user-select: none;
+      transition: opacity 0.15s ease;
+    }
+
+    .step-item.is-done {
+      opacity: 0.45;
+      text-decoration: line-through;
+    }
+
+    .step-num {
+      width: 24px;
+      height: 24px;
+      background: var(--red);
+      color: var(--bg-dim);
+      font-family: 'Fira Code', monospace;
+      font-weight: 800;
+      font-size: 0.72rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    .step-item.rest .step-num {
+      background: var(--yellow);
+    }
+
+    .step-phase-tag {
+      color: var(--aqua);
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      font-size: 0.75rem;
+      margin-right: 4px;
+    }
+
+    .step-text strong {
+      color: var(--fg0);
+      font-weight: 700;
+    }
+
+    .step-text .highlight {
+      color: var(--red);
+      font-weight: 700;
+    }
+
+    /* Microwave Power Timing Table */
+    .timing-box {
+      background: var(--bg0);
+      border: 1px solid var(--orange);
+      border-radius: 8px;
+      padding: 0.6rem 0.8rem;
+      margin: 0.15rem 0;
+    }
+
+    .timing-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.45rem;
+    }
+
+    .timing-title {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--orange);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .timing-hint {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.65rem;
+      color: var(--fg2);
+    }
+
+    .timing-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+    }
+
+    .timing-cell {
+      background: var(--bg1);
+      border: 1px solid var(--bg2);
+      border-radius: 6px;
+      padding: 4px 2px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .timing-cell:hover {
+      border-color: var(--yellow);
+      transform: translateY(-1px);
+    }
+
+    .timing-cell.active {
+      border-color: var(--orange);
+      background: var(--orange-dim);
+    }
+
+    .timing-cell.common {
+      border-color: var(--yellow);
+      background: var(--yellow-dim);
+    }
+
+    .timing-watts {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.65rem;
+      color: var(--fg2);
+      font-weight: 600;
+    }
+
+    .timing-cell.common .timing-watts {
+      color: var(--yellow);
+    }
+
+    .timing-val {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--red);
+      white-space: nowrap;
+    }
+
+    /* Interactive Microwave Cavity Visualizer */
+    .microwave-visualizer {
+      background: var(--bg0);
+      border: 1px solid var(--bg3);
+      border-radius: 8px;
+      padding: 0.6rem 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .microwave-cavity {
+      width: 58px;
+      height: 48px;
+      background: var(--bg1);
+      border: 2px solid var(--bg3);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: background 0.3s ease, border-color 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .microwave-cavity.cooking {
+      background: rgba(250, 189, 47, 0.22);
+      border-color: var(--yellow);
+      box-shadow: inset 0 0 12px rgba(250, 189, 47, 0.45);
+    }
+
+    .turntable-mug-svg {
+      transform-origin: center;
+      transition: transform 0.1s linear;
+    }
+
+    .cooking .turntable-mug-svg {
+      animation: spinTurntable 2.5s infinite linear;
+    }
+
+    @keyframes spinTurntable {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .microwave-status {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.74rem;
+      color: var(--fg2);
+      flex: 1;
+    }
+
+    .microwave-status strong {
+      color: var(--yellow);
+    }
+
+    /* Terminal Audio Timer Console */
+    .timer-console {
+      background: var(--bg0);
+      border: 1px solid var(--blue);
+      border-radius: 8px;
+      padding: 0.6rem 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .timer-display {
+      font-family: 'Fira Code', monospace;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--yellow);
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .timer-display.running {
+      color: var(--green);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.65; }
+    }
+
+    .timer-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-timer {
+      background: var(--bg1);
+      border: 1px solid var(--bg3);
+      color: var(--fg1);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-timer:hover {
+      background: var(--bg2);
+      border-color: var(--yellow);
+      color: var(--fg0);
+    }
+
+    .btn-timer.primary {
+      background: var(--yellow-dim);
+      border-color: var(--yellow);
+      color: var(--yellow);
+    }
+
+    /* Target Visual Assertion */
+    .target-banner {
+      background: var(--green-dim);
+      border: 1px dashed var(--green);
+      border-radius: 8px;
+      padding: 0.55rem 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .target-graphic {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+
+    .target-text {
+      font-size: 0.77rem;
+      color: var(--fg1);
+      line-height: 1.35;
+    }
+
+    .target-text strong {
+      color: var(--green);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .target-text span {
+      color: var(--yellow);
+      font-weight: 700;
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--bg0);
+      border: 1px solid var(--yellow);
+      color: var(--fg0);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--bg1);
+      border-top: 1px solid var(--bg3);
+      padding: 0.6rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.73rem;
+      color: var(--yellow);
+      font-weight: 600;
+      flex-wrap: wrap;
+    }
+
+    .svg-icon {
+      display: inline-block;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
+    @page {
+      size: A4 portrait;
+      margin: 8mm;
+    }
+
+    /* High-contrast, Ink-saving Print Stylesheet */
+    @media print {
+      body {
+        background: #fbf1c7 !important;
+        color: #282828 !important;
+        padding: 0;
+      }
+      .top-breadcrumbs, #toast, #confetti-canvas, .microwave-visualizer {
+        display: none !important;
+      }
+      .card {
+        border: 1px solid #bdae93 !important;
+        background: #fbf1c7 !important;
+        box-shadow: none !important;
+        max-width: 100%;
+      }
+      .card-box, .hw-row, .timing-cell, .window-bar, .footer, .timer-console, .override-box {
+        background: #ebdbb2 !important;
+        border-color: #d5c4a1 !important;
+        color: #282828 !important;
+      }
+      .title-box h1, .box-heading, .step-text strong, .ing-name {
+        color: #282828 !important;
+      }
+      .ing-qty, .timing-val, .pill.highlight, .timer-display {
+        color: #af3a03 !important;
+      }
+      .step-num {
+        background: #cc241d !important;
+        color: #fbf1c7 !important;
+      }
+      .step-item.rest .step-num {
+        background: #b57614 !important;
+      }
+      .target-banner {
+        background: #ebdbb2 !important;
+        border-color: #79740e !important;
+      }
+      .btn-timer, .window-actions, .timer-controls, .scale-selector {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .override-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 880px) {
+      .body-grid { grid-template-columns: 1fr; }
+      .header { grid-template-columns: 1fr; }
+      .nix-squircle-badge { display: none; }
+      .timing-grid { grid-template-columns: repeat(3, 1fr); }
+      .override-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 540px) {
+      .override-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Canvas for Celebration Particle FX -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Top Navigation Breadcrumb -->
+  <div class="top-breadcrumbs">
+    <div style="display:flex; gap:8px;">
+      <a href="../" class="nav-link-pill" title="Return to developer hub">
+        <svg class="svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>~/hub</span>
+      </a>
+      <a href="./" class="nav-link-pill" title="All recipes">
+        <svg class="svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </svg>
+        <span>~/recipes</span>
+      </a>
+    </div>
+    <span style="color:var(--fg4); font-size:0.75rem;">pkgs.recipe.microwave-mug-brownie</span>
+  </div>
+
+  <main class="card">
+    
+    <!-- Top Terminal / Flake Header Bar with Clean SVG Icons -->
+    <header class="window-bar">
+      <div class="window-dots">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+        <span style="margin-left: 6px; color: var(--fg2);">flake.nix</span>
+      </div>
+      <div class="window-actions">
+        <button class="btn-meta" id="btn-copy-recipe" title="Copy full recipe and build guide to clipboard">
+          <svg class="svg-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          copy recipe
+        </button>
+        <button class="btn-meta" id="btn-sound" title="Toggle audio effects">
+          <svg class="svg-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path id="sound-svg-waves" d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.08"/>
+          </svg>
+          sound: <span id="sound-status">on</span>
+        </button>
+        <button class="btn-meta" id="btn-theme" title="Toggle Gruvbox Light/Dark">
+          <svg class="svg-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          theme: <span id="theme-status">dark</span>
+        </button>
+        <button class="btn-meta" id="btn-reset" title="Reset all checked checkboxes">
+          <svg class="svg-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="1 4 1 10 7 10"/>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+          </svg>
+          reset-checks
+        </button>
+        <div class="flake-channel-tag">nixos-unstable</div>
+        <span id="eval-status" style="color: var(--green);">[pure-eval: true]</span>
+      </div>
+    </header>
+
+    <!-- Main Title & Metadata Area -->
+    <section class="header">
+      <div class="title-box">
+        <h1>Ultimate Microwave <span>Mug Brownie</span></h1>
+        <div class="subtitle">
+          Purely functional, deterministic single-serve chocolate execution in 60s
+        </div>
+
+        <div class="meta-toolbar">
+          <div class="pill highlight">
+            <svg class="svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/>
+            </svg>
+            <span id="pill-mug-size">250 ml (8.5 oz) Mug</span>
+          </div>
+
+          <div class="pill">
+            <svg class="svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+            Prep: 3 min
+          </div>
+
+          <div class="pill">
+            <svg class="svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="var(--yellow)">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+            Cook: ~55s
+          </div>
+
+          <div class="pill">
+            <svg class="svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 22h14M5 2h14M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/>
+            </svg>
+            Rest: 2 min
+          </div>
+
+          <!-- Serving Scaler -->
+          <div class="pill lambda">
+            <span>λ Scale:</span>
+            <div class="scale-selector">
+              <button type="button" class="scale-btn" data-scale="0.5" title="0.5x Mini / Espresso Mug">0.5x</button>
+              <button type="button" class="scale-btn active" data-scale="1.0" title="1.0x Standard Mug (250ml)">1x</button>
+              <button type="button" class="scale-btn" data-scale="2.0" title="2.0x Double / Soup Mug (450ml)">2x</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gruvbox Favicon NixOS Snowflake -->
+      <svg class="nix-squircle-badge" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="76" height="76" aria-hidden="true">
+        <defs>
+          <linearGradient id="nix-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#1d2021"/>
+            <stop offset="100%" stop-color="#282828"/>
+          </linearGradient>
+        </defs>
+
+        <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#nix-bg)" stroke="#3c3836" stroke-width="2"/>
+
+        <g transform="translate(12.8, 12.8) scale(1.6)">
+          <path d="M7.352 1.592l-1.364.002L5.32 2.75l1.557 2.713-3.137-.008-1.32 2.34H14.11l-1.353-2.332-3.192-.006-2.214-3.865z" fill="#83a598"/>
+          <path d="M13.527 1.592l-2.687.025 5.846 10.127 1.341-2.34-1.59-2.765 2.24-3.85-.683-1.182h-1.336l-1.57 2.705-1.56-2.72z" fill="#b8bb26"/>
+          <path d="M20.414 5.787l-5.846 10.125 2.696-.008 1.601-2.76 4.453.016.682-1.183-.666-1.157-3.13-.008L21.778 8.1l-1.365-2.313z" fill="#fabd2f"/>
+          <path d="M9.432 8.086l-2.696.008-1.601 2.76-4.453-.016L0 12.02l.666 1.157 3.13.008-1.575 2.71 1.365 2.315L9.432 8.086z" fill="#fe8019"/>
+          <path d="M7.33 12.25l-.006.01-.002-.004-1.342 2.34 1.59 2.765-2.24 3.85.684 1.182H7.35l.004-.006h.001l1.567-2.698 1.558 2.72 2.688-.026-.004-.006h.01L7.33 12.25z" fill="#fb4934"/>
+          <path d="M9.882 16.18l1.354 2.332 3.192.006 2.215 3.865 1.363-.002.668-1.156-1.557-2.713 3.137.008 1.32-2.34H9.881Z" fill="#d3869b"/>
+        </g>
+      </svg>
+    </section>
+
+    <!-- Main Grid Content -->
+    <div class="body-grid">
+      
+      <!-- LEFT COLUMN: Inputs & Overrides -->
+      <aside class="col">
+        <!-- Hardware Box -->
+        <div class="card-box">
+          <div class="box-heading red">
+            <svg class="svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
+            inputs.hardware
+          </div>
+          <div class="hw-list">
+            <div class="hw-row" id="hw-mug" title="Click to check off">
+              <svg class="svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--fg2)" stroke-width="2">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+              </svg>
+              <span id="hw-mug-desc">1 Ceramic mug (≥ 250 ml capacity)</span>
+            </div>
+            <div class="hw-row" id="hw-whisk" title="Click to check off">
+              <svg class="svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--fg2)" stroke-width="2">
+                <path d="M18 2v6a3 3 0 0 1-3 3 3 3 0 0 1-3-3V2M15 11v11M5 2v20M2 2h6"/>
+              </svg>
+              Small fork or mini whisk
+            </div>
+            <div class="hw-row" id="hw-scale" title="Click to check off">
+              <svg class="svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--fg2)" stroke-width="2">
+                <path d="M12 3v18M6 8l6-3 6 3M3 13l3-5 3 5a3 3 0 0 1-6 0zm12 0l3-5 3 5a3 3 0 0 1-6 0z"/>
+              </svg>
+              Measuring spoons or digital scale
+            </div>
+          </div>
+        </div>
+
+        <!-- Ingredients Box with True Right-Aligned Weights -->
+        <div class="card-box">
+          <div class="box-heading orange">
+            <svg class="svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            </svg>
+            inputs.ingredients
+          </div>
+
+          <!-- Dry -->
+          <div class="chip dry">Dry Components</div>
+          <div class="ing-table">
+            <div class="ing-row" id="ing-row-flour" title="Click to check off">
+              <span class="ing-name"><span class="ing-prefix">λ</span><span id="ing-flour-label">All-purpose flour</span></span>
+              <span class="ing-qty" id="qty-flour">25 g <span class="ing-sub">(3 tbsp)</span></span>
+            </div>
+            <div class="ing-row" id="ing-row-cocoa" title="Click to check off">
+              <span class="ing-name"><span class="ing-prefix">λ</span>Dutch cocoa powder</span>
+              <span class="ing-qty" id="qty-cocoa">12 g <span class="ing-sub">(1.5 tbsp)</span></span>
+            </div>
+            <div class="ing-row" id="ing-row-bsugar" title="Click to check off">
+              <span class="ing-name"><span class="ing-prefix">λ</span>Brown sugar (packed)</span>
+              <span class="ing-qty" id="qty-brown-sugar">22 g <span class="ing-sub">(1.5 tbsp)</span></span>
+            </div>
+            <div class="ing-row" id="ing-row-sugar" title="Click to check off">
+              <span class="ing-name"><span class="ing-prefix">λ</span>Granulated sugar</span>
+              <span class="ing-qty" id="qty-sugar">12 g <span class="ing-sub">(1 tbsp)</span></span>
+            </div>
+            <div class="ing-row" id="ing-row-salt" title="Click to check off">
+              <span class="ing-name"><span class="ing-prefix">λ</span>Fine sea salt</span>
+              <span class="ing-qty" id="qty-salt">0.5 g <span class="ing-sub">(1 pinch)</span></span>
+            </div>
+            <div class="ing-row optional-inactive" id="row-espresso" title="Click to check off">
+              <span class="ing-name"><span class="ing-prefix">λ</span>Instant espresso powder</span>
+              <span class="ing-qty" id="qty-espresso">— <span class="ing-sub">(optional)</span></span>
+            </div>
+          </div>
+
+          <!-- Wet -->
+          <div class="chip wet">Liquid Phases</div>
+          <div class="ing-table">
+            <div class="ing-row" id="ing-row-butter" title="Click to check off">
+              <span class="ing-name"><span class="ing-prefix">λ</span><span id="ing-butter-label">Butter (melted, unsalted)</span></span>
+              <span class="ing-qty" id="qty-butter">15 g <span class="ing-sub">(1 tbsp)</span></span>
+            </div>
+            <div class="ing-row" id="ing-row-oil" title="Click to check off">
+              <span class="ing-name"><span class="ing-prefix">λ</span>Neutral vegetable oil</span>
+              <span class="ing-qty" id="qty-oil">7 g <span class="ing-sub">(0.5 tbsp)</span></span>
+            </div>
+            <div class="ing-row" id="ing-row-milk" title="Click to check off">
+              <span class="ing-name"><span class="ing-prefix">λ</span><span id="ing-milk-label">Whole milk</span></span>
+              <span class="ing-qty" id="qty-milk">30 g <span class="ing-sub">(2 tbsp)</span></span>
+            </div>
+            <div class="ing-row" id="ing-row-vanilla" title="Click to check off">
+              <span class="ing-name"><span class="ing-prefix">λ</span>Vanilla extract</span>
+              <span class="ing-qty" id="qty-vanilla">2 g <span class="ing-sub">(0.5 tsp)</span></span>
+            </div>
+          </div>
+
+          <!-- Core Payload -->
+          <div class="chip core">Molten Core Payload</div>
+          <div class="ing-table">
+            <div class="ing-row" id="ing-row-chips" title="Click to check off">
+              <span class="ing-name"><span class="ing-prefix">λ</span><span id="ing-chips-label">Dark chocolate chips</span></span>
+              <span class="ing-qty" id="qty-chips">10 g <span class="ing-sub">(2 tsp)</span></span>
+            </div>
+            <div class="ing-row optional-inactive" id="row-peanut-butter" title="Click to check off">
+              <span class="ing-name"><span class="ing-prefix">λ</span>Peanut butter center core</span>
+              <span class="ing-qty" id="qty-peanut-butter">— <span class="ing-sub">(optional)</span></span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- RIGHT COLUMN: Pipeline Phases & Timer -->
+      <section class="col">
+        <div class="card-box" style="display: flex; flex-direction: column; gap: 0.65rem;">
+          <div class="box-heading aqua">
+            <svg class="svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="16 18 22 12 16 6"/>
+              <polyline points="8 6 2 12 8 18"/>
+            </svg>
+            stdenv.mkDerivation :: buildPhases
+          </div>
+
+          <div class="steps-list">
+            <div class="step-item" id="step-1" title="Click to check off">
+              <div class="step-num">1</div>
+              <div class="step-text">
+                <span class="step-phase-tag">unpackPhase:</span> Add flour, cocoa, brown sugar, white sugar, and salt directly into the mug. Whisk with fork until lump-free.
+              </div>
+            </div>
+
+            <div class="step-item" id="step-2" title="Click to check off">
+              <div class="step-num">2</div>
+              <div class="step-text">
+                <span class="step-phase-tag">configurePhase:</span> Inject liquid phases (melted butter, oil, whole milk, and vanilla extract).
+              </div>
+            </div>
+
+            <div class="step-item" id="step-3" title="Click to check off">
+              <div class="step-num">3</div>
+              <div class="step-text">
+                <span class="step-phase-tag">buildPhase:</span> Stir gently for 20–30s until thick and glossy. Drop chocolate chips into center; submerge lightly.
+              </div>
+            </div>
+
+            <div class="step-item" id="step-4" title="Click to check off">
+              <div class="step-num">4</div>
+              <div class="step-text">
+                <span class="step-phase-tag">installPhase:</span> Place mug on <span class="highlight">outer turntable edge</span> (not center!) for uniform magnetron wave absorption.
+              </div>
+            </div>
+          </div>
+
+          <!-- Microwave Power Timing Matrix -->
+          <div class="timing-box">
+            <div class="timing-header">
+              <div class="timing-title">
+                <svg class="svg-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                </svg>
+                Microwave Timing Matrix
+              </div>
+              <div class="timing-hint">Click preset to bind timer</div>
+            </div>
+            <div class="timing-grid">
+              <div class="timing-cell" data-seconds="48">
+                <div class="timing-watts">1200 W</div>
+                <div class="timing-val">45–50 s</div>
+              </div>
+              <div class="timing-cell common active" data-seconds="55">
+                <div class="timing-watts">1000 W <svg class="svg-icon svg-star" viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:-0.05em;"><path d="M8 1.5l2 4.2 4.6.7-3.3 3.2.8 4.6L8 12l-4.1 2.2.8-4.6-3.3-3.2 4.6-.7z"/></svg></div>
+                <div class="timing-val">50–55 s</div>
+              </div>
+              <div class="timing-cell" data-seconds="58">
+                <div class="timing-watts">900 W</div>
+                <div class="timing-val">55–60 s</div>
+              </div>
+              <div class="timing-cell common" data-seconds="65">
+                <div class="timing-watts">800 W <svg class="svg-icon svg-star" viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:-0.05em;"><path d="M8 1.5l2 4.2 4.6.7-3.3 3.2.8 4.6L8 12l-4.1 2.2.8-4.6-3.3-3.2 4.6-.7z"/></svg></div>
+                <div class="timing-val">60–70 s</div>
+              </div>
+              <div class="timing-cell" data-seconds="75">
+                <div class="timing-watts">700 W</div>
+                <div class="timing-val">70–80 s</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Microwave Turntable Visualizer (Custom Vector Mug) -->
+          <div class="microwave-visualizer" id="microwave-viz">
+            <div class="microwave-cavity" id="microwave-cavity">
+              <svg class="turntable-mug-svg" viewBox="0 0 32 32" width="30" height="30" fill="none">
+                <path d="M7 10h14v10a6 6 0 0 1-6 6h-2a6 6 0 0 1-6-6V10z" fill="var(--bg0)" stroke="var(--yellow)" stroke-width="2"/>
+                <path d="M21 12h2a3 3 0 0 1 3 3v0a3 3 0 0 1-3 3h-2" stroke="var(--yellow)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M10 5c0-1.5 1-1.5 1-3M14 6c0-1.5 1-1.5 1-3M18 5c0-1.5 1-1.5 1-3" stroke="var(--fg4)" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="microwave-status">
+              <div id="viz-status-title">Cavity: <strong>Standby</strong></div>
+              <div style="font-size:0.68rem; color:var(--fg4);" id="viz-status-desc">Click 'Run Microwave' to spin turntable and begin magnetron excitation.</div>
+            </div>
+            <div style="font-family:'Fira Code', monospace; font-size:0.75rem; color:var(--orange); font-weight:700;" id="viz-power-tag">1000W</div>
+          </div>
+
+          <!-- Terminal Live Audio Timer -->
+          <div class="timer-console">
+            <div class="timer-display" id="timer-display">
+              <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+              <span id="time-left">00:55</span>
+            </div>
+            <div class="timer-controls">
+              <button class="btn-timer primary" id="btn-timer-toggle">Run Microwave (55s)</button>
+              <button class="btn-timer" id="btn-timer-rest">Rest (2m)</button>
+              <button class="btn-timer" id="btn-timer-reset">Reset</button>
+            </div>
+          </div>
+
+          <div class="step-item rest" id="step-5" title="Click to check off">
+            <div class="step-num">5</div>
+            <div class="step-text">
+              <span class="step-phase-tag">fixupPhase & check:</span> Rest undisturbed for <span class="highlight">2 minutes</span>. Thermal inertia sets internal crumb while locking in molten fudge!
+            </div>
+          </div>
+
+          <!-- Target Visual Assertion Banner -->
+          <div class="target-banner">
+            <svg class="target-graphic" viewBox="0 0 36 36">
+              <circle cx="18" cy="18" r="16" fill="var(--bg0)" stroke="var(--green)" stroke-width="2"/>
+              <circle cx="18" cy="18" r="11" fill="var(--bg2)"/>
+              <circle cx="18" cy="18" r="6" fill="var(--yellow)"/>
+              <circle cx="18" cy="18" r="2.5" fill="var(--red)"/>
+            </svg>
+            <div class="target-text">
+              <strong>Visual Assertion Check:</strong> Outer perimeter set & matte; central <span>2 cm circle</span> remains shiny, soft & molten.
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- FULL-WIDTH BOTTOM BAR: recipe.override { ... } (Spanning Both Sides) -->
+      <div class="card-box override-full-box">
+        <div class="box-heading purple" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+          <div style="display: flex; align-items: center; gap: 7px;">
+            <svg class="svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+            </svg>
+            <span>recipe.override { ... }</span>
+          </div>
+          <span style="font-size: 0.68rem; color: var(--fg4); font-weight: 500; text-transform: none; font-family: 'Fira Code', monospace;">
+            Toggle live derivation parameters
+          </span>
+        </div>
+        <div class="override-grid" id="override-container">
+          <div class="toggle-row" id="toggle-vegan" title="Click to toggle vegan derivation">
+            <span class="toggle-label"><span class="ing-prefix">λ</span>vegan</span>
+            <span class="toggle-val">= false;</span>
+          </div>
+          <div class="toggle-row" id="toggle-gf" title="Click to toggle gluten-free flour blend">
+            <span class="toggle-label"><span class="ing-prefix">λ</span>glutenFree</span>
+            <span class="toggle-val">= false;</span>
+          </div>
+          <div class="toggle-row" id="toggle-fudge" title="Click to toggle extra fudge payload">
+            <span class="toggle-label"><span class="ing-prefix">λ</span>extraFudge</span>
+            <span class="toggle-val">= false;</span>
+          </div>
+          <div class="toggle-row" id="toggle-espresso" title="Click to toggle espresso chocolate enhancer">
+            <span class="toggle-label"><span class="ing-prefix">λ</span>espressoBoost</span>
+            <span class="toggle-val">= false;</span>
+          </div>
+          <div class="toggle-row" id="toggle-pb" title="Click to toggle molten peanut butter core">
+            <span class="toggle-label"><span class="ing-prefix">λ</span>peanutButter</span>
+            <span class="toggle-val">= false;</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Declarative Footer -->
+    <footer class="footer">
+      <svg class="svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2v4m0 12v4M2 12h4m12 0h4m-3.17-6.83l-2.83 2.83m-8 8l-2.83 2.83m0-13.66l2.83 2.83m8 8l2.83 2.83"/>
+      </svg>
+      <span>Pure evaluation complete</span>
+      <span>•</span>
+      <span>Enjoy your deterministic warm hug in a mug! Made with λ & chocolate</span>
+    </footer>
+
+  </main>
+
+  <!-- Modern Toast Notification -->
+  <div id="toast" role="status" aria-live="polite">
+    <span id="toast-icon">λ</span>
+    <span id="toast-msg">Copied complete recipe to clipboard!</span>
+  </div>
+
+  <!-- Interactive JavaScript Engine -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- STATE STORE ---
+      let scale = 1.0;
+      let soundEnabled = true;
+      const overrides = {
+        vegan: false,
+        glutenFree: false,
+        extraFudge: false,
+        espressoBoost: false,
+        peanutButterCore: false
+      };
+
+      // Base Recipe Database (at scale = 1.0)
+      const baseIngredients = {
+        flour: { g: 25, tbsp: 3, label: 'All-purpose flour', gfLabel: '1:1 GF Flour Blend' },
+        cocoa: { g: 12, tbsp: 1.5, label: 'Dutch cocoa powder' },
+        brownSugar: { g: 22, tbsp: 1.5, label: 'Brown sugar (packed)' },
+        sugar: { g: 12, tbsp: 1, label: 'Granulated sugar' },
+        salt: { g: 0.5, tbsp: 0.1, label: 'Fine sea salt' },
+        espresso: { g: 0.5, tbsp: 0.1, label: 'Instant espresso powder' },
+        butter: { g: 15, tbsp: 1, label: 'Butter (melted, unsalted)', veganLabel: 'Vegan block butter (melted)' },
+        oil: { g: 7, tbsp: 0.5, label: 'Neutral vegetable oil' },
+        milk: { g: 30, tbsp: 2, label: 'Whole milk', veganLabel: 'Oat milk (or soy milk)' },
+        vanilla: { g: 2, tbsp: 0.5, label: 'Vanilla extract' },
+        chips: { g: 10, tbsp: 0.67, label: 'Dark chocolate chips', veganLabel: 'Dairy-free dark chips' },
+        peanutButter: { g: 15, tbsp: 1, label: 'Peanut butter center core' }
+      };
+
+      // Toast Notification
+      let toastTimeout = null;
+      function showToast(msg, icon = 'λ') {
+        const toast = document.getElementById('toast');
+        const msgEl = document.getElementById('toast-msg');
+        const iconEl = document.getElementById('toast-icon');
+        if (!toast) return;
+
+        if (msgEl) msgEl.textContent = msg;
+        if (iconEl) iconEl.innerHTML = icon;
+        toast.classList.add('show');
+
+        if (toastTimeout) clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => toast.classList.remove('show'), 2400);
+      }
+
+      // --- RENDER DYNAMIC INGREDIENTS & TELEMETRY ---
+      function updateIngredientsDisplay() {
+        // Flour
+        const flourG = Math.round(baseIngredients.flour.g * scale);
+        const flourTbsp = (baseIngredients.flour.tbsp * scale).toFixed(1).replace(/\.0$/, '');
+        document.getElementById('qty-flour').innerHTML = `${flourG} g <span class="ing-sub">(${flourTbsp} tbsp)</span>`;
+        document.getElementById('ing-flour-label').textContent = overrides.glutenFree ? baseIngredients.flour.gfLabel : baseIngredients.flour.label;
+
+        // Cocoa
+        const cocoaG = Math.round(baseIngredients.cocoa.g * scale);
+        const cocoaTbsp = (baseIngredients.cocoa.tbsp * scale).toFixed(1).replace(/\.0$/, '');
+        document.getElementById('qty-cocoa').innerHTML = `${cocoaG} g <span class="ing-sub">(${cocoaTbsp} tbsp)</span>`;
+
+        // Brown Sugar
+        const bsG = Math.round(baseIngredients.brownSugar.g * scale);
+        const bsTbsp = (baseIngredients.brownSugar.tbsp * scale).toFixed(1).replace(/\.0$/, '');
+        document.getElementById('qty-brown-sugar').innerHTML = `${bsG} g <span class="ing-sub">(${bsTbsp} tbsp)</span>`;
+
+        // Granulated Sugar
+        const sG = Math.round(baseIngredients.sugar.g * scale);
+        const sTbsp = (baseIngredients.sugar.tbsp * scale).toFixed(1).replace(/\.0$/, '');
+        document.getElementById('qty-sugar').innerHTML = `${sG} g <span class="ing-sub">(${sTbsp} tbsp)</span>`;
+
+        // Salt
+        const saltG = (baseIngredients.salt.g * scale).toFixed(1).replace(/\.0$/, '');
+        document.getElementById('qty-salt').innerHTML = `${saltG} g <span class="ing-sub">(${scale > 1.5 ? '2 pinches' : '1 pinch'})</span>`;
+
+        // Espresso (Zero-shift permanent row)
+        const rowEspresso = document.getElementById('row-espresso');
+        if (overrides.espressoBoost) {
+          rowEspresso.classList.remove('optional-inactive');
+          document.getElementById('qty-espresso').innerHTML = `0.5 g <span class="ing-sub">(1 pinch)</span>`;
+        } else {
+          rowEspresso.classList.add('optional-inactive');
+          document.getElementById('qty-espresso').innerHTML = `— <span class="ing-sub">(optional)</span>`;
+        }
+
+        // Butter
+        const butterG = Math.round(baseIngredients.butter.g * scale);
+        const butterTbsp = (baseIngredients.butter.tbsp * scale).toFixed(1).replace(/\.0$/, '');
+        document.getElementById('qty-butter').innerHTML = `${butterG} g <span class="ing-sub">(${butterTbsp} tbsp)</span>`;
+        document.getElementById('ing-butter-label').textContent = overrides.vegan ? baseIngredients.butter.veganLabel : baseIngredients.butter.label;
+
+        // Oil
+        const oilG = Math.round(baseIngredients.oil.g * scale);
+        const oilTbsp = (baseIngredients.oil.tbsp * scale).toFixed(1).replace(/\.0$/, '');
+        document.getElementById('qty-oil').innerHTML = `${oilG} g <span class="ing-sub">(${oilTbsp} tbsp)</span>`;
+
+        // Milk
+        const milkG = Math.round(baseIngredients.milk.g * scale);
+        const milkTbsp = (baseIngredients.milk.tbsp * scale).toFixed(1).replace(/\.0$/, '');
+        document.getElementById('qty-milk').innerHTML = `${milkG} g <span class="ing-sub">(${milkTbsp} tbsp)</span>`;
+        document.getElementById('ing-milk-label').textContent = overrides.vegan ? baseIngredients.milk.veganLabel : baseIngredients.milk.label;
+
+        // Vanilla
+        const vanG = Math.round(baseIngredients.vanilla.g * scale);
+        const vanTsp = (baseIngredients.vanilla.tbsp * scale).toFixed(1).replace(/\.0$/, '');
+        document.getElementById('qty-vanilla').innerHTML = `${vanG} g <span class="ing-sub">(${vanTsp} tsp)</span>`;
+
+        // Chocolate Chips
+        const baseChipsG = overrides.extraFudge ? 18 : 10;
+        const chipsG = Math.round(baseChipsG * scale);
+        const chipsDesc = overrides.extraFudge ? (scale >= 2 ? '2.5 tbsp' : '1.2 tbsp') : (scale >= 2 ? '4 tsp' : '2 tsp');
+        document.getElementById('qty-chips').innerHTML = `${chipsG} g <span class="ing-sub">(${chipsDesc})</span>`;
+        document.getElementById('ing-chips-label').textContent = overrides.vegan ? baseIngredients.chips.veganLabel : baseIngredients.chips.label;
+
+        // Peanut Butter Core (Zero-shift permanent row)
+        const rowPB = document.getElementById('row-peanut-butter');
+        if (overrides.peanutButterCore) {
+          rowPB.classList.remove('optional-inactive');
+          const pbG = Math.round(15 * scale);
+          document.getElementById('qty-peanut-butter').innerHTML = `${pbG} g <span class="ing-sub">(${scale} tbsp)</span>`;
+        } else {
+          rowPB.classList.add('optional-inactive');
+          document.getElementById('qty-peanut-butter').innerHTML = `— <span class="ing-sub">(optional)</span>`;
+        }
+
+        // Mug Size Pill
+        const mugPill = document.getElementById('pill-mug-size');
+        const hwMug = document.getElementById('hw-mug-desc');
+        if (scale === 0.5) {
+          mugPill.textContent = "120 ml (4 oz) Espresso Cup";
+          hwMug.textContent = "1 Small mug / espresso cup (≥ 120 ml)";
+        } else if (scale === 2.0) {
+          mugPill.textContent = "450 ml (15 oz) Soup Mug";
+          hwMug.textContent = "1 Large ceramic mug (≥ 450 ml capacity)";
+        } else {
+          mugPill.textContent = "250 ml (8.5 oz) Mug";
+          hwMug.textContent = "1 Ceramic mug (≥ 250 ml capacity)";
+        }
+
+        // Update eval badge
+        const evalStatus = document.getElementById('eval-status');
+        if (overrides.vegan && overrides.glutenFree) {
+          evalStatus.textContent = "[pure-eval: vegan + gf]";
+        } else if (overrides.vegan) {
+          evalStatus.textContent = "[pure-eval: vegan]";
+        } else if (overrides.glutenFree) {
+          evalStatus.textContent = "[pure-eval: gluten-free]";
+        } else {
+          evalStatus.textContent = "[pure-eval: true]";
+        }
+      }
+
+      // --- INTERACTIVE OVERRIDES TOGGLES ---
+      const toggleMap = [
+        { id: 'toggle-vegan', key: 'vegan' },
+        { id: 'toggle-gf', key: 'glutenFree' },
+        { id: 'toggle-fudge', key: 'extraFudge' },
+        { id: 'toggle-espresso', key: 'espressoBoost' },
+        { id: 'toggle-pb', key: 'peanutButterCore' }
+      ];
+
+      toggleMap.forEach(({ id, key }) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('click', () => {
+          overrides[key] = !overrides[key];
+          el.classList.toggle('active', overrides[key]);
+          const valEl = el.querySelector('.toggle-val');
+          if (valEl) {
+            valEl.textContent = overrides[key] ? '= true;' : '= false;';
+          }
+          updateIngredientsDisplay();
+          showToast(`recipe.override.${key} = ${overrides[key]}`);
+        });
+      });
+
+      // --- SERVING SCALER BUTTONS ---
+      const scaleBtns = document.querySelectorAll('.scale-btn');
+      scaleBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          scaleBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          scale = parseFloat(btn.getAttribute('data-scale')) || 1.0;
+          updateIngredientsDisplay();
+          showToast(`Scaled recipe to ${scale}x`);
+        });
+      });
+
+      // --- COMPLETE RECIPE & DERIVATION CLIPBOARD EXPORT ---
+      document.getElementById('btn-copy-recipe').addEventListener('click', () => {
+        const flourG = Math.round(baseIngredients.flour.g * scale);
+        const flourTbsp = (baseIngredients.flour.tbsp * scale).toFixed(1).replace(/\.0$/, '');
+        const flourLabel = overrides.glutenFree ? "1:1 Gluten-Free Flour Blend" : "All-Purpose Flour";
+
+        const cocoaG = Math.round(baseIngredients.cocoa.g * scale);
+        const cocoaTbsp = (baseIngredients.cocoa.tbsp * scale).toFixed(1).replace(/\.0$/, '');
+
+        const bsG = Math.round(baseIngredients.brownSugar.g * scale);
+        const bsTbsp = (baseIngredients.brownSugar.tbsp * scale).toFixed(1).replace(/\.0$/, '');
+
+        const sG = Math.round(baseIngredients.sugar.g * scale);
+        const sTbsp = (baseIngredients.sugar.tbsp * scale).toFixed(1).replace(/\.0$/, '');
+
+        const butterG = Math.round(baseIngredients.butter.g * scale);
+        const butterTbsp = (baseIngredients.butter.tbsp * scale).toFixed(1).replace(/\.0$/, '');
+        const butterLabel = overrides.vegan ? "Vegan block butter (melted)" : "Unsalted butter (melted)";
+
+        const oilG = Math.round(baseIngredients.oil.g * scale);
+        const oilTbsp = (baseIngredients.oil.tbsp * scale).toFixed(1).replace(/\.0$/, '');
+
+        const milkG = Math.round(baseIngredients.milk.g * scale);
+        const milkTbsp = (baseIngredients.milk.tbsp * scale).toFixed(1).replace(/\.0$/, '');
+        const milkLabel = overrides.vegan ? "Oat milk (or soy milk)" : "Whole milk";
+
+        const vanG = Math.round(baseIngredients.vanilla.g * scale);
+        const vanTsp = (baseIngredients.vanilla.tbsp * scale).toFixed(1).replace(/\.0$/, '');
+
+        const baseChipsG = overrides.extraFudge ? 18 : 10;
+        const chipsG = Math.round(baseChipsG * scale);
+        const chipsDesc = overrides.extraFudge ? (scale >= 2 ? '2.5 tbsp' : '1.2 tbsp') : (scale >= 2 ? '4 tsp' : '2 tsp');
+        const chipsLabel = overrides.vegan ? "Dairy-free dark chocolate chips" : "Dark chocolate chips";
+
+        const mugCap = scale === 0.5 ? '120' : (scale === 2.0 ? '450' : '250');
+
+        let recipeText = `# Ultimate Microwave Mug Brownie (pkgs.recipe.microwave-mug-brownie)
+Scale: ${scale}x (${scale === 0.5 ? 'Mini Mug' : (scale === 2.0 ? 'Double Mug' : 'Standard Mug')})
+Prep Time: 3 min | Cook Time: ~55s @ 1000W | Rest: 2 min
+
+## Hardware Requirements
+- 1 Ceramic mug (≥ ${mugCap} ml capacity)
+- Small fork or mini whisk
+- Measuring spoons or digital scale
+
+## Ingredients (Scale: ${scale}x)
+### Dry Components
+- ${flourG}g (${flourTbsp} tbsp) ${flourLabel}
+- ${cocoaG}g (${cocoaTbsp} tbsp) Dutch cocoa powder
+- ${bsG}g (${bsTbsp} tbsp) Brown sugar (packed)
+- ${sG}g (${sTbsp} tbsp) Granulated sugar
+- ${(0.5 * scale).toFixed(1).replace(/\\.0$/, '')}g (${scale > 1.5 ? '2 pinches' : '1 pinch'}) Fine sea salt
+${overrides.espressoBoost ? `- 0.5g (1 pinch) Instant espresso powder\n` : ''}
+### Liquid Phases
+- ${butterG}g (${butterTbsp} tbsp) ${butterLabel}
+- ${oilG}g (${oilTbsp} tbsp) Neutral vegetable oil
+- ${milkG}g (${milkTbsp} tbsp) ${milkLabel}
+- ${vanG}g (${vanTsp} tsp) Vanilla extract
+
+### Molten Core Payload
+- ${chipsG}g (${chipsDesc}) ${chipsLabel}
+${overrides.peanutButterCore ? `- ${Math.round(15 * scale)}g (${scale} tbsp) Peanut butter center pocket\n` : ''}
+## Execution Pipeline (Build Phases)
+1. unpackPhase: Add all dry components directly into mug. Whisk with fork until lump-free.
+2. configurePhase: Pour in melted butter/oil, milk, and vanilla extract.
+3. buildPhase: Stir gently for 20–30s until thick and glossy. Drop chocolate chips into center; submerge lightly.
+4. installPhase: Place mug on outer turntable edge (not center!) for uniform wave distribution. Microwave ~50–55s at 1000W (or 60–70s at 800W).
+5. fixupPhase: Rest undisturbed for 2 minutes. Thermal inertia sets internal crumb while locking in molten fudge!
+
+## Visual Assertion Check
+Outer perimeter set & matte; central 2 cm circle remains shiny, soft & molten.
+
+---
+Nix Functional Derivation:
+pkgs.recipe.microwave-mug-brownie.override {
+  scale = ${scale.toFixed(1)};
+  vegan = ${overrides.vegan};
+  glutenFree = ${overrides.glutenFree};
+  extraFudge = ${overrides.extraFudge};
+  espressoBoost = ${overrides.espressoBoost};
+  peanutButter = ${overrides.peanutButterCore};
+}
+`;
+
+        navigator.clipboard.writeText(recipeText).then(() => {
+          showToast("Copied complete recipe & guide to clipboard!", `<svg class="svg-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="3.5" width="9" height="11" rx="1.5"/><path d="M3.5 12.5H3a1.5 1.5 0 0 1-1.5-1.5v-8A1.5 1.5 0 0 1 3.5 1.5h6a1.5 1.5 0 0 1 1.5 1.5v.5"/><rect x="6.5" y="1.5" width="5" height="2.5" rx="1" fill="currentColor" fill-opacity="0.2"/></svg>`);
+        }).catch(() => {
+          showToast("Failed to copy recipe");
+        });
+      });
+
+      // --- SOUND TOGGLE ---
+      const btnSound = document.getElementById('btn-sound');
+      const soundStatus = document.getElementById('sound-status');
+      const soundSvgWaves = document.getElementById('sound-svg-waves');
+      btnSound.addEventListener('click', () => {
+        soundEnabled = !soundEnabled;
+        soundStatus.textContent = soundEnabled ? 'on' : 'off';
+        if (soundSvgWaves) {
+          soundSvgWaves.style.display = soundEnabled ? 'inline' : 'none';
+        }
+        showToast(`Sound FX: ${soundEnabled ? 'Enabled' : 'Muted'}`);
+      });
+
+      // --- CHECKLIST STATE TOGGLES (HARDWARE, INGREDIENTS, PHASES) ---
+      const checkableElements = document.querySelectorAll('.hw-row, .ing-row, .step-item');
+      checkableElements.forEach(item => {
+        item.addEventListener('click', (e) => {
+          if (e.target.closest('.scale-selector') || e.target.closest('.toggle-row')) return;
+          item.classList.toggle('is-done');
+        });
+      });
+
+      document.getElementById('btn-reset').addEventListener('click', () => {
+        checkableElements.forEach(item => item.classList.remove('is-done'));
+        showToast("Reset all checklist items");
+      });
+
+      // --- THEME SWITCHER ---
+      const themeBtn = document.getElementById('btn-theme');
+      const themeStatus = document.getElementById('theme-status');
+      themeBtn.addEventListener('click', () => {
+        document.body.classList.toggle('light-theme');
+        const isLight = document.body.classList.contains('light-theme');
+        themeStatus.textContent = isLight ? 'light' : 'dark';
+      });
+
+      // --- WEB AUDIO SYNTHESIZER ---
+      let audioCtx = null;
+      let humOsc = null;
+      let humGain = null;
+
+      function getAudioContext() {
+        if (!audioCtx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) audioCtx = new AudioContext();
+        }
+        return audioCtx;
+      }
+
+      function startMicrowaveHum() {
+        if (!soundEnabled) return;
+        try {
+          const ctx = getAudioContext();
+          if (!ctx) return;
+          if (ctx.state === 'suspended') ctx.resume();
+
+          stopMicrowaveHum();
+
+          humOsc = ctx.createOscillator();
+          humGain = ctx.createGain();
+
+          humOsc.type = 'sawtooth';
+          humOsc.frequency.setValueAtTime(60, ctx.currentTime);
+
+          const filter = ctx.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(220, ctx.currentTime);
+
+          humGain.gain.setValueAtTime(0.035, ctx.currentTime);
+
+          humOsc.connect(filter);
+          filter.connect(humGain);
+          humGain.connect(ctx.destination);
+
+          humOsc.start();
+        } catch (e) {}
+      }
+
+      function stopMicrowaveHum() {
+        try {
+          if (humOsc) {
+            humOsc.stop();
+            humOsc.disconnect();
+            humOsc = null;
+          }
+        } catch (e) {}
+      }
+
+      function playCompletionBeeps() {
+        if (!soundEnabled) return;
+        try {
+          const ctx = getAudioContext();
+          if (!ctx) return;
+
+          const now = ctx.currentTime;
+          [0, 0.22, 0.44].forEach(offset => {
+            const beepOsc = ctx.createOscillator();
+            const beepGain = ctx.createGain();
+            beepOsc.type = 'sine';
+            beepOsc.frequency.setValueAtTime(880, now + offset);
+            beepGain.gain.setValueAtTime(0.2, now + offset);
+            beepGain.gain.exponentialRampToValueAtTime(0.001, now + offset + 0.12);
+            beepOsc.connect(beepGain);
+            beepGain.connect(ctx.destination);
+            beepOsc.start(now + offset);
+            beepOsc.stop(now + offset + 0.12);
+          });
+
+          const chimeTime = now + 0.7;
+          const osc1 = ctx.createOscillator();
+          const osc2 = ctx.createOscillator();
+          const gainNode = ctx.createGain();
+
+          osc1.type = 'triangle';
+          osc1.frequency.setValueAtTime(587.33, chimeTime);
+          osc1.frequency.setValueAtTime(880.00, chimeTime + 0.18);
+
+          osc2.type = 'sine';
+          osc2.frequency.setValueAtTime(293.66, chimeTime);
+
+          gainNode.gain.setValueAtTime(0.28, chimeTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.001, chimeTime + 1.2);
+
+          osc1.connect(gainNode);
+          osc2.connect(gainNode);
+          gainNode.connect(ctx.destination);
+
+          osc1.start(chimeTime);
+          osc2.start(chimeTime);
+          osc1.stop(chimeTime + 1.2);
+          osc2.stop(chimeTime + 1.2);
+        } catch (e) {}
+      }
+
+      // --- CONFETTI SPRINKLES BURST FX ---
+      function launchConfetti() {
+        const canvas = document.getElementById('confetti-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const colors = ['#fabd2f', '#fb4934', '#b8bb26', '#83a598', '#d3869b', '#fe8019', '#8ec07c'];
+        const particles = [];
+        for (let i = 0; i < 90; i++) {
+          particles.push({
+            x: canvas.width / 2,
+            y: canvas.height / 2 + 50,
+            vx: (Math.random() - 0.5) * 14,
+            vy: (Math.random() - 0.8) * 16,
+            size: Math.random() * 8 + 4,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            rotation: Math.random() * 360,
+            rSpeed: (Math.random() - 0.5) * 10,
+            alpha: 1
+          });
+        }
+
+        function animate() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          let alive = false;
+          particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.35;
+            p.rotation += p.rSpeed;
+            p.alpha -= 0.012;
+
+            if (p.alpha > 0) {
+              alive = true;
+              ctx.save();
+              ctx.globalAlpha = p.alpha;
+              ctx.translate(p.x, p.y);
+              ctx.rotate((p.rotation * Math.PI) / 180);
+              ctx.fillStyle = p.color;
+              ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+              ctx.restore();
+            }
+          });
+
+          if (alive) {
+            requestAnimationFrame(animate);
+          } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+          }
+        }
+        animate();
+      }
+
+      // --- TIMER & MICROWAVE VISUALIZER LOGIC ---
+      let timerInterval = null;
+      let targetSeconds = 55;
+      let remainingSeconds = 55;
+      let isRunning = false;
+      let isRestPhase = false;
+
+      const timeLeftEl = document.getElementById('time-left');
+      const timerDisplayEl = document.getElementById('timer-display');
+      const btnToggle = document.getElementById('btn-timer-toggle');
+      const btnRest = document.getElementById('btn-timer-rest');
+      const btnResetTimer = document.getElementById('btn-timer-reset');
+      const timingCells = document.querySelectorAll('.timing-cell');
+
+      const microwaveCavity = document.getElementById('microwave-cavity');
+      const vizStatusTitle = document.getElementById('viz-status-title');
+      const vizStatusDesc = document.getElementById('viz-status-desc');
+
+      function formatTime(sec) {
+        const m = Math.floor(sec / 60).toString().padStart(2, '0');
+        const s = (sec % 60).toString().padStart(2, '0');
+        return `${m}:${s}`;
+      }
+
+      function updateDisplay() {
+        timeLeftEl.textContent = formatTime(remainingSeconds);
+      }
+
+      function stopTimer() {
+        clearInterval(timerInterval);
+        isRunning = false;
+        timerDisplayEl.classList.remove('running');
+        microwaveCavity.classList.remove('cooking');
+        stopMicrowaveHum();
+
+        if (isRestPhase) {
+          btnToggle.textContent = `Start Rest (${remainingSeconds}s)`;
+          vizStatusTitle.innerHTML = "Cavity: <strong>Resting (Thermal Inertia)</strong>";
+          vizStatusDesc.textContent = "Undisturbed crumb stabilization in progress.";
+        } else {
+          btnToggle.textContent = `Start (${remainingSeconds}s)`;
+          vizStatusTitle.innerHTML = "Cavity: <strong>Standby</strong>";
+          vizStatusDesc.textContent = "Turntable stationary. Ready for execution.";
+        }
+      }
+
+      function startTimer() {
+        if (remainingSeconds <= 0) return;
+        isRunning = true;
+        timerDisplayEl.classList.add('running');
+        btnToggle.textContent = 'Pause';
+
+        if (!isRestPhase) {
+          microwaveCavity.classList.add('cooking');
+          vizStatusTitle.innerHTML = "Cavity: <strong style='color:var(--yellow);'>Active Heating <svg class='svg-icon' viewBox='0 0 16 16' width='14' height='14' fill='currentColor' aria-hidden='true'><polygon points='9 1.5 3 9 8 9 7 14.5 13 7 8 7 9 1.5'/></svg></strong>";
+          vizStatusDesc.textContent = "Turntable rotating. Magnetron wave excitation active.";
+          startMicrowaveHum();
+        } else {
+          vizStatusTitle.innerHTML = "Cavity: <strong style='color:var(--green);'>Resting Crumb</strong>";
+          vizStatusDesc.textContent = "Allow internal steam to lock in fudgy core.";
+        }
+
+        timerInterval = setInterval(() => {
+          remainingSeconds--;
+          updateDisplay();
+
+          if (remainingSeconds <= 0) {
+            stopTimer();
+            playCompletionBeeps();
+            launchConfetti();
+
+            if (!isRestPhase) {
+              timeLeftEl.textContent = "COOKED!";
+              btnToggle.textContent = 'Begin 2m Rest';
+              showToast("Microwave execution complete! Proceed to 2-minute rest phase.", `<svg class="svg-icon" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><polygon points="9 1.5 3 9 8 9 7 14.5 13 7 8 7 9 1.5"/></svg>`);
+              vizStatusTitle.innerHTML = "Cavity: <strong style='color:var(--green);'>Cook Complete!</strong>";
+              vizStatusDesc.textContent = "Now rest for 2 minutes to let thermal inertia solidify the fudge.";
+            } else {
+              timeLeftEl.textContent = "READY!";
+              btnToggle.textContent = 'Restart';
+              showToast("Brownie evaluation complete! Enjoy your warm hug in a mug!", `<svg class="svg-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 7.5h10a1.5 1.5 0 0 1 1.5 1.5v.5a4.5 4.5 0 0 1-9 0V9a1.5 1.5 0 0 1-1.5-1.5z"/><path d="M12 9h2.5"/><path d="M4.5 3.5c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5M7.5 3.5c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5"/></svg>`);
+              vizStatusTitle.innerHTML = "Cavity: <strong style='color:var(--green);'>Ready to Serve!</strong>";
+              vizStatusDesc.textContent = "Perimeter matte and set; molten chocolate core achieved.";
+            }
+          }
+        }, 1000);
+      }
+
+      btnToggle.addEventListener('click', () => {
+        if (isRunning) {
+          stopTimer();
+        } else {
+          if (remainingSeconds <= 0) remainingSeconds = targetSeconds;
+          startTimer();
+        }
+      });
+
+      btnRest.addEventListener('click', () => {
+        stopTimer();
+        isRestPhase = true;
+        targetSeconds = 120;
+        remainingSeconds = 120;
+        updateDisplay();
+        btnToggle.textContent = 'Start Rest (2m)';
+        startTimer();
+      });
+
+      btnResetTimer.addEventListener('click', () => {
+        stopTimer();
+        isRestPhase = false;
+        remainingSeconds = targetSeconds;
+        updateDisplay();
+        btnToggle.textContent = `Start (${targetSeconds}s)`;
+      });
+
+      // Bind Timing Matrix cells to Timer
+      timingCells.forEach(cell => {
+        cell.addEventListener('click', () => {
+          timingCells.forEach(c => c.classList.remove('active'));
+          cell.classList.add('active');
+          const sec = parseInt(cell.getAttribute('data-seconds'), 10);
+          const watts = cell.querySelector('.timing-watts').textContent.trim();
+          document.getElementById('viz-power-tag').textContent = watts;
+          targetSeconds = sec;
+          remainingSeconds = sec;
+          isRestPhase = false;
+          stopTimer();
+          updateDisplay();
+          btnToggle.textContent = `Start (${sec}s)`;
+          showToast(`Bound microwave preset: ${watts} (${sec}s)`);
+        });
+      });
+
+      // Initial Render
+      updateIngredientsDisplay();
+    });
+  </script>
+</body>
+</html>
