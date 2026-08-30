@@ -13,13 +13,13 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://irgendeinwer.github.io/blog/cachyos-kernel-on-nixos.html</loc>
+    <loc>https://irgendeinwer.github.io/blog/cachyos-kernel-on-nixos</loc>
     <lastmod>2026-08-30</lastmod>
     <priority>0.85</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://irgendeinwer.github.io/blog/building-declarative-nixos-fleet.html</loc>
+    <loc>https://irgendeinwer.github.io/blog/building-declarative-nixos-fleet</loc>
     <lastmod>2026-08-30</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
