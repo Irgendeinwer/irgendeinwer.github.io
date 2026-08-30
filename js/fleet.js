@@ -1,0 +1,145 @@
+/**
+ * fleet.js: Fastfetch Specifications & Interactive Snowflake Animation
+ */
+
+const hostData = {
+    junixos: {
+        user: "julian",
+        host: "junixos",
+        specs: [
+            { key: "OS", val: "NixOS (x86_64)" },
+            { key: "Host", val: "Desktop Workstation" },
+            { key: "Kernel", val: "Linux (CachyOS)" },
+            { key: "Shell", val: "zsh" },
+            { key: "WM", val: "Hyprland (Wayland)", accent: true },
+            { key: "Terminal", val: "kitty" },
+            { key: "Font", val: "FiraCode Nerd Font" },
+            { key: "Theme", val: "gruvbox-dark-gtk" },
+            { key: "Cursor", val: "BreezeX-RosePine-Linux" },
+            { key: "CPU", val: "Intel Core i5-13600KF" },
+            { key: "GPU", val: "AMD Radeon RX 9070" }
+        ]
+    },
+    junixbook: {
+        user: "julian",
+        host: "junixbook",
+        specs: [
+            { key: "OS", val: "NixOS (x86_64)" },
+            { key: "Host", val: "Portable Laptop" },
+            { key: "Kernel", val: "Linux (Latest)" },
+            { key: "Shell", val: "zsh" },
+            { key: "WM", val: "Hyprland (Wayland)", accent: true },
+            { key: "Terminal", val: "kitty" },
+            { key: "Font", val: "FiraCode Nerd Font" },
+            { key: "Theme", val: "gruvbox-dark-gtk" },
+            { key: "CPU", val: "10th Gen Intel Core i5 (Mobile)" },
+            { key: "GPU", val: "Intel UHD Graphics" },
+            { key: "Config", val: "Shared Flake Baseline" }
+        ]
+    }
+};
+
+function renderHostSpecs(hostKey) {
+    const data = hostData[hostKey];
+    const container = document.getElementById('specs-container');
+    if (!data || !container) return;
+
+    let html = `
+        <div class="fetch-header">${data.user}@${data.host}</div>
+        <div class="fetch-divider">-----------------------------</div>
+    `;
+
+    data.specs.forEach(item => {
+        const accentClass = item.accent ? ' accent' : '';
+        html += `<div class="spec-line"><span class="spec-key">${item.key}:</span><span class="spec-val${accentClass}">${item.val}</span></div>`;
+    });
+
+    html += `
+        <div class="fetch-palette" aria-hidden="true">
+            <span class="palette-block" style="background:#282828"></span>
+            <span class="palette-block" style="background:#fb4934"></span>
+            <span class="palette-block" style="background:#b8bb26"></span>
+            <span class="palette-block" style="background:#fabd2f"></span>
+            <span class="palette-block" style="background:#83a598"></span>
+            <span class="palette-block" style="background:#d3869b"></span>
+            <span class="palette-block" style="background:#8ec07c"></span>
+            <span class="palette-block" style="background:#ebdbb2"></span>
+        </div>
+    `;
+
+    container.innerHTML = html;
+}
+
+function switchHost(host) {
+    renderHostSpecs(host);
+    const isJunixos = host === 'junixos';
+    const tabJunixos = document.getElementById('tab-junixos');
+    const tabJunixbook = document.getElementById('tab-junixbook');
+
+    if (tabJunixos) {
+        tabJunixos.classList.toggle('active', isJunixos);
+        tabJunixos.setAttribute('aria-selected', isJunixos ? 'true' : 'false');
+    }
+    if (tabJunixbook) {
+        tabJunixbook.classList.toggle('active', !isJunixos);
+        tabJunixbook.setAttribute('aria-selected', isJunixos ? 'false' : 'true');
+    }
+}
+
+// Snowflake Easter Egg Quotes & Particle Effects
+const quotes = [
+    "❄️ Purity check: 100% pure",
+    "🔒 flake.lock verified & clean",
+    "🔑 sops-nix secrets management enabled",
+    "💾 Automated BorgBackup to USB drive active",
+    "🚀 CachyOS kernel optimizations active",
+    "🛡️ zapret DPI bypass active",
+    "📦 Works on my machine? Everywhere.",
+    "🛠️ Declarative all the way down"
+];
+let quoteIdx = 0;
+let cumulativeAngle = 0;
+const gruvColors = ['#fabd2f', '#fe8019', '#b8bb26', '#83a598', '#d3869b', '#fb4934'];
+const particleChars = ['λ', '❄', '⚡', '★', '⬡'];
+
+function spawnParticles(x, y) {
+    for (let i = 0; i < 16; i++) {
+        const p = document.createElement('span');
+        p.className = 'particle';
+        p.textContent = particleChars[Math.floor(Math.random() * particleChars.length)];
+        p.style.color = gruvColors[Math.floor(Math.random() * gruvColors.length)];
+        p.style.left = `${x}px`;
+        p.style.top = `${y}px`;
+        p.style.fontSize = `${Math.random() * 14 + 14}px`;
+
+        const angle = Math.random() * Math.PI * 2;
+        const distance = Math.random() * 120 + 60;
+        p.style.setProperty('--tx', `${Math.cos(angle) * distance}px`);
+        p.style.setProperty('--ty', `${Math.sin(angle) * distance}px`);
+
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 900);
+    }
+}
+
+function triggerSnowflakeEgg(event) {
+    cumulativeAngle += 360;
+    const flakeEl = document.getElementById("snowflake-btn");
+    if (flakeEl) {
+        flakeEl.style.transform = `rotate(${cumulativeAngle}deg)`;
+    }
+
+    const rect = flakeEl ? flakeEl.getBoundingClientRect() : { left: 0, top: 0, width: 0, height: 0 };
+    const posX = (event && typeof event.clientX === 'number' && event.clientX > 0)
+        ? event.clientX
+        : rect.left + rect.width / 2;
+    const posY = (event && typeof event.clientY === 'number' && event.clientY > 0)
+        ? event.clientY
+        : rect.top + rect.height / 2;
+    spawnParticles(posX, posY);
+
+    quoteIdx = (quoteIdx + 1) % quotes.length;
+    const quoteEl = document.getElementById("nix-quote");
+    if (quoteEl) quoteEl.textContent = quotes[quoteIdx];
+    if (typeof showToast === 'function') showToast("Evaluated pure flake expression!");
+}

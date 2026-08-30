@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Browser Theme Color -->
+    <meta name="theme-color" content="#282828" id="meta-theme-color">
+
+    <!-- SEO Metadata -->
+    <title>Running CachyOS Kernels on NixOS (Without Compiling from Source) | Irgendeinwer</title>
+    <meta name="title" content="Running CachyOS Kernels on NixOS (Without Compiling from Source) | Irgendeinwer">
+    <meta name="description" content="How to use the pre-built CachyOS BORE kernel on NixOS with Attic binary caches so you don't spend 2 hours compiling Linux locally.">
+    <meta name="keywords" content="cachyos kernel nixos, nixos cachyos, nix-cachyos-kernel, nixos gaming kernel, attic binary cache, bore scheduler nixos">
+    <meta name="author" content="Irgendeinwer">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://irgendeinwer.github.io/blog/cachyos-kernel-on-nixos.html">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" href="../favicon.ico" sizes="any">
+
+    <!-- Open Graph & Twitter -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://irgendeinwer.github.io/blog/cachyos-kernel-on-nixos.html">
+    <meta property="og:title" content="Running CachyOS Kernels on NixOS (Without Compiling from Source)">
+    <meta property="og:description" content="How to use pre-built CachyOS BORE kernels on NixOS with Attic binary caches so you don't spend 2 hours compiling locally.">
+    <meta property="og:image" content="https://irgendeinwer.github.io/assets/og-image.png">
+
+    <!-- Schema.org JSON-LD for Article -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Running CachyOS Kernels on NixOS (Without Compiling from Source)",
+      "description": "How to use pre-built CachyOS BORE kernels on NixOS with Attic binary caches so you don't spend 2 hours compiling locally.",
+      "image": "https://irgendeinwer.github.io/assets/og-image.png",
+      "author": {
+        "@type": "Person",
+        "name": "Irgendeinwer",
+        "url": "https://github.com/irgendeinwer"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Irgendeinwer"
+      },
+      "datePublished": "2026-08-30",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://irgendeinwer.github.io/blog/cachyos-kernel-on-nixos.html"
+      }
+    }
+    </script>
+
+    <!-- Modular Stylesheets -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+</head>
+<body data-contrast="medium">
+
+    <div class="container">
+        <!-- Top Nav -->
+        <nav class="top-nav" aria-label="Navigation">
+            <div class="nav-links">
+                <a href="../" class="nav-pill" title="Return to developer hub">
+                    <span>← ~/hub</span>
+                </a>
+                <a href="index.html" class="nav-pill" title="All articles">
+                    <span>📁 blog</span>
+                </a>
+                <div class="nav-status">
+                    <span class="status-indicator" aria-hidden="true"></span>
+                    <span>cachyos-kernel.md</span>
+                </div>
+            </div>
+            <div class="contrast-switcher" role="group" aria-label="Background Contrast Modes">
+                <span class="contrast-label">Contrast:</span>
+                <button class="contrast-btn" onclick="setContrast('hard')" aria-label="Set contrast to Hard mode">Hard</button>
+                <button class="contrast-btn active" onclick="setContrast('medium')" aria-label="Set contrast to Medium mode">Medium</button>
+                <button class="contrast-btn" onclick="setContrast('soft')" aria-label="Set contrast to Soft mode">Soft</button>
+            </div>
+        </nav>
+
+        <!-- Article Header -->
+        <header>
+            <div class="prompt-line">julian@hub:<span class="path">~/blog</span>$ <span class="cmd">cat cachyos-kernel.md</span></div>
+            <h1>Running CachyOS Kernels on NixOS Without <span class="title-nowrap">Compiling<span class="accent">.</span></span></h1>
+            
+            <div class="post-meta">
+                <span>🗓️ August 2026</span>
+                <span>⏱️ 4 min read</span>
+                <span style="color: var(--aqua);">#NixOS #CachyOS #LinuxGaming</span>
+            </div>
+        </header>
+
+        <!-- Article Content -->
+        <main class="prose">
+            <p>
+                If you've tried running CachyOS's kernel on NixOS, chances are you ran <code>nixos-rebuild switch</code>, saw your fans spin up to 100%, and realized Nix decided to compile the entire Linux kernel from source.
+            </p>
+            <p>
+                The CachyOS kernel with the BORE (Burst-Oriented Response Enhancer) scheduler is great for desktop responsiveness and frame times in games, but nobody wants a 45-minute build on every kernel point release.
+            </p>
+            <p>
+                Here is the exact setup I use on my desktop (<code>junixos</code>) to pull pre-built kernel binaries directly from the Attic cache in under 10 seconds.
+            </p>
+
+            <h2>The Trap: Why Nix Tries to Build It Locally</h2>
+            <p>
+                When adding flake inputs, muscle memory usually tells you to add <code>inputs.nixpkgs.follows = "nixpkgs"</code>.
+            </p>
+            <p>
+                With kernel flakes, <strong>this is what breaks the cache</strong>. Because kernel packages depend strictly on the exact toolchain and nixpkgs revision used by the CI builder, overriding <code>nixpkgs</code> changes the derivation hash. Nix sees that your local derivation hash doesn't match the remote cache, assumes it's custom, and starts building from source.
+            </p>
+
+            <h2>Step 1: Declare the Flake Input (Without Follows)</h2>
+            <p>
+                In your <code>flake.nix</code>, import <code>nix-cachyos-kernel</code> and pass it down via <code>specialArgs</code>:
+            </p>
+
+            <pre><code><span class="code-nix-comment"># flake.nix</span>
+{
+  <span class="code-nix-key">inputs</span> = {
+    <span class="code-nix-key">nixpkgs.url</span> = <span class="code-nix-str">"github:nixos/nixpkgs/nixos-unstable"</span>;
+
+    <span class="code-nix-comment"># Do NOT add 'inputs.nixpkgs.follows = "nixpkgs"' here!</span>
+    <span class="code-nix-key">nix-cachyos-kernel.url</span> = <span class="code-nix-str">"github:xddxdd/nix-cachyos-kernel/release"</span>;
+  };
+
+  <span class="code-nix-key">outputs</span> = { <span class="code-nix-key">self</span>, <span class="code-nix-key">nixpkgs</span>, <span class="code-nix-key">nix-cachyos-kernel</span>, ... }@<span class="code-nix-key">inputs</span>: {
+    <span class="code-nix-key">nixosConfigurations."junixos"</span> = nixpkgs.lib.nixosSystem {
+      <span class="code-nix-key">specialArgs</span> = { <span class="code-nix-builtin">inherit</span> inputs; };
+      <span class="code-nix-key">modules</span> = [
+        <span class="code-nix-str">./hosts/junixos/configuration.nix</span>
+      ];
+    };
+  };
+}</code></pre>
+
+            <h2>Step 2: Add the Binary Cache &amp; Kernel Module</h2>
+            <p>
+                Next, we tell Nix where to fetch the pre-built binaries and provide the public signing key. I keep this modular in my <code>kernel.nix</code> so I can toggle between CachyOS, standard latest, or LTS:
+            </p>
+
+            <pre><code><span class="code-nix-comment"># modules/nixos/kernel.nix</span>
+{ <span class="code-nix-key">config</span>, <span class="code-nix-key">lib</span>, <span class="code-nix-key">pkgs</span>, <span class="code-nix-key">inputs</span>, ... }:
+<span class="code-nix-builtin">let</span>
+  <span class="code-nix-key">cfg</span> = config.custom.system.kernel;
+<span class="code-nix-builtin">in</span> {
+  <span class="code-nix-key">options.custom.system.kernel</span> = lib.mkOption {
+    <span class="code-nix-key">type</span> = lib.types.enum [ <span class="code-nix-str">"cachyos"</span> <span class="code-nix-str">"latest"</span> <span class="code-nix-str">"lts"</span> ];
+    <span class="code-nix-key">default</span> = <span class="code-nix-str">"latest"</span>;
+  };
+
+  <span class="code-nix-key">config</span> = lib.mkMerge [
+    (lib.mkIf (cfg == <span class="code-nix-str">"cachyos"</span>) {
+      <span class="code-nix-comment"># Use the pre-built CachyOS kernel</span>
+      <span class="code-nix-key">boot.kernelPackages</span> =
+        inputs.nix-cachyos-kernel.legacyPackages.${pkgs.stdenv.hostPlatform.system}.linuxPackages-cachyos-latest;
+
+      <span class="code-nix-comment"># Binary cache substituter and public key</span>
+      <span class="code-nix-key">nix.settings</span> = {
+        <span class="code-nix-key">substituters</span> = [ <span class="code-nix-str">"https://attic.xuyh0120.win/lantian"</span> ];
+        <span class="code-nix-key">trusted-public-keys</span> = [
+          <span class="code-nix-str">"lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="</span>
+        ];
+      };
+    })
+
+    (lib.mkIf (cfg == <span class="code-nix-str">"latest"</span>) {
+      <span class="code-nix-key">boot.kernelPackages</span> = pkgs.linuxPackages_latest;
+    })
+  ];
+}</code></pre>
+
+            <h2>Step 3: Enable It in Your Host Config</h2>
+            <p>
+                Now inside your machine configuration, just set:
+            </p>
+
+            <pre><code><span class="code-nix-comment"># hosts/junixos/configuration.nix</span>
+{
+  <span class="code-nix-key">custom.system.kernel</span> = <span class="code-nix-str">"cachyos"</span>;
+}</code></pre>
+
+            <p>
+                Run <code>nixos-rebuild switch --flake .#junixos</code>. Instead of a long compile step, you'll see Nix substitute the binary packages straight from the cache and finish the rebuild in a few seconds.
+            </p>
+
+            <h2>Does It Actually Make a Difference?</h2>
+            <p>
+                On desktop setups running high refresh rate Wayland/Hyprland sessions and games, BORE does a noticeably better job keeping UI interactions and framerates smooth when the CPU is under background load (like heavy cargo or nix builds while gaming).
+            </p>
+            <p>
+                You can check out the full flake setup in my <a href="https://github.com/Irgendeinwer/NixOS-Dotfiles" target="_blank" rel="noopener noreferrer">NixOS-Dotfiles repo</a>.
+            </p>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>
+                <a href="index.html">← Back to Articles</a> • Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a> • Built by <a href="https://github.com/irgendeinwer">Irgendeinwer</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/shortcuts.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

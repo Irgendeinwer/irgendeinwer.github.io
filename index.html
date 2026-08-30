@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <!-- Dynamic Browser Theme Color for Mobile/Desktop Chrome & Safari -->
+    <!-- Dynamic Browser Theme Color -->
     <meta name="theme-color" content="#282828" id="meta-theme-color">
 
     <!-- Primary SEO Metadata -->
     <title>Irgendeinwer | NixOS Dotfiles &amp; Developer Hub</title>
     <meta name="title" content="Irgendeinwer | NixOS Dotfiles &amp; Developer Hub">
-    <meta name="description" content="Declarative multi-host NixOS dotfiles (junixos &amp; junixbook) powered by Flakes, Home-Manager, Hyprland, and custom namespace architectures.">
-    <meta name="keywords" content="irgendeinwer, NixOS, dotfiles, junixos, junixbook, nix-flakes, home-manager, hyprland, CachyOS, gruvbox, zsh, kitty, zapret, RX 9070">
+    <meta name="description" content="Declarative multi-host NixOS dotfiles (junixos &amp; junixbook) powered by Flakes, Home-Manager, Hyprland, SOPS secrets, and custom namespace architectures.">
+    <meta name="keywords" content="irgendeinwer, NixOS, dotfiles, junixos, junixbook, nix-flakes, home-manager, hyprland, sops-nix, borgbackup, CachyOS, gruvbox, zsh, kitty, zapret, RX 9070">
     <meta name="author" content="Irgendeinwer">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://irgendeinwer.github.io/">
@@ -26,7 +26,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://irgendeinwer.github.io/">
     <meta property="og:title" content="Irgendeinwer | NixOS Dotfiles &amp; Developer Hub">
-    <meta property="og:description" content="Modular Flake-based NixOS setup featuring custom namespaces, Hyprland, gaming modules, and multi-machine fleet configurations.">
+    <meta property="og:description" content="Modular Flake-based NixOS setup featuring custom namespaces, SOPS secrets, BorgBackup, Hyprland, gaming modules, and multi-machine fleet configurations.">
     <meta property="og:site_name" content="Irgendeinwer">
     <meta property="og:image" content="https://irgendeinwer.github.io/assets/og-image.png">
     <meta property="og:image:type" content="image/png">
@@ -56,7 +56,7 @@
             "https://discord.com/users/775352250209796106"
           ],
           "jobTitle": "Systems & Linux Developer",
-          "knowsAbout": ["NixOS", "Nix Flakes", "Home-Manager", "Linux", "Hyprland", "Neovim"]
+          "knowsAbout": ["NixOS", "Nix Flakes", "Home-Manager", "Linux", "Hyprland", "Neovim", "SOPS", "BorgBackup"]
         },
         {
           "@type": "SoftwareSourceCode",
@@ -73,1049 +73,31 @@
     }
     </script>
 
-    <!-- Gruvbox Dark Theme Stylesheet -->
-    <style>
-        :root {
-            /* Gruvbox Dark Palette */
-            --bg-hard: #1d2021;
-            --bg: #282828;
-            --bg-soft: #32302f;
-            --bg-card: #3c3836;
-            --bg-hover: #504945;
-
-            --fg-0: #fbf1c7;
-            --fg-1: #ebdbb2;
-            --fg-4: #a89984;
-            --gray: #928374;
-
-            --red: #fb4934;
-            --green: #b8bb26;
-            --yellow: #fabd2f;
-            --blue: #83a598;
-            --purple: #d3869b;
-            --aqua: #8ec07c;
-            --orange: #fe8019;
-
-            --font-mono: 'JetBrains Mono', 'Fira Code', 'FiraCode Nerd Font', 'Cascadia Code', monospace;
-            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        /* Contrast Modes */
-        body[data-contrast="hard"] { --bg: var(--bg-hard); }
-        body[data-contrast="soft"] { --bg: var(--bg-soft); }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--fg-1);
-            font-family: var(--font-sans);
-            line-height: 1.6;
-            padding: 0 1.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            transition: background-color 0.2s ease, color 0.2s ease;
-        }
-
-        /* Accessible Focus Outline */
-        a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible {
-            outline: 2px solid var(--yellow);
-            outline-offset: 3px;
-        }
-
-        .container {
-            max-width: 880px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            padding: 2rem 0 1rem;
-        }
-
-        /* Terminal Cursor Blink */
-        .cursor-blink {
-            display: inline-block;
-            width: 7px;
-            height: 13px;
-            vertical-align: -1px;
-            background-color: var(--yellow);
-            animation: cursor-blink 1s step-end infinite;
-            margin-left: 4px;
-        }
-
-        @keyframes cursor-blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* Top Nav & Contrast Switcher */
-        .top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            color: var(--fg-4);
-            flex-wrap: wrap;
-            gap: 0.8rem;
-        }
-
-        .nav-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.55rem;
-            background: var(--bg-hard);
-            border: 1px solid var(--bg-card);
-            padding: 0.35rem 0.75rem;
-            border-radius: 6px;
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--green);
-            white-space: nowrap;
-        }
-
-        .status-indicator {
-            width: 7px;
-            height: 7px;
-            background-color: var(--green);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--green);
-        }
-
-        .contrast-switcher {
-            display: flex;
-            align-items: center;
-            gap: 0.35rem;
-            background: var(--bg-hard);
-            padding: 0.25rem;
-            border-radius: 6px;
-            border: 1px solid var(--bg-card);
-        }
-
-        .contrast-label {
-            font-size: 0.75rem;
-            padding: 0 0.4rem;
-            color: var(--fg-4);
-        }
-
-        .contrast-btn {
-            background: transparent;
-            border: none;
-            color: var(--fg-4);
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            padding: 0.2rem 0.55rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-
-        .contrast-btn:hover {
-            color: var(--fg-0);
-        }
-
-        .contrast-btn.active {
-            background: var(--bg-card);
-            color: var(--yellow);
-            font-weight: bold;
-        }
-
-        /* Header */
-        header {
-            margin-bottom: 1.8rem;
-            border-bottom: 1px dashed var(--bg-hover);
-            padding-bottom: 1.6rem;
-        }
-
-        .prompt-line {
-            font-family: var(--font-mono);
-            font-size: 0.95rem;
-            color: var(--aqua);
-            margin-bottom: 0.35rem;
-        }
-
-        .prompt-line .path { color: var(--fg-4); }
-        .prompt-line .cmd { color: var(--fg-0); }
-
-        h1 {
-            font-family: var(--font-mono);
-            font-size: 2.6rem;
-            color: var(--fg-0);
-            letter-spacing: -0.03em;
-            line-height: 1.15;
-            margin-bottom: 0.6rem;
-            display: flex;
-            align-items: center;
-        }
-
-        h1 .accent {
-            color: var(--orange);
-        }
-
-        .lead {
-            font-size: 1.02rem;
-            color: var(--fg-4);
-            max-width: 680px;
-        }
-
-        /* Live Git Commit Banner */
-        .git-status-bar {
-            margin-top: 1.2rem;
-            background: var(--bg-hard);
-            border: 1px solid var(--bg-card);
-            border-radius: 6px;
-            padding: 0.55rem 0.85rem;
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--fg-4);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .git-status-left {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .git-badge {
-            background: rgba(184, 187, 38, 0.15);
-            color: var(--green);
-            border: 1px solid rgba(184, 187, 38, 0.3);
-            border-radius: 4px;
-            padding: 0.1rem 0.4rem;
-            font-size: 0.72rem;
-            font-weight: 600;
-        }
-
-        .git-msg {
-            color: var(--fg-1);
-        }
-
-        .git-msg a {
-            color: var(--yellow);
-            text-decoration: none;
-        }
-        .git-msg a:hover {
-            text-decoration: underline;
-        }
-
-        /* Section Headings */
-        h2 {
-            font-size: 1.25rem;
-            color: var(--fg-0);
-            font-family: var(--font-mono);
-            margin: 1.8rem 0 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-
-        h2::before {
-            content: "λ";
-            color: var(--aqua);
-            font-weight: bold;
-        }
-
-        /* Fastfetch Terminal Container */
-        .terminal-card {
-            background: var(--bg-hard);
-            border: 1px solid var(--bg-card);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-        }
-
-        .terminal-header {
-            background: var(--bg-soft);
-            padding: 0.6rem 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--bg-card);
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .terminal-dots {
-            display: flex;
-            gap: 6px;
-        }
-
-        .dot {
-            width: 11px;
-            height: 11px;
-            border-radius: 50%;
-        }
-        .dot.red { background-color: var(--red); }
-        .dot.yellow { background-color: var(--yellow); }
-        .dot.green { background-color: var(--green); }
-
-        .terminal-quote {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--yellow);
-            font-style: italic;
-        }
-
-        .host-tabs {
-            display: flex;
-            gap: 0.35rem;
-        }
-
-        .tab-btn {
-            background: var(--bg-card);
-            color: var(--fg-4);
-            border: 1px solid var(--bg-hover);
-            padding: 0.25rem 0.65rem;
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-
-        .tab-btn.active {
-            background: var(--aqua);
-            color: var(--bg-hard);
-            border-color: var(--aqua);
-            font-weight: bold;
-        }
-
-        /* Fastfetch Responsive Layout */
-        .terminal-body {
-            padding: 1.4rem 1.8rem;
-            display: flex;
-            align-items: center;
-            gap: 2.5rem;
-            font-family: var(--font-mono);
-            font-size: 0.86rem;
-        }
-
-        @media (max-width: 680px) {
-            .terminal-body {
-                flex-direction: column;
-                align-items: center;
-                gap: 1.5rem;
-                padding: 1.2rem;
-            }
-            .nix-logo {
-                width: 170px !important;
-                height: 170px !important;
-            }
-        }
-
-        /* Interactive Large Rainbow Nix Logo */
-        .nix-logo {
-            width: 245px;
-            height: 245px;
-            flex-shrink: 0;
-            cursor: pointer;
-            user-select: none;
-            transform-origin: center;
-            transform: rotate(0deg);
-            transition: transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
-            filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.45));
-        }
-
-        .nix-logo:hover {
-            filter: drop-shadow(0 0 22px rgba(184, 187, 38, 0.55));
-        }
-
-        .fetch-specs {
-            display: flex;
-            flex-direction: column;
-            gap: 0.35rem;
-            width: 100%;
-        }
-
-        .fetch-header {
-            color: var(--yellow);
-            font-weight: bold;
-            font-size: 0.95rem;
-        }
-
-        .fetch-divider {
-            color: var(--fg-4);
-            margin-bottom: 0.2rem;
-            opacity: 0.5;
-        }
-
-        .spec-line {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .spec-key {
-            color: var(--blue);
-            font-weight: 600;
-            min-width: 75px;
-        }
-
-        .spec-val {
-            color: var(--fg-1);
-        }
-
-        .spec-val.accent {
-            color: var(--orange);
-        }
-
-        /* Fastfetch Terminal Color Palette Bar */
-        .fetch-palette {
-            display: flex;
-            gap: 6px;
-            margin-top: 0.65rem;
-            padding-top: 0.5rem;
-        }
-
-        .palette-block {
-            width: 18px;
-            height: 12px;
-            border-radius: 2px;
-            transition: transform 0.15s ease;
-        }
-
-        .palette-block:hover {
-            transform: scaleY(1.4);
-        }
-
-        /* Repositories Cards */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.2rem;
-        }
-
-        .card {
-            background: var(--bg-soft);
-            border: 1px solid var(--bg-card);
-            border-radius: 8px;
-            padding: 1.5rem;
-            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-            position: relative;
-        }
-
-        .card:hover {
-            border-color: var(--yellow);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.75rem;
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--fg-0);
-        }
-
-        .card-title a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .card-title a:hover {
-            color: var(--orange);
-        }
-
-        .card-desc {
-            color: var(--fg-1);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Tags */
-        .tag-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.45rem;
-        }
-
-        .tag {
-            font-family: var(--font-mono);
-            font-size: 0.76rem;
-            padding: 0.2rem 0.55rem;
-            border-radius: 4px;
-            background: var(--bg-card);
-            color: var(--aqua);
-            border: 1px solid var(--bg-hover);
-        }
-
-        .tag.accent {
-            color: var(--orange);
-            background: rgba(254, 128, 25, 0.12);
-            border-color: rgba(254, 128, 25, 0.3);
-        }
-
-        .tag.green {
-            color: var(--green);
-            background: rgba(184, 187, 38, 0.12);
-            border-color: rgba(184, 187, 38, 0.3);
-        }
-
-        /* Repository Directory Tree Component */
-        .tree-container {
-            background: var(--bg-hard);
-            border: 1px solid var(--bg-card);
-            border-radius: 8px;
-            margin-top: 1rem;
-            overflow: hidden;
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-        }
-
-        .tree-header {
-            background: var(--bg-soft);
-            padding: 0.6rem 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--bg-card);
-            color: var(--fg-4);
-            font-size: 0.8rem;
-        }
-
-        .tree-body {
-            padding: 1rem 1.25rem;
-            max-height: 480px;
-            overflow-y: auto;
-        }
-
-        .tree-branch {
-            list-style: none;
-            padding-left: 1.2rem;
-            border-left: 1px solid var(--bg-card);
-            margin: 0.2rem 0 0.2rem 0.4rem;
-        }
-
-        .tree-root {
-            list-style: none;
-            padding-left: 0;
-            margin: 0;
-        }
-
-        .tree-item {
-            margin: 0.3rem 0;
-        }
-
-        .tree-folder summary {
-            cursor: pointer;
-            color: var(--yellow);
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-            user-select: none;
-            padding: 0.15rem 0.3rem;
-            border-radius: 4px;
-            transition: background 0.15s ease;
-        }
-
-        .tree-folder summary:hover {
-            background: var(--bg-card);
-            color: var(--fg-0);
-        }
-
-        .tree-folder summary::marker, .tree-folder summary::-webkit-details-marker {
-            display: none;
-        }
-
-        .tree-folder summary::before {
-            content: "▸";
-            color: var(--fg-4);
-            font-size: 0.8rem;
-            display: inline-block;
-            transition: transform 0.15s ease;
-        }
-
-        .tree-folder[open] > summary::before {
-            transform: rotate(90deg);
-            color: var(--yellow);
-        }
-
-        .tree-file {
-            color: var(--fg-1);
-            display: flex;
-            align-items: center;
-            gap: 0.45rem;
-            padding: 0.12rem 0.3rem;
-            border-radius: 4px;
-        }
-
-        .tree-file:hover {
-            background: var(--bg-soft);
-        }
-
-        .tree-file-nix { color: var(--aqua); }
-        .tree-file-doc { color: var(--blue); }
-        .tree-file-media { color: var(--purple); }
-
-        .btn-tree-toggle {
-            background: var(--bg-card);
-            border: 1px solid var(--bg-hover);
-            color: var(--fg-1);
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .btn-tree-toggle:hover {
-            background: var(--bg-hover);
-            color: var(--yellow);
-        }
-
-        /* Interactive Namespace Builder Widget */
-        .playground-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.75rem;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .playground-actions {
-            display: flex;
-            gap: 0.4rem;
-        }
-
-        .btn-action {
-            background: var(--bg-card);
-            color: var(--fg-1);
-            border: 1px solid var(--bg-hover);
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            padding: 0.25rem 0.6rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-
-        .btn-action:hover {
-            background: var(--yellow);
-            color: var(--bg-hard);
-            border-color: var(--yellow);
-            font-weight: bold;
-        }
-
-        .playground-container {
-            background: var(--bg-soft);
-            border: 1px solid var(--bg-card);
-            border-radius: 8px;
-            padding: 1.5rem;
-            display: grid;
-            grid-template-columns: 1fr 1.15fr;
-            gap: 1.5rem;
-        }
-
-        @media (max-width: 780px) {
-            .playground-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .toggles-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 0.65rem;
-        }
-
-        .toggle-group-title {
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-            color: var(--fg-4);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-top: 0.4rem;
-        }
-
-        .toggle-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            cursor: pointer;
-            font-family: var(--font-mono);
-            font-size: 0.82rem;
-            color: var(--fg-1);
-            user-select: none;
-        }
-
-        .toggle-item input[type="checkbox"] {
-            accent-color: var(--green);
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-        }
-
-        .live-code-preview {
-            background: var(--bg-hard);
-            border: 1px solid var(--bg-card);
-            border-radius: 6px;
-            padding: 1.2rem;
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--fg-1);
-            overflow-x: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            line-height: 1.5;
-        }
-
-        .code-nix-key { color: var(--blue); }
-        .code-nix-val { color: var(--green); }
-        .code-nix-str { color: var(--yellow); }
-        .code-nix-comment { color: var(--gray); font-style: italic; }
-
-        /* Unified Flake & Clone Commands Box */
-        .cmd-terminal {
-            background: var(--bg-hard);
-            border: 1px solid var(--bg-card);
-            border-radius: 8px;
-            margin-top: 1rem;
-            overflow: hidden;
-        }
-
-        .cmd-header {
-            background: var(--bg-soft);
-            padding: 0.5rem 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--bg-card);
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .cmd-tabs {
-            display: flex;
-            gap: 0.35rem;
-        }
-
-        .cmd-tab-btn {
-            background: var(--bg-card);
-            color: var(--fg-4);
-            border: 1px solid var(--bg-hover);
-            padding: 0.25rem 0.65rem;
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-
-        .cmd-tab-btn.active {
-            background: var(--aqua);
-            color: var(--bg-hard);
-            border-color: var(--aqua);
-            font-weight: bold;
-        }
-
-        .cmd-body {
-            padding: 1rem 1.2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .cmd-text {
-            color: var(--green);
-            overflow-x: auto;
-            word-break: break-all;
-        }
-
-        .cmd-text::before {
-            content: "$ ";
-            color: var(--fg-4);
-        }
-
-        .btn-copy-small {
-            background: var(--bg-card);
-            color: var(--fg-0);
-            border: 1px solid var(--bg-hover);
-            padding: 0.4rem 0.8rem;
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            white-space: nowrap;
-        }
-
-        .btn-copy-small:hover {
-            background: var(--yellow);
-            color: var(--bg-hard);
-            border-color: var(--yellow);
-            font-weight: bold;
-        }
-
-        /* Connect / Links */
-        .links-group {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--bg-soft);
-            color: var(--fg-0);
-            border: 1px solid var(--bg-card);
-            padding: 0.7rem 1.2rem;
-            border-radius: 6px;
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-
-        .btn:hover {
-            border-color: var(--yellow);
-            color: var(--yellow);
-            transform: translateY(-2px);
-        }
-
-        .btn-primary {
-            background: var(--yellow);
-            color: var(--bg-hard);
-            border-color: var(--yellow);
-            font-weight: bold;
-        }
-
-        .btn-primary:hover {
-            background: var(--orange);
-            border-color: var(--orange);
-            color: var(--bg-hard);
-        }
-
-        .btn-icon-star {
-            color: var(--bg-hard);
-            font-size: 1.1rem;
-            line-height: 1;
-            font-weight: 900;
-        }
-
-        .btn-discord:hover {
-            border-color: #7289da;
-            color: #7289da;
-        }
-
-        /* Floating Particles */
-        .particle {
-            position: fixed;
-            pointer-events: none;
-            font-family: var(--font-mono);
-            font-weight: bold;
-            z-index: 9999;
-            animation: floatUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-
-        @keyframes floatUp {
-            0% {
-                opacity: 1;
-                transform: translate(0, 0) scale(1.2);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(var(--tx), var(--ty)) scale(0.4);
-            }
-        }
-
-        /* Modern Gruvbox Toast Notification */
-        #toast {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translate(-50%, 30px) scale(0.92);
-            background: rgba(30, 32, 33, 0.96);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--yellow);
-            color: var(--fg-0);
-            font-family: var(--font-mono);
-            font-size: 0.84rem;
-            padding: 0.65rem 1.1rem;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            pointer-events: none;
-            opacity: 0;
-            visibility: hidden;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), visibility 0.25s ease;
-        }
-
-        #toast.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, 0) scale(1);
-        }
-
-        #toast-icon {
-            color: var(--yellow);
-            font-weight: bold;
-        }
-
-        /* Vim Cheat Sheet Badge (Bottom Right) */
-        .kbd-hint {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--bg-hard);
-            border: 1px solid var(--bg-card);
-            color: var(--fg-4);
-            font-family: var(--font-mono);
-            font-size: 0.76rem;
-            padding: 0.35rem 0.65rem;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            z-index: 90;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        .kbd-hint:hover {
-            color: var(--yellow);
-            border-color: var(--yellow);
-            transform: translateY(-2px);
-        }
-
-        .kbd-key {
-            background: var(--bg-card);
-            color: var(--yellow);
-            padding: 0.1rem 0.35rem;
-            border-radius: 3px;
-            border: 1px solid var(--bg-hover);
-            font-weight: bold;
-        }
-
-        /* Neovim Style Cheat Sheet Modal */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(4px);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-box {
-            background: var(--bg-hard);
-            border: 1px solid var(--yellow);
-            border-radius: 8px;
-            width: 90%;
-            max-width: 440px;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.6);
-            overflow: hidden;
-            font-family: var(--font-mono);
-        }
-
-        .modal-header {
-            background: var(--bg-soft);
-            padding: 0.6rem 1rem;
-            border-bottom: 1px solid var(--bg-card);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-            color: var(--yellow);
-        }
-
-        .modal-body {
-            padding: 1.2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.6rem;
-            font-size: 0.82rem;
-            color: var(--fg-1);
-        }
-
-        .modal-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px dashed var(--bg-card);
-            padding-bottom: 0.35rem;
-        }
-
-        /* Footer */
-        footer {
-            width: 100%;
-            max-width: 880px;
-            margin-top: 3.5rem;
-            padding-top: 1.5rem;
-            padding-bottom: 2rem;
-            border-top: 1px solid var(--bg-card);
-            text-align: center;
-            font-size: 0.85rem;
-            color: var(--gray);
-            font-family: var(--font-mono);
-        }
-
-        footer a {
-            color: var(--fg-4);
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            color: var(--yellow);
-            text-decoration: underline;
-        }
-    </style>
+    <!-- Modular CSS Stylesheets -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
 </head>
 <body data-contrast="medium">
 
     <div class="container">
         <!-- Top Nav & Contrast Switcher -->
         <nav class="top-nav" aria-label="Quick Settings">
-            <div class="nav-status">
-                <span class="status-indicator" aria-hidden="true"></span>
-                <span>nix-daemon active // flakes enabled</span>
-                <span class="cursor-blink" aria-hidden="true"></span>
+            <div class="nav-links">
+                <div class="nav-status">
+                    <span class="status-indicator" aria-hidden="true"></span>
+                    <span>nix-daemon active // flakes enabled</span>
+                    <span class="cursor-blink" aria-hidden="true"></span>
+                </div>
+                <a href="blog/" class="nav-pill" title="Read technical write-ups and system notes">
+                    <span>📝 ~/blog</span>
+                </a>
             </div>
             <div class="contrast-switcher" role="group" aria-label="Background Contrast Modes">
                 <span class="contrast-label">Contrast:</span>
-                <button class="contrast-btn" onclick="setContrast('hard')">Hard</button>
-                <button class="contrast-btn active" onclick="setContrast('medium')">Medium</button>
-                <button class="contrast-btn" onclick="setContrast('soft')">Soft</button>
+                <button class="contrast-btn" onclick="setContrast('hard')" aria-label="Set contrast to Hard mode">Hard</button>
+                <button class="contrast-btn active" onclick="setContrast('medium')" aria-label="Set contrast to Medium mode">Medium</button>
+                <button class="contrast-btn" onclick="setContrast('soft')" aria-label="Set contrast to Soft mode">Soft</button>
             </div>
         </nav>
 
@@ -1124,7 +106,7 @@
             <div class="prompt-line">julian@hub:<span class="path">~</span>$ <span class="cmd">nix-info</span></div>
             <h1>Irgendeinwer<span class="accent">.</span></h1>
             <p class="lead">
-                Building declarative, reproducible multi-host systems with NixOS, Flakes, Home-Manager, and custom namespace architectures.
+                Building declarative, reproducible multi-host systems with NixOS, Flakes, Home-Manager, SOPS secrets, and custom namespace architectures.
             </p>
 
             <!-- Live GitHub Commit Status Banner -->
@@ -1149,13 +131,13 @@
                     </div>
                     <span class="terminal-quote">⚡ <span id="nix-quote">Hyprland Wayland compositor loaded</span></span>
                     <div class="host-tabs" role="tablist" aria-label="Fleet Machines">
-                        <button class="tab-btn active" id="tab-junixos" role="tab" aria-selected="true" onclick="switchHost('junixos')">🖥️ junixos</button>
-                        <button class="tab-btn" id="tab-junixbook" role="tab" aria-selected="false" onclick="switchHost('junixbook')">💻 junixbook</button>
+                        <button class="tab-btn active" id="tab-junixos" role="tab" aria-selected="true" aria-controls="specs-container" onclick="switchHost('junixos')">🖥️ junixos</button>
+                        <button class="tab-btn" id="tab-junixbook" role="tab" aria-selected="false" aria-controls="specs-container" onclick="switchHost('junixbook')">💻 junixbook</button>
                     </div>
                 </div>
                 <div class="terminal-body">
                     <!-- Clean Vector Rainbow NixOS Snowflake (Interactive Easter Egg) -->
-                    <svg class="nix-logo" id="snowflake-btn" viewBox="0 0 24 24" onclick="triggerSnowflakeEgg(event)" title="Click me for a Nix fortune! (or press 's')" role="img" aria-label="NixOS Snowflake">
+                    <svg class="nix-logo" id="snowflake-btn" viewBox="0 0 24 24" onclick="triggerSnowflakeEgg(event)" onkeydown="if(event.key==='Enter'||event.key===' ')triggerSnowflakeEgg(event)" tabindex="0" role="button" title="Click me for a Nix fortune! (or press 's')" aria-label="Interactive NixOS Snowflake (Click or press 's' for fortunes)">
                         <!-- Arm 1 (Top Left): Aqua -->
                         <path d="M7.352 1.592l-1.364.002L5.32 2.75l1.557 2.713-3.137-.008-1.32 2.34H14.11l-1.353-2.332-3.192-.006-2.214-3.865z" fill="#83a598"/>
                         <!-- Arm 2 (Top Right): Green -->
@@ -1171,14 +153,14 @@
                     </svg>
                     
                     <!-- Dynamic Fastfetch Specs -->
-                    <div class="fetch-specs" id="specs-container"></div>
+                    <div class="fetch-specs" id="specs-container" role="tabpanel" aria-live="polite"></div>
                 </div>
             </div>
         </section>
 
-        <!-- Featured Projects Section -->
+        <!-- Featured Projects & Blog Section -->
         <section aria-labelledby="repos-section">
-            <h2 id="repos-section">Featured Repositories</h2>
+            <h2 id="repos-section">Featured Repositories &amp; Writing</h2>
             <div class="grid-2">
                 <article class="card">
                     <div class="card-header">
@@ -1190,49 +172,79 @@
                         <span class="tag green">Main Repository</span>
                     </div>
                     <p class="card-desc">
-                        Declarative multi-host setup with auto-importing modules, CachyOS kernel, gaming servers, zapret, and custom namespaces.
+                        Declarative multi-host setup with auto-importing modules, SOPS secrets, BorgBackup, CachyOS kernel, gaming servers, and custom namespaces.
                     </p>
                     <div class="tag-list">
                         <span class="tag">nixos</span>
                         <span class="tag">flakes</span>
+                        <span class="tag">sops-nix</span>
                         <span class="tag">hyprland</span>
                         <span class="tag">home-manager</span>
                         <span class="tag">cachyos</span>
-                        <span class="tag">nixvim</span>
                     </div>
                 </article>
 
                 <article class="card">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <a href="https://github.com/irgendeinwer" target="_blank" rel="noopener noreferrer">
-                                GitHub Profile ↗
+                            <a href="blog/">
+                                Developer Blog ↗
                             </a>
                         </h3>
-                        <span class="tag">Developer Hub</span>
+                        <span class="tag purple">Articles</span>
                     </div>
                     <p class="card-desc">
-                        Explore public contributions, dotfiles, system experiments, and developer activity.
+                        System architecture breakdowns, NixOS tutorials, security notes, and performance tuning guides.
                     </p>
                     <div class="tag-list">
-                        <span class="tag">open-source</span>
-                        <span class="tag">contributions</span>
-                        <span class="tag">linux</span>
+                        <span class="tag">articles</span>
+                        <span class="tag">guides</span>
+                        <span class="tag">architecture</span>
                     </div>
                 </article>
             </div>
         </section>
 
-        <!-- Collapsible Repository File Tree -->
+        <!-- Collapsible Repository File Tree (Dynamic & Pre-rendered) -->
         <section aria-labelledby="tree-section">
             <h2 id="tree-section">Repository Tree &amp; Modular Layout</h2>
             <div class="tree-container">
                 <div class="tree-header">
-                    <span>📂 NixOS-Dotfiles (16 directories, 78 files)</span>
-                    <button class="btn-tree-toggle" onclick="toggleAllTreeFolders()">Expand / Collapse All</button>
+                    <span id="tree-stats-text">📂 NixOS-Dotfiles (18 directories, 87 files)</span>
+                    <button class="btn-tree-toggle" onclick="toggleAllTreeFolders()" aria-label="Toggle expand and collapse on all repository folders">Expand / Collapse All</button>
                 </div>
                 <div class="tree-body">
-                    <ul class="tree-root">
+                    <ul class="tree-root" id="tree-root-container">
+                        <!-- .github -->
+                        <li class="tree-item">
+                            <details class="tree-folder">
+                                <summary>📁 .github/</summary>
+                                <ul class="tree-branch">
+                                    <li class="tree-item">
+                                        <details class="tree-folder">
+                                            <summary>📁 workflows/</summary>
+                                            <ul class="tree-branch">
+                                                <li class="tree-item tree-file tree-file-config">📄 nix-test.yml</li>
+                                                <li class="tree-item tree-file tree-file-config">📄 nix-update.yml</li>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                </ul>
+                            </details>
+                        </li>
+
+                        <!-- assets -->
+                        <li class="tree-item">
+                            <details class="tree-folder">
+                                <summary>📁 assets/</summary>
+                                <ul class="tree-branch">
+                                    <li class="tree-item tree-file tree-file-media">🎵 atmos.wav</li>
+                                    <li class="tree-item tree-file tree-file-config">🔑 iserv.pem</li>
+                                    <li class="tree-item tree-file tree-file-media">🎵 oal_dflt.wav</li>
+                                </ul>
+                            </details>
+                        </li>
+
                         <!-- hosts -->
                         <li class="tree-item">
                             <details class="tree-folder">
@@ -1292,24 +304,18 @@
                                                     </details>
                                                 </li>
                                                 <li class="tree-item tree-file tree-file-nix">📄 listen.nix</li>
+                                                <li class="tree-item tree-file tree-file-config">📜 listen.sh</li>
                                                 <li class="tree-item tree-file tree-file-nix">📄 mpv.nix</li>
                                                 <li class="tree-item">
                                                     <details class="tree-folder">
                                                         <summary>📁 rofi/</summary>
                                                         <ul class="tree-branch">
-                                                            <li class="tree-item tree-file">📄 gruvbox-material.rasi</li>
+                                                            <li class="tree-item tree-file tree-file-config">📄 gruvbox-material.rasi</li>
                                                             <li class="tree-item tree-file tree-file-nix">📄 rofi.nix</li>
                                                         </ul>
                                                     </details>
                                                 </li>
-                                                <li class="tree-item">
-                                                    <details class="tree-folder">
-                                                        <summary>📁 scripts/</summary>
-                                                        <ul class="tree-branch">
-                                                            <li class="tree-item tree-file">📜 listen.sh</li>
-                                                        </ul>
-                                                    </details>
-                                                </li>
+                                                <li class="tree-item tree-file tree-file-nix">📄 sops.nix</li>
                                                 <li class="tree-item tree-file tree-file-nix">📄 virtual-surround.nix</li>
                                                 <li class="tree-item tree-file tree-file-nix">📄 zsh.nix</li>
                                             </ul>
@@ -1349,6 +355,7 @@
                                                 </li>
                                                 <li class="tree-item tree-file tree-file-nix">📄 pkgs.nix</li>
                                                 <li class="tree-item tree-file tree-file-nix">📄 plymouth.nix</li>
+                                                <li class="tree-item tree-file tree-file-nix">📄 sops.nix</li>
                                                 <li class="tree-item tree-file tree-file-nix">📄 sound.nix</li>
                                                 <li class="tree-item tree-file tree-file-nix">📄 virt.nix</li>
                                             </ul>
@@ -1387,6 +394,7 @@
                                         <details class="tree-folder">
                                             <summary>📁 overlays/</summary>
                                             <ul class="tree-branch">
+                                                <li class="tree-item tree-file tree-file-nix">📄 obs-move-transition.nix</li>
                                                 <li class="tree-item tree-file tree-file-nix">📄 pnpm.nix</li>
                                             </ul>
                                         </details>
@@ -1398,6 +406,7 @@
                                             <summary>📁 services/</summary>
                                             <ul class="tree-branch">
                                                 <li class="tree-item tree-file tree-file-nix">📄 ArchiSteamFarm.nix</li>
+                                                <li class="tree-item tree-file tree-file-nix">📄 backup.nix</li>
                                                 <li class="tree-item tree-file tree-file-nix">📄 hotspot.nix</li>
                                                 <li class="tree-item tree-file tree-file-nix">📄 immich.nix</li>
                                                 <li class="tree-item tree-file tree-file-nix">📄 isolated-gaming.nix</li>
@@ -1416,19 +425,19 @@
                             </details>
                         </li>
 
-                        <!-- assets inside dotfiles repo -->
+                        <!-- secrets -->
                         <li class="tree-item">
                             <details class="tree-folder">
-                                <summary>📁 assets/</summary>
+                                <summary>📁 secrets/</summary>
                                 <ul class="tree-branch">
-                                    <li class="tree-item tree-file tree-file-media">🎵 atmos.wav</li>
-                                    <li class="tree-item tree-file">🔑 iserv.pem</li>
-                                    <li class="tree-item tree-file tree-file-media">🎵 oal_dflt.wav</li>
+                                    <li class="tree-item tree-file tree-file-config">📄 common.yaml</li>
+                                    <li class="tree-item tree-file tree-file-config">📄 junixos.yaml</li>
                                 </ul>
                             </details>
                         </li>
 
                         <!-- Root level files -->
+                        <li class="tree-item tree-file tree-file-config">📄 .sops.yaml</li>
                         <li class="tree-item tree-file tree-file-nix">📄 flake.nix</li>
                         <li class="tree-item tree-file tree-file-nix">📄 flake.lock</li>
                         <li class="tree-item tree-file tree-file-doc">📘 README.md</li>
@@ -1446,51 +455,55 @@
                     Modularized under <code>custom.*</code>. Toggle options to preview generated NixOS declarations:
                 </p>
                 <div class="playground-actions">
-                    <button class="btn-action" onclick="randomizeOptions(false)" title="Keyboard shortcut: 'r'">🎲 Randomize</button>
-                    <button class="btn-action" onclick="copyNixCode()">📋 Copy Config</button>
+                    <button class="btn-action" onclick="randomizeOptions(false)" title="Keyboard shortcut: 'r'" aria-label="Randomize options">🎲 Randomize</button>
+                    <button class="btn-action" onclick="copyNixCode()" aria-label="Copy Nix configuration snippet to clipboard">📋 Copy Config</button>
                 </div>
             </div>
             <div class="playground-container">
                 <div class="toggles-panel">
                     <div class="toggle-group-title">Desktop &amp; Gaming</div>
                     <label class="toggle-item">
-                        <input type="checkbox" id="chk-hyprland" onchange="updateLiveConfig()">
+                        <input type="checkbox" id="chk-hyprland" onchange="updateLiveConfig()" aria-label="custom.desktop.hyprland.enable">
                         <span>custom.desktop.hyprland.enable</span>
                     </label>
                     <label class="toggle-item">
-                        <input type="checkbox" id="chk-gaming" onchange="updateLiveConfig()">
+                        <input type="checkbox" id="chk-gaming" onchange="updateLiveConfig()" aria-label="custom.desktop.gaming.enable">
                         <span>custom.desktop.gaming.enable</span>
                     </label>
                     <label class="toggle-item">
-                        <input type="checkbox" id="chk-ark" onchange="updateLiveConfig()">
+                        <input type="checkbox" id="chk-ark" onchange="updateLiveConfig()" aria-label="custom.desktop.gaming.arkServer.enable">
                         <span>custom.desktop.gaming.arkServer.enable</span>
                     </label>
 
                     <div class="toggle-group-title">System &amp; Boot</div>
                     <label class="toggle-item">
-                        <input type="checkbox" id="chk-silent" onchange="updateLiveConfig()">
+                        <input type="checkbox" id="chk-silent" onchange="updateLiveConfig()" aria-label="custom.system.boot.silent.enable">
                         <span>custom.system.boot.silent.enable</span>
                     </label>
                     <label class="toggle-item">
-                        <input type="checkbox" id="chk-android" onchange="updateLiveConfig()">
+                        <input type="checkbox" id="chk-android" onchange="updateLiveConfig()" aria-label="custom.system.android.enable">
                         <span>custom.system.android.enable</span>
                     </label>
 
-                    <div class="toggle-group-title">Services &amp; Network</div>
+                    <div class="toggle-group-title">Services, Backup &amp; Network</div>
                     <label class="toggle-item">
-                        <input type="checkbox" id="chk-hotspot" onchange="updateLiveConfig()">
+                        <input type="checkbox" id="chk-backup" onchange="updateLiveConfig()" aria-label="custom.services.backup.enable">
+                        <span>custom.services.backup.enable</span>
+                    </label>
+                    <label class="toggle-item">
+                        <input type="checkbox" id="chk-hotspot" onchange="updateLiveConfig()" aria-label="custom.services.hotspot.enable">
                         <span>custom.services.hotspot.enable</span>
                     </label>
                     <label class="toggle-item">
-                        <input type="checkbox" id="chk-jellyfin" onchange="updateLiveConfig()">
+                        <input type="checkbox" id="chk-jellyfin" onchange="updateLiveConfig()" aria-label="custom.services.jellyfin.enable">
                         <span>custom.services.jellyfin.enable</span>
                     </label>
                     <label class="toggle-item">
-                        <input type="checkbox" id="chk-zapret" onchange="updateLiveConfig()">
+                        <input type="checkbox" id="chk-zapret" onchange="updateLiveConfig()" aria-label="custom.services.zapret.enable">
                         <span>custom.services.zapret.enable</span>
                     </label>
                     <label class="toggle-item">
-                        <input type="checkbox" id="chk-isolated" onchange="updateLiveConfig()">
+                        <input type="checkbox" id="chk-isolated" onchange="updateLiveConfig()" aria-label="custom.services.isolatedGaming.enable">
                         <span>custom.services.isolatedGaming.enable</span>
                     </label>
                 </div>
@@ -1506,13 +519,13 @@
             <div class="cmd-terminal">
                 <div class="cmd-header">
                     <div class="cmd-tabs">
-                        <button class="cmd-tab-btn active" id="btn-tab-clone" onclick="switchCmd('clone')">Clone Repository</button>
-                        <button class="cmd-tab-btn" id="btn-tab-rebuild" onclick="switchCmd('rebuild')">NixOS Rebuild Flake</button>
+                        <button class="cmd-tab-btn active" id="btn-tab-clone" onclick="switchCmd('clone')" aria-label="Show Git Clone command">Clone Repository</button>
+                        <button class="cmd-tab-btn" id="btn-tab-rebuild" onclick="switchCmd('rebuild')" aria-label="Show NixOS Rebuild command">NixOS Rebuild Flake</button>
                     </div>
                 </div>
                 <div class="cmd-body">
                     <code class="cmd-text" id="cmd-display">git clone https://github.com/Irgendeinwer/NixOS-Dotfiles.git</code>
-                    <button class="btn-copy-small" onclick="copyCurrentCommand()">Copy Command</button>
+                    <button class="btn-copy-small" onclick="copyCurrentCommand()" aria-label="Copy command to clipboard">Copy Command</button>
                 </div>
             </div>
         </section>
@@ -1536,23 +549,23 @@
         <!-- Footer -->
         <footer>
             <p>
-                Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a> • Styled with Gruvbox Dark • Built for <a href="https://github.com/irgendeinwer">Irgendeinwer</a>
+                Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a> • Styled with Gruvbox Dark • Built by <a href="https://github.com/irgendeinwer">Irgendeinwer</a>
             </p>
         </footer>
     </div>
 
     <!-- Floating Vim Keybind Helper Badge -->
-    <div class="kbd-hint" onclick="toggleHelpModal()">
+    <div class="kbd-hint" onclick="toggleHelpModal()" onkeydown="if(event.key==='Enter'||event.key===' ')toggleHelpModal()" role="button" tabindex="0" aria-label="Open keyboard shortcuts cheat sheet">
         <span>Vim keys</span>
         <kbd class="kbd-key">?</kbd>
     </div>
 
     <!-- Neovim Style Cheat Sheet Modal -->
-    <div class="modal-overlay" id="help-modal" onclick="if(event.target === this) toggleHelpModal()">
+    <div class="modal-overlay" id="help-modal" onclick="if(event.target === this) toggleHelpModal()" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div class="modal-box">
             <div class="modal-header">
-                <span>⌨️ Keybindings &amp; Shortcuts</span>
-                <span style="cursor:pointer;" onclick="toggleHelpModal()">[ESC / ✕]</span>
+                <span id="modal-title">⌨️ Keybindings &amp; Shortcuts</span>
+                <span style="cursor:pointer;" onclick="toggleHelpModal()" role="button" tabindex="0" aria-label="Close shortcuts modal">[ESC / ✕]</span>
             </div>
             <div class="modal-body">
                 <div class="modal-row"><span>Scroll Down / Up</span> <span><kbd class="kbd-key">j</kbd> / <kbd class="kbd-key">k</kbd></span></div>
@@ -1571,437 +584,12 @@
         <span id="toast-msg">Copied to clipboard!</span>
     </div>
 
-    <!-- Interactive JavaScript -->
-    <script>
-        // Structured Host Data for Fastfetch
-        const hostData = {
-            junixos: {
-                user: "julian",
-                host: "junixos",
-                specs: [
-                    { key: "OS", val: "NixOS (x86_64)" },
-                    { key: "Host", val: "Desktop Workstation" },
-                    { key: "Kernel", val: "Linux (CachyOS)" },
-                    { key: "Shell", val: "zsh" },
-                    { key: "WM", val: "Hyprland (Wayland)", accent: true },
-                    { key: "Terminal", val: "kitty" },
-                    { key: "Font", val: "FiraCode Nerd Font" },
-                    { key: "Theme", val: "gruvbox-dark-gtk" },
-                    { key: "Cursor", val: "BreezeX-RosePine-Linux" },
-                    { key: "CPU", val: "Intel Core i5-13600KF" },
-                    { key: "GPU", val: "AMD Radeon RX 9070" }
-                ]
-            },
-            junixbook: {
-                user: "julian",
-                host: "junixbook",
-                specs: [
-                    { key: "OS", val: "NixOS (x86_64)" },
-                    { key: "Host", val: "Portable Laptop" },
-                    { key: "Kernel", val: "Linux (Latest)" },
-                    { key: "Shell", val: "zsh" },
-                    { key: "WM", val: "Hyprland (Wayland)", accent: true },
-                    { key: "Terminal", val: "kitty" },
-                    { key: "Font", val: "FiraCode Nerd Font" },
-                    { key: "Theme", val: "gruvbox-dark-gtk" },
-                    { key: "CPU", val: "10th Gen Intel Core i5 (Mobile)" },
-                    { key: "GPU", val: "Intel UHD Graphics" },
-                    { key: "Config", val: "Shared Flake Baseline" }
-                ]
-            }
-        };
-
-        function renderHostSpecs(hostKey) {
-            const data = hostData[hostKey];
-            if (!data) return;
-
-            let html = `
-                <div class="fetch-header">${data.user}@${data.host}</div>
-                <div class="fetch-divider">-----------------------------</div>
-            `;
-
-            data.specs.forEach(item => {
-                const accentClass = item.accent ? ' accent' : '';
-                html += `<div class="spec-line"><span class="spec-key">${item.key}:</span><span class="spec-val${accentClass}">${item.val}</span></div>`;
-            });
-
-            // Authentic Fastfetch Color Palette Bar
-            html += `
-                <div class="fetch-palette" aria-hidden="true">
-                    <span class="palette-block" style="background:#282828"></span>
-                    <span class="palette-block" style="background:#fb4934"></span>
-                    <span class="palette-block" style="background:#b8bb26"></span>
-                    <span class="palette-block" style="background:#fabd2f"></span>
-                    <span class="palette-block" style="background:#83a598"></span>
-                    <span class="palette-block" style="background:#d3869b"></span>
-                    <span class="palette-block" style="background:#8ec07c"></span>
-                    <span class="palette-block" style="background:#ebdbb2"></span>
-                </div>
-            `;
-
-            document.getElementById('specs-container').innerHTML = html;
-        }
-
-        function switchHost(host) {
-            renderHostSpecs(host);
-            const isJunixos = host === 'junixos';
-            const tabJunixos = document.getElementById('tab-junixos');
-            const tabJunixbook = document.getElementById('tab-junixbook');
-
-            tabJunixos.classList.toggle('active', isJunixos);
-            tabJunixos.setAttribute('aria-selected', isJunixos ? 'true' : 'false');
-
-            tabJunixbook.classList.toggle('active', !isJunixos);
-            tabJunixbook.setAttribute('aria-selected', isJunixos ? 'false' : 'true');
-        }
-
-        // Initialize default host specs
-        switchHost('junixos');
-
-        // Easter Egg Quotes
-        const quotes = [
-            "❄️ Purity check: 100% pure",
-            "🔒 flake.lock verified & clean",
-            "🚀 CachyOS kernel optimizations active",
-            "🛡️ zapret DPI bypass active",
-            "📡 Hotspot: unpure thoughts about ubuntu",
-            "📦 Works on my machine? Everywhere.",
-            "🛠️ Declarative all the way down"
-        ];
-        let quoteIdx = 0;
-
-        // Cumulative Snowflake Spin & Particle Burst
-        let cumulativeAngle = 0;
-        const gruvColors = ['#fabd2f', '#fe8019', '#b8bb26', '#83a598', '#d3869b', '#fb4934'];
-        const particleChars = ['λ', '❄', '⚡', '★', '⬡'];
-
-        function spawnParticles(x, y) {
-            for (let i = 0; i < 16; i++) {
-                const p = document.createElement('span');
-                p.className = 'particle';
-                p.textContent = particleChars[Math.floor(Math.random() * particleChars.length)];
-                p.style.color = gruvColors[Math.floor(Math.random() * gruvColors.length)];
-                p.style.left = `${x}px`;
-                p.style.top = `${y}px`;
-                p.style.fontSize = `${Math.random() * 14 + 14}px`;
-
-                const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * 120 + 60;
-                p.style.setProperty('--tx', `${Math.cos(angle) * distance}px`);
-                p.style.setProperty('--ty', `${Math.sin(angle) * distance}px`);
-
-                document.body.appendChild(p);
-                setTimeout(() => p.remove(), 900);
-            }
-        }
-
-        function triggerSnowflakeEgg(event) {
-            cumulativeAngle += 360;
-            const flakeEl = document.getElementById("snowflake-btn");
-            if (flakeEl) {
-                flakeEl.style.transform = `rotate(${cumulativeAngle}deg)`;
-            }
-
-            const rect = flakeEl ? flakeEl.getBoundingClientRect() : { left: 0, top: 0, width: 0, height: 0 };
-            const posX = (event && typeof event.clientX === 'number' && event.clientX > 0)
-                ? event.clientX
-                : rect.left + rect.width / 2;
-            const posY = (event && typeof event.clientY === 'number' && event.clientY > 0)
-                ? event.clientY
-                : rect.top + rect.height / 2;
-            spawnParticles(posX, posY);
-
-            quoteIdx = (quoteIdx + 1) % quotes.length;
-            document.getElementById("nix-quote").textContent = quotes[quoteIdx];
-            showToast("Evaluated pure flake expression!");
-        }
-
-        // Namespace Concept Code Generator
-        function updateLiveConfig() {
-            const hypr = document.getElementById("chk-hyprland").checked;
-            const gaming = document.getElementById("chk-gaming").checked;
-            const ark = document.getElementById("chk-ark").checked;
-            const silent = document.getElementById("chk-silent").checked;
-            const android = document.getElementById("chk-android").checked;
-            const hotspot = document.getElementById("chk-hotspot").checked;
-            const jellyfin = document.getElementById("chk-jellyfin").checked;
-            const zapret = document.getElementById("chk-zapret").checked;
-            const isolated = document.getElementById("chk-isolated").checked;
-
-            const code = 
-`<span class="code-nix-comment"># hosts/junixos/configuration.nix snippet</span>
-{
-  <span class="code-nix-key">custom</span> = {
-    <span class="code-nix-key">system</span> = {
-      <span class="code-nix-key">kernel</span> = <span class="code-nix-str">"cachyos"</span>;
-      <span class="code-nix-key">boot.silent.enable</span> = <span class="code-nix-val">${silent}</span>;
-      <span class="code-nix-key">android.enable</span>     = <span class="code-nix-val">${android}</span>;
-    };
-
-    <span class="code-nix-key">desktop</span> = {
-      <span class="code-nix-key">hyprland.enable</span>    = <span class="code-nix-val">${hypr}</span>;
-      <span class="code-nix-key">gaming</span> = {
-        <span class="code-nix-key">enable</span>           = <span class="code-nix-val">${gaming}</span>;
-        <span class="code-nix-key">arkServer.enable</span> = <span class="code-nix-val">${ark}</span>;
-      };
-    };
-
-    <span class="code-nix-key">services</span> = {
-      <span class="code-nix-key">hotspot</span> = {
-        <span class="code-nix-key">enable</span>   = <span class="code-nix-val">${hotspot}</span>;
-        <span class="code-nix-key">ssid</span>     = <span class="code-nix-str">"6+7"</span>;
-      };
-      <span class="code-nix-key">jellyfin.enable</span>       = <span class="code-nix-val">${jellyfin}</span>;
-      <span class="code-nix-key">zapret.enable</span>         = <span class="code-nix-val">${zapret}</span>;
-      <span class="code-nix-key">isolatedGaming.enable</span> = <span class="code-nix-val">${isolated}</span>;
-    };
-  };
-}`;
-            document.getElementById("code-preview").innerHTML = code;
-        }
-
-        // Randomize namespace on load (silent = true prevents initial popup toast)
-        const toggleIds = [
-            "chk-hyprland", "chk-gaming", "chk-ark",
-            "chk-silent", "chk-android", "chk-hotspot",
-            "chk-jellyfin", "chk-zapret", "chk-isolated"
-        ];
-
-        function randomizeOptions(silent = false) {
-            toggleIds.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.checked = Math.random() > 0.45;
-            });
-            updateLiveConfig();
-            if (!silent) {
-                showToast("Randomized custom namespace!");
-            }
-        }
-
-        function copyNixCode() {
-            const rawCode = document.getElementById("code-preview").innerText;
-            navigator.clipboard.writeText(rawCode).then(() => {
-                showToast("Copied Nix configuration snippet!");
-            }).catch(() => {
-                showToast("Failed to copy code");
-            });
-        }
-
-        // Silently randomize options on page load
-        randomizeOptions(true);
-
-        // Repository Tree Toggle All Button
-        let allTreeExpanded = false;
-        function toggleAllTreeFolders() {
-            allTreeExpanded = !allTreeExpanded;
-            const folders = document.querySelectorAll('.tree-folder');
-            folders.forEach(folder => {
-                folder.open = allTreeExpanded;
-            });
-        }
-
-        // Live GitHub Latest Commit Fetcher (Safe DOM + Cache + Timeout)
-        async function fetchLatestCommit() {
-            const msgEl = document.getElementById("git-latest-msg");
-            const dateEl = document.getElementById("git-latest-date");
-            if (!msgEl || !dateEl) return;
-
-            function renderCommit(msg, sha, url, dateStr) {
-                const date = new Date(dateStr);
-                const formattedDate = isNaN(date.getTime()) 
-                    ? "20. Aug. 2026" 
-                    : date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-
-                const link = document.createElement("a");
-                link.href = url;
-                link.target = "_blank";
-                link.rel = "noopener noreferrer";
-                link.textContent = msg;
-
-                const shaSpan = document.createElement("span");
-                shaSpan.style.color = "var(--gray)";
-                shaSpan.textContent = ` (${sha})`;
-
-                msgEl.replaceChildren(link, shaSpan);
-                dateEl.textContent = `${formattedDate} (master)`;
-            }
-
-            // 1. Instant render from local cache if present
-            const cached = localStorage.getItem("gh-latest-commit");
-            if (cached) {
-                try {
-                    const c = JSON.parse(cached);
-                    renderCommit(c.msg, c.sha, c.url, c.date);
-                } catch(e) {}
-            }
-
-            // 2. Fetch fresh commit with a 3.5s timeout
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 3500);
-
-                const res = await fetch("https://api.github.com/repos/Irgendeinwer/NixOS-Dotfiles/commits?per_page=1", {
-                    signal: controller.signal,
-                    headers: { 'Accept': 'application/vnd.github.v3+json' }
-                });
-                clearTimeout(timeoutId);
-
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                const data = await res.json();
-
-                if (Array.isArray(data) && data.length > 0) {
-                    const commit = data[0];
-                    const fullMsg = commit.commit.message.split("\n")[0];
-                    const shortSha = commit.sha.substring(0, 7);
-                    const commitUrl = commit.html_url;
-                    const commitDate = commit.commit.author?.date || commit.commit.committer?.date;
-
-                    renderCommit(fullMsg, shortSha, commitUrl, commitDate);
-                    localStorage.setItem("gh-latest-commit", JSON.stringify({
-                        msg: fullMsg, sha: shortSha, url: commitUrl, date: commitDate
-                    }));
-                    return;
-                }
-            } catch (err) {
-                // If nothing cached, display default fallback
-                if (!localStorage.getItem("gh-latest-commit")) {
-                    const fallbackText = document.createElement("span");
-                    fallbackText.style.color = "var(--fg-1)";
-                    fallbackText.textContent = "Tracking declarative flake baseline";
-
-                    const verifiedBadge = document.createElement("span");
-                    verifiedBadge.style.color = "var(--gray)";
-                    verifiedBadge.textContent = " (verified)";
-
-                    msgEl.replaceChildren(fallbackText, verifiedBadge);
-                    dateEl.textContent = "master branch";
-                }
-            }
-        }
-        fetchLatestCommit();
-
-        // Command Switcher (Clone vs Rebuild)
-        const commands = {
-            clone: "git clone https://github.com/Irgendeinwer/NixOS-Dotfiles.git",
-            rebuild: "nixos-rebuild switch --flake github:Irgendeinwer/NixOS-Dotfiles#junixos"
-        };
-        let activeCmdKey = 'clone';
-
-        function switchCmd(key) {
-            activeCmdKey = key;
-            document.getElementById('cmd-display').innerText = commands[key];
-            document.getElementById('btn-tab-clone').classList.toggle('active', key === 'clone');
-            document.getElementById('btn-tab-rebuild').classList.toggle('active', key === 'rebuild');
-        }
-
-        function copyCurrentCommand() {
-            const cmd = commands[activeCmdKey];
-            navigator.clipboard.writeText(cmd).then(() => {
-                showToast("Copied command to clipboard!");
-            }).catch(() => {
-                showToast("Failed to copy command");
-            });
-        }
-
-        // Contrast Switcher & Dynamic Theme Color Sync
-        const contrastThemeColors = {
-            hard: '#1d2021',
-            medium: '#282828',
-            soft: '#32302f'
-        };
-
-        function setContrast(mode) {
-            document.body.setAttribute('data-contrast', mode);
-            document.querySelectorAll('.contrast-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === mode);
-            });
-            
-            const metaTheme = document.getElementById('meta-theme-color');
-            if (metaTheme && contrastThemeColors[mode]) {
-                metaTheme.setAttribute('content', contrastThemeColors[mode]);
-            }
-
-            localStorage.setItem('gruvbox-contrast', mode);
-        }
-
-        // Load saved contrast mode
-        const savedContrast = localStorage.getItem('gruvbox-contrast');
-        if (savedContrast) {
-            setContrast(savedContrast);
-        }
-
-        // Modern Toast Queue & Modal Toggle
-        let toastTimeout = null;
-        function showToast(msg, icon = 'λ') {
-            const toast = document.getElementById("toast");
-            const msgEl = document.getElementById("toast-msg");
-            const iconEl = document.getElementById("toast-icon");
-            if (!toast) return;
-
-            if (msgEl) msgEl.textContent = msg;
-            if (iconEl) iconEl.textContent = icon;
-
-            toast.classList.add("show");
-            if (toastTimeout) clearTimeout(toastTimeout);
-            
-            toastTimeout = setTimeout(() => {
-                toast.classList.remove("show");
-            }, 2200);
-        }
-
-        function toggleHelpModal() {
-            const modal = document.getElementById('help-modal');
-            if (modal) modal.classList.toggle('active');
-        }
-
-        // Robust Keybindings Navigation
-        window.addEventListener('keydown', (e) => {
-            if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
-            
-            if (e.key === 'j') {
-                e.preventDefault();
-                window.scrollBy({ top: 160, behavior: 'smooth' });
-            }
-            if (e.key === 'k') {
-                e.preventDefault();
-                window.scrollBy({ top: -160, behavior: 'smooth' });
-            }
-            if (e.key === 'G') {
-                e.preventDefault();
-                window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
-            }
-            if (e.key === 'g' && !e.shiftKey) {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-            if (e.key === 'r' || e.key === 'R') {
-                e.preventDefault();
-                randomizeOptions(false);
-            }
-            if (e.key === 's' || e.key === 'S') {
-                e.preventDefault();
-                triggerSnowflakeEgg();
-            }
-            if (e.key === '1') {
-                e.preventDefault();
-                switchHost('junixos');
-            }
-            if (e.key === '2') {
-                e.preventDefault();
-                switchHost('junixbook');
-            }
-            if (e.key === '?' || (e.key === '/' && e.shiftKey) || e.key === 'h') {
-                e.preventDefault();
-                toggleHelpModal();
-            }
-            if (e.key === 'Escape') {
-                const modal = document.getElementById('help-modal');
-                if (modal && modal.classList.contains('active')) {
-                    e.preventDefault();
-                    toggleHelpModal();
-                }
-            }
-        });
-    </script>
+    <!-- Modular Interactive JavaScript -->
+    <script src="js/fleet.js"></script>
+    <script src="js/config-generator.js"></script>
+    <script src="js/github.js"></script>
+    <script src="js/tree.js"></script>
+    <script src="js/shortcuts.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

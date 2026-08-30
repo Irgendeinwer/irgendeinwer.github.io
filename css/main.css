@@ -1,0 +1,227 @@
+/* ==========================================================================
+   Main Base & Layout Styles
+   ========================================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--fg-1);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Accessible Focus Outline */
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: 3px;
+}
+
+.container {
+    max-width: 880px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0 1rem;
+}
+
+/* Terminal Cursor Blink */
+.cursor-blink {
+    display: inline-block;
+    width: 7px;
+    height: 13px;
+    vertical-align: -1px;
+    background-color: var(--yellow);
+    animation: cursor-blink 1s step-end infinite;
+    margin-left: 4px;
+}
+
+/* Top Nav & Contrast Switcher */
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--fg-4);
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+/* Nav Status / Capsule Pill */
+.nav-status, .nav-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    background: var(--bg-hard);
+    border: 1px solid var(--bg-card);
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--green);
+    white-space: nowrap;
+    text-decoration: none;
+    transition: all 0.15s ease;
+}
+
+.nav-pill {
+    color: var(--fg-1);
+}
+
+.nav-pill:hover {
+    border-color: var(--yellow);
+    color: var(--yellow);
+    transform: translateY(-1px);
+}
+
+.nav-pill.active {
+    border-color: var(--aqua);
+    color: var(--aqua);
+}
+
+.status-indicator {
+    width: 7px;
+    height: 7px;
+    background-color: var(--green);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--green);
+}
+
+.contrast-switcher {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--bg-hard);
+    padding: 0.25rem;
+    border-radius: 6px;
+    border: 1px solid var(--bg-card);
+}
+
+.contrast-label {
+    font-size: 0.75rem;
+    padding: 0 0.4rem;
+    color: var(--fg-4);
+}
+
+.contrast-btn {
+    background: transparent;
+    border: none;
+    color: var(--fg-4);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.contrast-btn:hover {
+    color: var(--fg-0);
+}
+
+.contrast-btn.active {
+    background: var(--bg-card);
+    color: var(--yellow);
+    font-weight: bold;
+}
+
+/* Header */
+header {
+    margin-bottom: 1.8rem;
+    border-bottom: 1px dashed var(--bg-hover);
+    padding-bottom: 1.6rem;
+}
+
+.prompt-line {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--aqua);
+    margin-bottom: 0.35rem;
+}
+
+.prompt-line .path { color: var(--fg-4); }
+.prompt-line .cmd { color: var(--fg-0); }
+
+h1 {
+    font-family: var(--font-mono);
+    font-size: 2.5rem;
+    color: var(--fg-0);
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin-bottom: 0.6rem;
+    word-break: break-word;
+}
+
+h1 .accent {
+    color: var(--orange);
+}
+
+.title-nowrap {
+    white-space: nowrap;
+}
+
+.lead {
+    font-size: 1.02rem;
+    color: var(--fg-4);
+    max-width: 680px;
+}
+
+/* Section Headings */
+h2 {
+    font-size: 1.25rem;
+    color: var(--fg-0);
+    font-family: var(--font-mono);
+    margin: 1.8rem 0 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+h2::before {
+    content: "λ";
+    color: var(--aqua);
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    width: 100%;
+    max-width: 880px;
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+    border-top: 1px solid var(--bg-card);
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--gray);
+    font-family: var(--font-mono);
+}
+
+footer a {
+    color: var(--fg-4);
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: var(--yellow);
+    text-decoration: underline;
+}

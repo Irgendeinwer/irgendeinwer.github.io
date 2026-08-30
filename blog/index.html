@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Browser Theme Color -->
+    <meta name="theme-color" content="#282828" id="meta-theme-color">
+
+    <!-- SEO Metadata -->
+    <title>Blog &amp; Technical Notes | Irgendeinwer</title>
+    <meta name="title" content="Blog &amp; Technical Notes | Irgendeinwer">
+    <meta name="description" content="Technical deep-dives on NixOS, CachyOS kernels, Flakes, SOPS secrets, Linux system architecture, and reproducible workflows.">
+    <meta name="author" content="Irgendeinwer">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://irgendeinwer.github.io/blog/">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" href="../favicon.ico" sizes="any">
+
+    <!-- Open Graph & Twitter -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://irgendeinwer.github.io/blog/">
+    <meta property="og:title" content="Blog &amp; Technical Notes | Irgendeinwer">
+    <meta property="og:description" content="Technical deep-dives on NixOS, CachyOS kernels, Flakes, SOPS secrets, Linux architecture, and declarative dotfiles.">
+    <meta property="og:image" content="https://irgendeinwer.github.io/assets/og-image.png">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "Irgendeinwer Technical Blog",
+      "url": "https://irgendeinwer.github.io/blog/",
+      "description": "Technical deep-dives on NixOS, CachyOS kernels, Flakes, SOPS secrets, Linux architecture, and declarative dotfiles.",
+      "author": {
+        "@type": "Person",
+        "name": "Irgendeinwer"
+      }
+    }
+    </script>
+
+    <!-- Modular Stylesheets -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+</head>
+<body data-contrast="medium">
+
+    <div class="container">
+        <!-- Top Nav -->
+        <nav class="top-nav" aria-label="Navigation">
+            <div class="nav-links">
+                <a href="../" class="nav-pill" title="Return to developer hub">
+                    <span>← ~/hub</span>
+                </a>
+                <div class="nav-status">
+                    <span class="status-indicator" aria-hidden="true"></span>
+                    <span>blog active // 2 articles</span>
+                </div>
+            </div>
+            <div class="contrast-switcher" role="group" aria-label="Background Contrast Modes">
+                <span class="contrast-label">Contrast:</span>
+                <button class="contrast-btn" onclick="setContrast('hard')" aria-label="Set contrast to Hard mode">Hard</button>
+                <button class="contrast-btn active" onclick="setContrast('medium')" aria-label="Set contrast to Medium mode">Medium</button>
+                <button class="contrast-btn" onclick="setContrast('soft')" aria-label="Set contrast to Soft mode">Soft</button>
+            </div>
+        </nav>
+
+        <!-- Header -->
+        <header>
+            <div class="prompt-line">julian@hub:<span class="path">~/blog</span>$ <span class="cmd">ls -la</span></div>
+            <h1>Articles &amp; <span class="title-nowrap">Notes<span class="accent">.</span></span></h1>
+            <p class="lead">
+                Technical write-ups, architecture breakdowns, and guides covering NixOS, Linux systems development, and reproducible workflows.
+            </p>
+        </header>
+
+        <!-- Blog Posts List -->
+        <section aria-labelledby="posts-heading">
+            <h2 id="posts-heading">Published Articles</h2>
+            
+            <div class="grid-2" style="margin-top: 1rem;">
+                <article class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <a href="cachyos-kernel-on-nixos.html">
+                                Running CachyOS Kernels on NixOS ↗
+                            </a>
+                        </h3>
+                        <span class="tag green">Performance</span>
+                    </div>
+                    <p class="card-desc">
+                        How to configure CachyOS BORE kernels with pre-built Attic binary caches in Nix Flakes to avoid hours of local compilation.
+                    </p>
+                    <div class="tag-list">
+                        <span class="tag">cachyos</span>
+                        <span class="tag">nixos</span>
+                        <span class="tag">kernel</span>
+                        <span class="tag">gaming</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <a href="building-declarative-nixos-fleet.html">
+                                Building a Declarative Multi-Host NixOS Fleet ↗
+                            </a>
+                        </h3>
+                        <span class="tag">Architecture</span>
+                    </div>
+                    <p class="card-desc">
+                        Structuring multi-machine Nix flakes with custom option namespaces, age-encrypted SOPS secrets, and automated BorgBackup with udev rules.
+                    </p>
+                    <div class="tag-list">
+                        <span class="tag">nixos</span>
+                        <span class="tag">flakes</span>
+                        <span class="tag">sops-nix</span>
+                        <span class="tag">borgbackup</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>
+                <a href="../">← Return to Developer Hub</a> • Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a> • Built by <a href="https://github.com/irgendeinwer">Irgendeinwer</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/shortcuts.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

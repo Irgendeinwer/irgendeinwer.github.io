@@ -1,0 +1,46 @@
+name: Sync Dotfiles Tree
+
+on:
+  schedule:
+    - cron: '0 4 * * *' # Run daily at 04:00 UTC
+  workflow_dispatch:      # Allow manual trigger
+  repository_dispatch:    # Allow trigger via webhook / dotfiles repository
+    types: [dotfiles_updated]
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Website Repository
+        uses: actions/checkout@v4
+
+      - name: Checkout NixOS Dotfiles
+        uses: actions/checkout@v4
+        with:
+          repository: 'Irgendeinwer/NixOS-Dotfiles'
+          path: 'temp-dotfiles'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Generate Tree JSON
+        run: |
+          python3 scripts/sync-tree.py temp-dotfiles
+          rm -rf temp-dotfiles
+
+      - name: Commit and Push if Changed
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data/tree.json
+          if git diff --staged --quiet; then
+            echo "No changes in repository tree."
+          else
+            git commit -m "chore(data): auto-sync dotfiles repository tree [skip ci]"
+            git push
+          fi

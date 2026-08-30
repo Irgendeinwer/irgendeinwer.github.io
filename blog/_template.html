@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Dynamic Browser Theme Color -->
+    <meta name="theme-color" content="#282828" id="meta-theme-color">
+
+    <!-- SEO Metadata: Replace title, description, and canonical URL -->
+    <title>ARTICLE_TITLE | Irgendeinwer</title>
+    <meta name="title" content="ARTICLE_TITLE | Irgendeinwer">
+    <meta name="description" content="ARTICLE_DESCRIPTION">
+    <meta name="author" content="Irgendeinwer">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://irgendeinwer.github.io/blog/SLUG.html">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" href="../favicon.ico" sizes="any">
+
+    <!-- Open Graph & Twitter -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://irgendeinwer.github.io/blog/SLUG.html">
+    <meta property="og:title" content="ARTICLE_TITLE | Irgendeinwer">
+    <meta property="og:description" content="ARTICLE_DESCRIPTION">
+    <meta property="og:image" content="https://irgendeinwer.github.io/assets/og-image.png">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "ARTICLE_TITLE",
+      "description": "ARTICLE_DESCRIPTION",
+      "image": "https://irgendeinwer.github.io/assets/og-image.png",
+      "author": {
+        "@type": "Person",
+        "name": "Irgendeinwer",
+        "url": "https://github.com/irgendeinwer"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Irgendeinwer"
+      },
+      "datePublished": "YYYY-MM-DD",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://irgendeinwer.github.io/blog/SLUG.html"
+      }
+    }
+    </script>
+
+    <!-- Modular Stylesheets -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+</head>
+<body data-contrast="medium">
+
+    <div class="container">
+        <!-- Top Nav -->
+        <nav class="top-nav" aria-label="Navigation">
+            <div class="nav-links">
+                <a href="../" class="nav-pill" title="Return to developer hub">
+                    <span>← ~/hub</span>
+                </a>
+                <a href="index.html" class="nav-pill" title="All articles">
+                    <span>📁 blog</span>
+                </a>
+                <div class="nav-status">
+                    <span class="status-indicator" aria-hidden="true"></span>
+                    <span>SLUG.md</span>
+                </div>
+            </div>
+            <div class="contrast-switcher" role="group" aria-label="Background Contrast Modes">
+                <span class="contrast-label">Contrast:</span>
+                <button class="contrast-btn" onclick="setContrast('hard')" aria-label="Set contrast to Hard mode">Hard</button>
+                <button class="contrast-btn active" onclick="setContrast('medium')" aria-label="Set contrast to Medium mode">Medium</button>
+                <button class="contrast-btn" onclick="setContrast('soft')" aria-label="Set contrast to Soft mode">Soft</button>
+            </div>
+        </nav>
+
+        <!-- Article Header -->
+        <header>
+            <div class="prompt-line">julian@hub:<span class="path">~/blog</span>$ <span class="cmd">cat SLUG.md</span></div>
+            <h1>ARTICLE_TITLE_HEADING <span class="title-nowrap">LASTWORD<span class="accent">.</span></span></h1>
+            
+            <div class="post-meta">
+                <span>🗓️ MONTH YYYY</span>
+                <span>⏱️ X min read</span>
+                <span style="color: var(--aqua);">#NixOS #Topic</span>
+            </div>
+        </header>
+
+        <!-- Article Content -->
+        <main class="prose">
+            <p>
+                Introduction paragraph goes here...
+            </p>
+
+            <h2>1. Section Heading</h2>
+            <p>
+                Section details and explanation...
+            </p>
+
+            <pre><code><span class="code-nix-comment"># Code comments here</span>
+{
+  <span class="code-nix-key">example.key</span> = <span class="code-nix-str">"value"</span>;
+}</code></pre>
+
+            <blockquote>
+                "Notable quote or key takeaway."
+            </blockquote>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>
+                <a href="index.html">← Back to Articles</a> • Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a> • Built by <a href="https://github.com/irgendeinwer">Irgendeinwer</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/shortcuts.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

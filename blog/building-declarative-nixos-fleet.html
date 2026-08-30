@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Browser Theme Color -->
+    <meta name="theme-color" content="#282828" id="meta-theme-color">
+
+    <!-- SEO Metadata -->
+    <title>Building a Declarative Multi-Host NixOS Fleet | Irgendeinwer</title>
+    <meta name="title" content="Building a Declarative Multi-Host NixOS Fleet | Irgendeinwer">
+    <meta name="description" content="A practical architectural breakdown of structuring multi-machine Nix flakes with custom namespaces, SSH host-key SOPS secrets, and automated BorgBackups.">
+    <meta name="author" content="Irgendeinwer">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://irgendeinwer.github.io/blog/building-declarative-nixos-fleet.html">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" href="../favicon.ico" sizes="any">
+
+    <!-- Open Graph & Twitter -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://irgendeinwer.github.io/blog/building-declarative-nixos-fleet.html">
+    <meta property="og:title" content="Building a Declarative Multi-Host NixOS Fleet | Irgendeinwer">
+    <meta property="og:description" content="A practical architectural breakdown of structuring multi-machine Nix flakes with custom namespaces, SSH host-key SOPS secrets, and automated BorgBackups.">
+    <meta property="og:image" content="https://irgendeinwer.github.io/assets/og-image.png">
+
+    <!-- Schema.org JSON-LD for Article -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Building a Declarative Multi-Host NixOS Fleet",
+      "description": "A practical architectural breakdown of structuring multi-machine Nix flakes with custom namespaces, SSH host-key SOPS secrets, and automated BorgBackups.",
+      "image": "https://irgendeinwer.github.io/assets/og-image.png",
+      "author": {
+        "@type": "Person",
+        "name": "Irgendeinwer",
+        "url": "https://github.com/irgendeinwer"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Irgendeinwer"
+      },
+      "datePublished": "2026-08-30",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://irgendeinwer.github.io/blog/building-declarative-nixos-fleet.html"
+      }
+    }
+    </script>
+
+    <!-- Modular Stylesheets -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+</head>
+<body data-contrast="medium">
+
+    <div class="container">
+        <!-- Top Nav -->
+        <nav class="top-nav" aria-label="Navigation">
+            <div class="nav-links">
+                <a href="../" class="nav-pill" title="Return to developer hub">
+                    <span>← ~/hub</span>
+                </a>
+                <a href="index.html" class="nav-pill" title="All articles">
+                    <span>📁 blog</span>
+                </a>
+                <div class="nav-status">
+                    <span class="status-indicator" aria-hidden="true"></span>
+                    <span>declarative-fleet.md</span>
+                </div>
+            </div>
+            <div class="contrast-switcher" role="group" aria-label="Background Contrast Modes">
+                <span class="contrast-label">Contrast:</span>
+                <button class="contrast-btn" onclick="setContrast('hard')" aria-label="Set contrast to Hard mode">Hard</button>
+                <button class="contrast-btn active" onclick="setContrast('medium')" aria-label="Set contrast to Medium mode">Medium</button>
+                <button class="contrast-btn" onclick="setContrast('soft')" aria-label="Set contrast to Soft mode">Soft</button>
+            </div>
+        </nav>
+
+        <!-- Article Header -->
+        <header>
+            <div class="prompt-line">julian@hub:<span class="path">~/blog</span>$ <span class="cmd">cat declarative-fleet.md</span></div>
+            <h1>Building a Declarative Multi-Host NixOS <span class="title-nowrap">Fleet<span class="accent">.</span></span></h1>
+            
+            <div class="post-meta">
+                <span>🗓️ August 2026</span>
+                <span>⏱️ 6 min read</span>
+                <span style="color: var(--aqua);">#NixOS #Flakes #sops-nix #BorgBackup</span>
+            </div>
+        </header>
+
+        <!-- Article Content -->
+        <main class="prose">
+            <p>
+                Managing more than one Linux machine usually turns into a sync nightmare. You tweak a config on your desktop, forget to copy it to your laptop, and suddenly half your keybinds and scripts are out of date.
+            </p>
+            <p>
+                In my setup, I manage my desktop workstation (<code>junixos</code>) and laptop (<code>junixbook</code>) from a single Git repository using Nix Flakes. Here is how the structure works in practice—from custom option namespaces to zero-friction secrets and automated USB backups.
+            </p>
+
+            <h2>1. Auto-Importing Overlays and Flake Structure</h2>
+            <p>
+                Instead of manually listing dozens of overlay files in <code>flake.nix</code>, I wrote a simple helper that reads the <code>modules/overlays/</code> directory and imports any <code>.nix</code> file it finds:
+            </p>
+
+            <pre><code><span class="code-nix-comment"># flake.nix snippet</span>
+{
+  <span class="code-nix-key">outputs</span> = { <span class="code-nix-key">self</span>, <span class="code-nix-key">nixpkgs</span>, ... }@<span class="code-nix-key">inputs</span>:
+    <span class="code-nix-builtin">let</span>
+      <span class="code-nix-fn">loadOverlays</span> = <span class="code-nix-attr">dir</span>:
+        <span class="code-nix-builtin">if</span> builtins.pathExists dir <span class="code-nix-builtin">then</span>
+          <span class="code-nix-builtin">let</span>
+            <span class="code-nix-key">files</span> = builtins.attrNames (builtins.readDir dir);
+            <span class="code-nix-key">nixFiles</span> = builtins.filter (<span class="code-nix-attr">name</span>: builtins.match <span class="code-nix-str">".*\\.nix"</span> name != <span class="code-nix-val">null</span>) files;
+          <span class="code-nix-builtin">in</span>
+          map (<span class="code-nix-attr">name</span>: <span class="code-nix-fn">import</span> (dir + <span class="code-nix-str">"/${name}"</span>)) nixFiles
+        <span class="code-nix-builtin">else</span> [ ];
+
+      <span class="code-nix-key">myOverlays</span> = <span class="code-nix-fn">loadOverlays</span> <span class="code-nix-str">./modules/overlays</span>;
+    <span class="code-nix-builtin">in</span> {
+      <span class="code-nix-key">nixosConfigurations."junixos"</span> = nixpkgs.lib.nixosSystem {
+        <span class="code-nix-key">specialArgs</span> = { <span class="code-nix-builtin">inherit</span> inputs; };
+        <span class="code-nix-key">modules</span> = [
+          { <span class="code-nix-key">nixpkgs.overlays</span> = myOverlays; }
+          inputs.disko.nixosModules.disko
+          <span class="code-nix-str">./hosts/junixos/disk-config.nix</span>
+          <span class="code-nix-str">./hosts/junixos/configuration.nix</span>
+          inputs.sops-nix.nixosModules.sops
+          inputs.home-manager.nixosModules.default
+          inputs.nixvim.nixosModules.nixvim
+        ];
+      };
+    };
+}</code></pre>
+
+            <h2>2. The <code>custom.*</code> Namespace Approach</h2>
+            <p>
+                One trap in NixOS is writing raw configuration blocks everywhere. When you configure services directly in host files, things quickly become messy.
+            </p>
+            <p>
+                Instead, I define reusable modules under a <code>custom.*</code> hierarchy. A host configuration ends up looking clean and intentional:
+            </p>
+
+            <pre><code><span class="code-nix-comment"># hosts/junixos/configuration.nix</span>
+{
+  <span class="code-nix-key">custom</span> = {
+    <span class="code-nix-key">system</span> = {
+      <span class="code-nix-key">kernel</span> = <span class="code-nix-str">"cachyos"</span>;
+      <span class="code-nix-key">boot.silent.enable</span> = <span class="code-nix-val">true</span>;
+      <span class="code-nix-key">android.enable</span>     = <span class="code-nix-val">true</span>;
+    };
+
+    <span class="code-nix-key">desktop</span> = {
+      <span class="code-nix-key">hyprland.enable</span>    = <span class="code-nix-val">true</span>;
+      <span class="code-nix-key">gaming.enable</span>      = <span class="code-nix-val">true</span>;
+    };
+
+    <span class="code-nix-key">services</span> = {
+      <span class="code-nix-key">backup</span> = {
+        <span class="code-nix-key">enable</span>            = <span class="code-nix-val">true</span>;
+        <span class="code-nix-key">deviceUuid</span>        = <span class="code-nix-str">"9e2b10a4-3a21-4f12-88ec-123456789abc"</span>;
+        <span class="code-nix-key">autoTriggerOnPlug</span> = <span class="code-nix-val">true</span>;
+      };
+      <span class="code-nix-key">zapret.enable</span>         = <span class="code-nix-val">true</span>;
+      <span class="code-nix-key">isolatedGaming.enable</span> = <span class="code-nix-val">false</span>;
+    };
+  };
+}</code></pre>
+
+            <h2>3. Secrets Without GPG Headaches (<code>sops-nix</code> + SSH Keys)</h2>
+            <p>
+                I didn't want to deal with GPG keys or manual password manager exports when bootstrapping a fresh machine.
+            </p>
+            <p>
+                Using <code>sops-nix</code>, the system converts the machine's existing SSH host key (<code>/etc/ssh/ssh_host_ed25519_key</code>) into an <code>age</code> identity. All encrypted secret YAML files live in <code>secrets/</code> inside the repo, and Nix decrypts them automatically at runtime:
+            </p>
+
+            <pre><code><span class="code-nix-comment"># modules/nixos/sops.nix</span>
+{ <span class="code-nix-key">config</span>, <span class="code-nix-key">pkgs</span>, ... }:
+<span class="code-nix-builtin">let</span>
+  <span class="code-nix-key">secretsDir</span> = <span class="code-nix-str">../../secrets</span>;
+  <span class="code-nix-key">hostSecretsFile</span> = secretsDir + <span class="code-nix-str">"/${config.networking.hostName}.yaml"</span>;
+  <span class="code-nix-key">commonSecretsFile</span> = secretsDir + <span class="code-nix-str">"/common.yaml"</span>;
+<span class="code-nix-builtin">in</span> {
+  <span class="code-nix-key">sops</span> = {
+    <span class="code-nix-key">defaultSopsFormat</span> = <span class="code-nix-str">"yaml"</span>;
+    <span class="code-nix-key">age.sshKeyPaths</span> = [ <span class="code-nix-str">"/etc/ssh/ssh_host_ed25519_key"</span> ];
+
+    <span class="code-nix-key">defaultSopsFile</span> =
+      <span class="code-nix-builtin">if</span> builtins.pathExists hostSecretsFile <span class="code-nix-builtin">then</span> hostSecretsFile
+      <span class="code-nix-builtin">else if</span> builtins.pathExists commonSecretsFile <span class="code-nix-builtin">then</span> commonSecretsFile
+      <span class="code-nix-builtin">else</span> <span class="code-nix-val">null</span>;
+  };
+
+  <span class="code-nix-key">environment.systemPackages</span> = <span class="code-nix-builtin">with</span> pkgs; [ sops age ssh-to-age ];
+}</code></pre>
+
+            <h2>4. Automated BorgBackups on USB Drive Insertion</h2>
+            <p>
+                Manual backups get forgotten. To fix this, I set up a BorgBackup service that triggers via a <code>udev</code> rule whenever I plug in my external backup drive:
+            </p>
+
+            <pre><code><span class="code-nix-comment"># modules/services/backup.nix</span>
+{ <span class="code-nix-key">config</span>, <span class="code-nix-key">lib</span>, ... }:
+<span class="code-nix-builtin">let</span>
+  <span class="code-nix-key">cfg</span> = config.custom.services.backup;
+<span class="code-nix-builtin">in</span> {
+  <span class="code-nix-key">config</span> = lib.mkIf cfg.enable {
+    <span class="code-nix-comment"># Automount disk on demand with a 15s spin-up timeout</span>
+    <span class="code-nix-key">fileSystems."${cfg.mountPoint}"</span> = {
+      <span class="code-nix-key">device</span> = <span class="code-nix-str">"/dev/disk/by-uuid/${cfg.deviceUuid}"</span>;
+      <span class="code-nix-key">fsType</span> = <span class="code-nix-str">"ext4"</span>;
+      <span class="code-nix-key">options</span> = [ <span class="code-nix-str">"noauto"</span> <span class="code-nix-str">"nofail"</span> <span class="code-nix-str">"x-systemd.automount"</span> <span class="code-nix-str">"x-systemd.device-timeout=15s"</span> ];
+    };
+
+    <span class="code-nix-comment"># Udev rule: triggers systemd backup service as soon as the drive is plugged in</span>
+    <span class="code-nix-key">services.udev.extraRules</span> = lib.mkIf cfg.autoTriggerOnPlug ''
+      ACTION=="add", SUBSYSTEM=="block", ENV{ID_FS_UUID}=="${cfg.deviceUuid}", TAG+="systemd", ENV{SYSTEMD_WANTS}+="borgbackup-job-systemBackup.service"
+    '';
+
+    <span class="code-nix-key">services.borgbackup.jobs.systemBackup</span> = {
+      <span class="code-nix-key">paths</span> = [ <span class="code-nix-str">"/home/${config.custom.user}"</span> <span class="code-nix-str">"/etc/ssh"</span> <span class="code-nix-str">"/var/lib/sops-nix"</span> ];
+      <span class="code-nix-key">repo</span> = <span class="code-nix-str">"${cfg.mountPoint}/${cfg.repoName}"</span>;
+      <span class="code-nix-key">encryption.mode</span> = <span class="code-nix-str">"repokey-blake2"</span>;
+      <span class="code-nix-key">encryption.passCommand</span> = <span class="code-nix-str">"cat ${config.sops.secrets.borg_passphrase.path}"</span>;
+      <span class="code-nix-key">compression</span> = <span class="code-nix-str">"auto,zstd,3"</span>;
+    };
+  };
+}</code></pre>
+
+            <p>
+                Whenever I plug in the drive, systemd automounts the partition, runs the encrypted incremental backup, and unmounts it when finished.
+            </p>
+
+            <h2>Summary</h2>
+            <p>
+                Having a unified multi-host flake means I can spin up a fresh machine or sync changes across hardware in a few minutes without guessing what packages were installed.
+            </p>
+            <p>
+                The complete configuration, Neovim modules, and Hyprland setup are available on GitHub in my <a href="https://github.com/Irgendeinwer/NixOS-Dotfiles" target="_blank" rel="noopener noreferrer">NixOS-Dotfiles repository</a>.
+            </p>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>
+                <a href="index.html">← Back to Articles</a> • Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a> • Built by <a href="https://github.com/irgendeinwer">Irgendeinwer</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/shortcuts.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

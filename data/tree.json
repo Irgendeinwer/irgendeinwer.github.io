@@ -1,0 +1,648 @@
+{
+  "repoName": "NixOS-Dotfiles",
+  "totalDirectories": 17,
+  "totalFiles": 87,
+  "tree": [
+    {
+      "name": ".github",
+      "path": ".github",
+      "type": "directory",
+      "children": [
+        {
+          "name": "workflows",
+          "path": ".github/workflows",
+          "type": "directory",
+          "children": [
+            {
+              "name": "nix-test.yml",
+              "path": ".github/workflows/nix-test.yml",
+              "type": "file",
+              "fileType": "config"
+            },
+            {
+              "name": "nix-update.yml",
+              "path": ".github/workflows/nix-update.yml",
+              "type": "file",
+              "fileType": "config"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "assets",
+      "path": "assets",
+      "type": "directory",
+      "children": [
+        {
+          "name": "atmos.wav",
+          "path": "assets/atmos.wav",
+          "type": "file",
+          "fileType": "media"
+        },
+        {
+          "name": "iserv.pem",
+          "path": "assets/iserv.pem",
+          "type": "file",
+          "fileType": "config"
+        },
+        {
+          "name": "oal_dflt.wav",
+          "path": "assets/oal_dflt.wav",
+          "type": "file",
+          "fileType": "media"
+        }
+      ]
+    },
+    {
+      "name": "hosts",
+      "path": "hosts",
+      "type": "directory",
+      "children": [
+        {
+          "name": "junixbook",
+          "path": "hosts/junixbook",
+          "type": "directory",
+          "children": [
+            {
+              "name": "configuration.nix",
+              "path": "hosts/junixbook/configuration.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "hardware-configuration.nix",
+              "path": "hosts/junixbook/hardware-configuration.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "home.nix",
+              "path": "hosts/junixbook/home.nix",
+              "type": "file",
+              "fileType": "nix"
+            }
+          ]
+        },
+        {
+          "name": "junixos",
+          "path": "hosts/junixos",
+          "type": "directory",
+          "children": [
+            {
+              "name": "configuration.nix",
+              "path": "hosts/junixos/configuration.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "disk-config.nix",
+              "path": "hosts/junixos/disk-config.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "hardware-configuration.nix",
+              "path": "hosts/junixos/hardware-configuration.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "home.nix",
+              "path": "hosts/junixos/home.nix",
+              "type": "file",
+              "fileType": "nix"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "modules",
+      "path": "modules",
+      "type": "directory",
+      "children": [
+        {
+          "name": "home-manager",
+          "path": "modules/home-manager",
+          "type": "directory",
+          "children": [
+            {
+              "name": "hypr",
+              "path": "modules/home-manager/hypr",
+              "type": "directory",
+              "children": [
+                {
+                  "name": "hyprcursor.nix",
+                  "path": "modules/home-manager/hypr/hyprcursor.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                },
+                {
+                  "name": "hypridle.nix",
+                  "path": "modules/home-manager/hypr/hypridle.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                },
+                {
+                  "name": "hyprland.nix",
+                  "path": "modules/home-manager/hypr/hyprland.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                },
+                {
+                  "name": "hyprlock.nix",
+                  "path": "modules/home-manager/hypr/hyprlock.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                },
+                {
+                  "name": "hyprshot.nix",
+                  "path": "modules/home-manager/hypr/hyprshot.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                },
+                {
+                  "name": "wallpaper.nix",
+                  "path": "modules/home-manager/hypr/wallpaper.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                }
+              ]
+            },
+            {
+              "name": "rofi",
+              "path": "modules/home-manager/rofi",
+              "type": "directory",
+              "children": [
+                {
+                  "name": "gruvbox-material.rasi",
+                  "path": "modules/home-manager/rofi/gruvbox-material.rasi",
+                  "type": "file",
+                  "fileType": "config"
+                },
+                {
+                  "name": "rofi.nix",
+                  "path": "modules/home-manager/rofi/rofi.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                }
+              ]
+            },
+            {
+              "name": "default.nix",
+              "path": "modules/home-manager/default.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "git.nix",
+              "path": "modules/home-manager/git.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "gtk.nix",
+              "path": "modules/home-manager/gtk.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "listen.nix",
+              "path": "modules/home-manager/listen.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "listen.sh",
+              "path": "modules/home-manager/listen.sh",
+              "type": "file",
+              "fileType": "config"
+            },
+            {
+              "name": "mpv.nix",
+              "path": "modules/home-manager/mpv.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "sops.nix",
+              "path": "modules/home-manager/sops.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "virtual-surround.nix",
+              "path": "modules/home-manager/virtual-surround.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "zsh.nix",
+              "path": "modules/home-manager/zsh.nix",
+              "type": "file",
+              "fileType": "nix"
+            }
+          ]
+        },
+        {
+          "name": "nixos",
+          "path": "modules/nixos",
+          "type": "directory",
+          "children": [
+            {
+              "name": "pkgs",
+              "path": "modules/nixos/pkgs",
+              "type": "directory",
+              "children": [
+                {
+                  "name": "browsers.nix",
+                  "path": "modules/nixos/pkgs/browsers.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                },
+                {
+                  "name": "flexing.nix",
+                  "path": "modules/nixos/pkgs/flexing.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                },
+                {
+                  "name": "media.nix",
+                  "path": "modules/nixos/pkgs/media.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                },
+                {
+                  "name": "messaging.nix",
+                  "path": "modules/nixos/pkgs/messaging.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                }
+              ]
+            },
+            {
+              "name": "android.nix",
+              "path": "modules/nixos/android.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "arkSurvivalEvolved.nix",
+              "path": "modules/nixos/arkSurvivalEvolved.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "base.nix",
+              "path": "modules/nixos/base.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "bluetooth.nix",
+              "path": "modules/nixos/bluetooth.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "direnv.nix",
+              "path": "modules/nixos/direnv.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "factorio.nix",
+              "path": "modules/nixos/factorio.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "flakes.nix",
+              "path": "modules/nixos/flakes.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "fonts.nix",
+              "path": "modules/nixos/fonts.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "gaming.nix",
+              "path": "modules/nixos/gaming.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "greetd.nix",
+              "path": "modules/nixos/greetd.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "hypr.nix",
+              "path": "modules/nixos/hypr.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "kernel.nix",
+              "path": "modules/nixos/kernel.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "lix.nix",
+              "path": "modules/nixos/lix.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "nh.nix",
+              "path": "modules/nixos/nh.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "obs-studio.nix",
+              "path": "modules/nixos/obs-studio.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "pkgs.nix",
+              "path": "modules/nixos/pkgs.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "plymouth.nix",
+              "path": "modules/nixos/plymouth.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "sops.nix",
+              "path": "modules/nixos/sops.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "sound.nix",
+              "path": "modules/nixos/sound.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "virt.nix",
+              "path": "modules/nixos/virt.nix",
+              "type": "file",
+              "fileType": "nix"
+            }
+          ]
+        },
+        {
+          "name": "nixvim",
+          "path": "modules/nixvim",
+          "type": "directory",
+          "children": [
+            {
+              "name": "plugins",
+              "path": "modules/nixvim/plugins",
+              "type": "directory",
+              "children": [
+                {
+                  "name": "cmp.nix",
+                  "path": "modules/nixvim/plugins/cmp.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                },
+                {
+                  "name": "default.nix",
+                  "path": "modules/nixvim/plugins/default.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                },
+                {
+                  "name": "formatting.nix",
+                  "path": "modules/nixvim/plugins/formatting.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                },
+                {
+                  "name": "lsp.nix",
+                  "path": "modules/nixvim/plugins/lsp.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                },
+                {
+                  "name": "markview.nix",
+                  "path": "modules/nixvim/plugins/markview.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                },
+                {
+                  "name": "telescope.nix",
+                  "path": "modules/nixvim/plugins/telescope.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                },
+                {
+                  "name": "treesitter.nix",
+                  "path": "modules/nixvim/plugins/treesitter.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                },
+                {
+                  "name": "ui.nix",
+                  "path": "modules/nixvim/plugins/ui.nix",
+                  "type": "file",
+                  "fileType": "nix"
+                }
+              ]
+            },
+            {
+              "name": "keybinds.nix",
+              "path": "modules/nixvim/keybinds.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "nixvim.nix",
+              "path": "modules/nixvim/nixvim.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "options.nix",
+              "path": "modules/nixvim/options.nix",
+              "type": "file",
+              "fileType": "nix"
+            }
+          ]
+        },
+        {
+          "name": "overlays",
+          "path": "modules/overlays",
+          "type": "directory",
+          "children": [
+            {
+              "name": "obs-move-transition.nix",
+              "path": "modules/overlays/obs-move-transition.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "pnpm.nix",
+              "path": "modules/overlays/pnpm.nix",
+              "type": "file",
+              "fileType": "nix"
+            }
+          ]
+        },
+        {
+          "name": "services",
+          "path": "modules/services",
+          "type": "directory",
+          "children": [
+            {
+              "name": "ArchiSteamFarm.nix",
+              "path": "modules/services/ArchiSteamFarm.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "backup.nix",
+              "path": "modules/services/backup.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "hotspot.nix",
+              "path": "modules/services/hotspot.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "immich.nix",
+              "path": "modules/services/immich.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "isolated-gaming.nix",
+              "path": "modules/services/isolated-gaming.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "jellyfin.nix",
+              "path": "modules/services/jellyfin.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "lact.nix",
+              "path": "modules/services/lact.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "meilisearch.nix",
+              "path": "modules/services/meilisearch.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "openrgb.nix",
+              "path": "modules/services/openrgb.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "playerctl.nix",
+              "path": "modules/services/playerctl.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "printing.nix",
+              "path": "modules/services/printing.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "syncthing.nix",
+              "path": "modules/services/syncthing.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "zapret.nix",
+              "path": "modules/services/zapret.nix",
+              "type": "file",
+              "fileType": "nix"
+            }
+          ]
+        },
+        {
+          "name": "default.nix",
+          "path": "modules/default.nix",
+          "type": "file",
+          "fileType": "nix"
+        }
+      ]
+    },
+    {
+      "name": "secrets",
+      "path": "secrets",
+      "type": "directory",
+      "children": [
+        {
+          "name": "common.yaml",
+          "path": "secrets/common.yaml",
+          "type": "file",
+          "fileType": "config"
+        },
+        {
+          "name": "junixos.yaml",
+          "path": "secrets/junixos.yaml",
+          "type": "file",
+          "fileType": "config"
+        }
+      ]
+    },
+    {
+      "name": ".sops.yaml",
+      "path": ".sops.yaml",
+      "type": "file",
+      "fileType": "config"
+    },
+    {
+      "name": "CONTRIBUTING.md",
+      "path": "CONTRIBUTING.md",
+      "type": "file",
+      "fileType": "doc"
+    },
+    {
+      "name": "flake.lock",
+      "path": "flake.lock",
+      "type": "file",
+      "fileType": "other"
+    },
+    {
+      "name": "flake.nix",
+      "path": "flake.nix",
+      "type": "file",
+      "fileType": "nix"
+    },
+    {
+      "name": "README.md",
+      "path": "README.md",
+      "type": "file",
+      "fileType": "doc"
+    }
+  ]
+}
