@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <!-- Background Dot Pattern -->
+    <pattern id="dot-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="1.5" fill="#32302f" />
+    </pattern>
+
+    <!-- Drop Shadow for Terminal Card -->
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+
+    <!-- Radial Glow behind Visual -->
+    <radialGradient id="blog-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#b8bb26" stop-opacity="0.18"/>
+      <stop offset="60%" stop-color="#83a598" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#282828" stop-opacity="0"/>
+    </radialGradient>
+
+    <style>
+      .mono-title { font-family: 'JetBrains Mono', 'Fira Code', 'FiraCode Nerd Font', monospace, sans-serif; font-weight: 900; }
+      .mono-bold  { font-family: 'JetBrains Mono', 'Fira Code', 'FiraCode Nerd Font', monospace, sans-serif; font-weight: 700; }
+      .mono-med   { font-family: 'JetBrains Mono', 'Fira Code', 'FiraCode Nerd Font', monospace, sans-serif; font-weight: 600; }
+      .mono-reg   { font-family: 'JetBrains Mono', 'Fira Code', 'FiraCode Nerd Font', monospace, sans-serif; font-weight: 400; }
+    </style>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1200" height="630" fill="#1d2021"/>
+  <rect width="1200" height="630" fill="url(#dot-grid)"/>
+
+  <!-- Main Terminal Window Card -->
+  <g filter="url(#card-shadow)">
+    <rect x="50" y="45" width="1100" height="540" rx="16" fill="#282828" stroke="#3c3836" stroke-width="2"/>
+    
+    <!-- Window Title Bar -->
+    <path d="M 50,61 A 16,16 0 0 1 66,45 L 1134,45 A 16,16 0 0 1 1150,61 L 1150,96 L 50,96 Z" fill="#1d2021"/>
+    <line x1="50" y1="96" x2="1150" y2="96" stroke="#3c3836" stroke-width="1.5"/>
+
+    <!-- Window Control Buttons -->
+    <circle cx="80" cy="71" r="6.5" fill="#fb4934"/>
+    <circle cx="102" cy="71" r="6.5" fill="#fabd2f"/>
+    <circle cx="124" cy="71" r="6.5" fill="#b8bb26"/>
+
+    <!-- Terminal Header Info -->
+    <text x="600" y="76" text-anchor="middle" class="mono-med" font-size="13" fill="#a89984">julian@hub: ~/blog (technical notes &amp; systems write-ups)</text>
+  </g>
+
+  <!-- ================= LEFT COLUMN: EVERGREEN CONTENT ================= -->
+  <!-- Pill Badge -->
+  <g transform="translate(90, 124)">
+    <rect width="185" height="26" rx="5" fill="#b8bb26" fill-opacity="0.15" stroke="#b8bb26" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="92.5" y="17.5" text-anchor="middle" class="mono-bold" font-size="11.5" fill="#b8bb26" letter-spacing="0.5">📝 TECHNICAL BLOG</text>
+  </g>
+
+  <!-- Brand Heading -->
+  <text x="90" y="206" class="mono-title" font-size="54" fill="#fabd2f" letter-spacing="-1">Articles &amp; Notes<tspan fill="#fe8019">.</tspan></text>
+  <text x="90" y="244" class="mono-med" font-size="15" fill="#ebdbb2">Technical deep-dives, systems architecture &amp; workflows</text>
+
+  <!-- Core Topics / Focus Pillars (Evergreen) -->
+  <!-- Pillar 1: NixOS & Flakes -->
+  <g transform="translate(90, 276)">
+    <rect width="550" height="54" rx="8" fill="#1d2021" stroke="#3c3836" stroke-width="1.2"/>
+    <text x="20" y="33" class="mono-bold" font-size="14.5" fill="#83a598">❄ NixOS, Flakes &amp; Home-Manager</text>
+    <text x="530" y="33" text-anchor="end" class="mono-reg" font-size="12" fill="#a89984">Declarative Fleets</text>
+  </g>
+
+  <!-- Pillar 2: Kernel & Performance -->
+  <g transform="translate(90, 342)">
+    <rect width="550" height="54" rx="8" fill="#1d2021" stroke="#3c3836" stroke-width="1.2"/>
+    <text x="20" y="33" class="mono-bold" font-size="14.5" fill="#8ec07c">⚡ Linux Kernel &amp; Performance Tuning</text>
+    <text x="530" y="33" text-anchor="end" class="mono-reg" font-size="12" fill="#a89984">Schedulers &amp; Caches</text>
+  </g>
+
+  <!-- Pillar 3: Security & Secrets -->
+  <g transform="translate(90, 408)">
+    <rect width="550" height="54" rx="8" fill="#1d2021" stroke="#3c3836" stroke-width="1.2"/>
+    <text x="20" y="33" class="mono-bold" font-size="14.5" fill="#fabd2f">🏰 Security, Secrets &amp; Backup Automation</text>
+    <text x="530" y="33" text-anchor="end" class="mono-reg" font-size="12" fill="#a89984">SOPS-Nix &amp; Borg</text>
+  </g>
+
+  <!-- Tag Badges -->
+  <g transform="translate(90, 484)" class="mono-reg" font-size="12">
+    <rect x="0" y="0" width="72" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="36" y="17.5" text-anchor="middle" fill="#83a598">#nixos</text>
+
+    <rect x="82" y="0" width="70" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="117" y="17.5" text-anchor="middle" fill="#8ec07c">#kernel</text>
+
+    <rect x="162" y="0" width="68" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="196" y="17.5" text-anchor="middle" fill="#fabd2f">#flakes</text>
+
+    <rect x="240" y="0" width="80" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="280" y="17.5" text-anchor="middle" fill="#fe8019">#sops-nix</text>
+
+    <rect x="330" y="0" width="85" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="372.5" y="17.5" text-anchor="middle" fill="#d3869b">#hyprland</text>
+
+    <rect x="425" y="0" width="68" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="459" y="17.5" text-anchor="middle" fill="#ebdbb2">#linux</text>
+  </g>
+
+  <!-- ================= RIGHT COLUMN: EVERGREEN ARTICLE STACK VISUAL ================= -->
+  <circle cx="890" cy="335" r="170" fill="url(#blog-glow)"/>
+  <circle cx="890" cy="335" r="145" fill="none" stroke="#504945" stroke-width="1.2" stroke-dasharray="4 6" opacity="0.4"/>
+
+  <!-- Stylized Stacked Articles & Terminal Illustration -->
+  <g transform="translate(760, 205)">
+    <!-- Back Stack Sheet 2 -->
+    <rect x="70" y="-15" width="165" height="225" rx="8" fill="#1d2021" stroke="#3c3836" stroke-width="1.5" transform="rotate(6 150 100)"/>
+    
+    <!-- Back Stack Sheet 1 -->
+    <rect x="45" y="-5" width="170" height="235" rx="9" fill="#282828" stroke="#504945" stroke-width="1.5" transform="rotate(-3 130 110)"/>
+
+    <!-- Front Article Sheet -->
+    <rect x="40" y="10" width="180" height="240" rx="10" fill="#1d2021" stroke="#83a598" stroke-width="2"/>
+    <path d="M 180,10 L 220,50 L 180,50 Z" fill="#32302f" stroke="#83a598" stroke-width="1.5"/>
+
+    <!-- Document Header & Lambda Icon -->
+    <rect x="65" y="35" width="40" height="12" rx="3" fill="#b8bb26"/>
+    <text x="190" y="44" text-anchor="middle" class="mono-bold" font-size="16" fill="#fabd2f">λ</text>
+
+    <!-- Document Code / Article Lines -->
+    <rect x="65" y="65" width="130" height="6" rx="2" fill="#83a598"/>
+    <rect x="65" y="80" width="105" height="6" rx="2" fill="#ebdbb2" fill-opacity="0.6"/>
+    <rect x="65" y="95" width="125" height="6" rx="2" fill="#ebdbb2" fill-opacity="0.4"/>
+
+    <!-- Code Block in Article -->
+    <rect x="60" y="118" width="140" height="65" rx="5" fill="#282828" stroke="#3c3836"/>
+    <text x="70" y="136" class="mono-reg" font-size="10.5" fill="#b8bb26"># system-notes</text>
+    <text x="70" y="152" class="mono-reg" font-size="10.5" fill="#fe8019">nix.build = true;</text>
+    <text x="70" y="168" class="mono-reg" font-size="10.5" fill="#8ec07c">status: "online";</text>
+
+    <!-- Bottom Metadata Tags -->
+    <rect x="65" y="200" width="60" height="7" rx="2" fill="#d3869b"/>
+    <rect x="135" y="200" width="50" height="7" rx="2" fill="#504945"/>
+    <rect x="65" y="215" width="90" height="6" rx="2" fill="#ebdbb2" fill-opacity="0.3"/>
+  </g>
+</svg>

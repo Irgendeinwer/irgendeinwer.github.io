@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <!-- Background Dot Pattern -->
+    <pattern id="dot-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="1.5" fill="#32302f" />
+    </pattern>
+
+    <!-- Drop Shadow for Terminal Card -->
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+
+    <!-- Radial Glow behind Topology -->
+    <radialGradient id="fleet-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#83a598" stop-opacity="0.22"/>
+      <stop offset="60%" stop-color="#fabd2f" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#282828" stop-opacity="0"/>
+    </radialGradient>
+
+    <style>
+      .mono-title { font-family: 'JetBrains Mono', 'Fira Code', 'FiraCode Nerd Font', monospace, sans-serif; font-weight: 900; }
+      .mono-bold  { font-family: 'JetBrains Mono', 'Fira Code', 'FiraCode Nerd Font', monospace, sans-serif; font-weight: 700; }
+      .mono-med   { font-family: 'JetBrains Mono', 'Fira Code', 'FiraCode Nerd Font', monospace, sans-serif; font-weight: 600; }
+      .mono-reg   { font-family: 'JetBrains Mono', 'Fira Code', 'FiraCode Nerd Font', monospace, sans-serif; font-weight: 400; }
+    </style>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1200" height="630" fill="#1d2021"/>
+  <rect width="1200" height="630" fill="url(#dot-grid)"/>
+
+  <!-- Main Terminal Window Card -->
+  <g filter="url(#card-shadow)">
+    <rect x="50" y="45" width="1100" height="540" rx="16" fill="#282828" stroke="#3c3836" stroke-width="2"/>
+    
+    <!-- Window Title Bar -->
+    <path d="M 50,61 A 16,16 0 0 1 66,45 L 1134,45 A 16,16 0 0 1 1150,61 L 1150,96 L 50,96 Z" fill="#1d2021"/>
+    <line x1="50" y1="96" x2="1150" y2="96" stroke="#3c3836" stroke-width="1.5"/>
+
+    <!-- Window Control Buttons -->
+    <circle cx="80" cy="71" r="6.5" fill="#fb4934"/>
+    <circle cx="102" cy="71" r="6.5" fill="#fabd2f"/>
+    <circle cx="124" cy="71" r="6.5" fill="#b8bb26"/>
+
+    <!-- Terminal Header Info -->
+    <text x="600" y="76" text-anchor="middle" class="mono-med" font-size="13" fill="#a89984">julian@hub: ~/blog/building-declarative-nixos-fleet</text>
+  </g>
+
+  <!-- ================= LEFT COLUMN: CONTENT ================= -->
+  <!-- Pill Badge -->
+  <g transform="translate(90, 126)">
+    <rect width="210" height="26" rx="5" fill="#83a598" fill-opacity="0.15" stroke="#83a598" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="105" y="17.5" text-anchor="middle" class="mono-bold" font-size="11.5" fill="#83a598" letter-spacing="0.5">🏰 ARCHITECTURE &amp; SECURITY</text>
+  </g>
+
+  <!-- Article Heading -->
+  <text x="90" y="202" class="mono-title" font-size="44" fill="#ebdbb2" letter-spacing="-0.5">Declarative Multi-Host</text>
+  <text x="90" y="248" class="mono-title" font-size="44" fill="#fabd2f" letter-spacing="-0.5">NixOS Fleet Architecture<tspan fill="#fe8019">.</tspan></text>
+  <text x="90" y="286" class="mono-med" font-size="15" fill="#a89984">Custom option namespaces, age-encrypted SOPS &amp; BorgBackup</text>
+
+  <!-- Spec / Architecture Highlights -->
+  <g transform="translate(90, 318)">
+    <rect width="560" height="135" rx="8" fill="#1d2021" stroke="#3c3836" stroke-width="1.2"/>
+    <text x="20" y="30" class="mono-bold" font-size="13" fill="#fabd2f"># fleet design principles</text>
+    
+    <text x="20" y="58" class="mono-reg" font-size="13" fill="#ebdbb2"><tspan fill="#83a598">1. Custom Namespaces:</tspan> Clean <tspan fill="#fe8019">myHost.*</tspan> options without collisions</text>
+    <text x="20" y="84" class="mono-reg" font-size="13" fill="#ebdbb2"><tspan fill="#fe8019">2. SOPS-Nix Secrets:</tspan> Encrypted with Host SSH Keys (Zero plaintext)</text>
+    <text x="20" y="110" class="mono-reg" font-size="13" fill="#ebdbb2"><tspan fill="#b8bb26">3. Automated Borg:</tspan> Udev plug-triggered incremental backups</text>
+  </g>
+
+  <!-- Tag Badges -->
+  <g transform="translate(90, 480)" class="mono-reg" font-size="12">
+    <rect x="0" y="0" width="70" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="35" y="17.5" text-anchor="middle" fill="#83a598">#nixos</text>
+
+    <rect x="80" y="0" width="105" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="132.5" y="17.5" text-anchor="middle" fill="#fe8019">#sops-secrets</text>
+
+    <rect x="195" y="0" width="115" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="252.5" y="17.5" text-anchor="middle" fill="#d3869b">#borgbackup</text>
+
+    <rect x="320" y="0" width="105" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="372.5" y="17.5" text-anchor="middle" fill="#fabd2f">#namespaces</text>
+  </g>
+
+  <!-- ================= RIGHT COLUMN: GRAPHIC ================= -->
+  <circle cx="900" cy="335" r="175" fill="url(#fleet-glow)"/>
+  <circle cx="900" cy="335" r="145" fill="none" stroke="#504945" stroke-width="1.2" stroke-dasharray="4 6" opacity="0.35"/>
+
+  <!-- Stylized Multi-Host Topology Nodes -->
+  <g transform="translate(760, 205)">
+    <!-- Connection lines -->
+    <line x1="130" y1="50" x2="60" y2="175" stroke="#83a598" stroke-width="2" stroke-dasharray="3 3"/>
+    <line x1="130" y1="50" x2="200" y2="175" stroke="#fabd2f" stroke-width="2" stroke-dasharray="3 3"/>
+
+    <!-- Central Flake Hub Node -->
+    <rect x="80" y="20" width="100" height="60" rx="8" fill="#1d2021" stroke="#b8bb26" stroke-width="2"/>
+    <text x="130" y="44" text-anchor="middle" class="mono-bold" font-size="12" fill="#b8bb26">flake.nix</text>
+    <text x="130" y="62" text-anchor="middle" class="mono-reg" font-size="10" fill="#a89984">Core Fleet</text>
+
+    <!-- Node 1: junixos -->
+    <rect x="10" y="150" width="105" height="65" rx="8" fill="#1d2021" stroke="#83a598" stroke-width="2"/>
+    <text x="62" y="174" text-anchor="middle" class="mono-bold" font-size="12" fill="#83a598">🖥️ junixos</text>
+    <text x="62" y="192" text-anchor="middle" class="mono-reg" font-size="9.5" fill="#ebdbb2">Desktop Fleet</text>
+    <text x="62" y="205" text-anchor="middle" class="mono-reg" font-size="9" fill="#fe8019">SOPS + Borg</text>
+
+    <!-- Node 2: junixbook -->
+    <rect x="150" y="150" width="105" height="65" rx="8" fill="#1d2021" stroke="#fabd2f" stroke-width="2"/>
+    <text x="202" y="174" text-anchor="middle" class="mono-bold" font-size="12" fill="#fabd2f">💻 junixbook</text>
+    <text x="202" y="192" text-anchor="middle" class="mono-reg" font-size="9.5" fill="#ebdbb2">Mobile Fleet</text>
+    <text x="202" y="205" text-anchor="middle" class="mono-reg" font-size="9" fill="#b8bb26">Battery Profile</text>
+  </g>
+</svg>
