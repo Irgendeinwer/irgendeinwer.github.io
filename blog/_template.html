@@ -52,6 +52,11 @@
     }
     </script>
 
+    <!-- Preload Stylesheets -->
+    <link rel="preload" href="../css/variables.css" as="style">
+    <link rel="preload" href="../css/main.css" as="style">
+    <link rel="preload" href="../css/components.css" as="style">
+
     <!-- Modular Stylesheets -->
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/main.css">
@@ -76,9 +81,9 @@
             </div>
             <div class="contrast-switcher" role="group" aria-label="Background Contrast Modes">
                 <span class="contrast-label">Contrast:</span>
-                <button class="contrast-btn" onclick="setContrast('hard')" aria-label="Set contrast to Hard mode">Hard</button>
-                <button class="contrast-btn active" onclick="setContrast('medium')" aria-label="Set contrast to Medium mode">Medium</button>
-                <button class="contrast-btn" onclick="setContrast('soft')" aria-label="Set contrast to Soft mode">Soft</button>
+                <button type="button" class="contrast-btn" onclick="setContrast('hard')" aria-label="Set contrast to Hard mode">Hard</button>
+                <button type="button" class="contrast-btn active" onclick="setContrast('medium')" aria-label="Set contrast to Medium mode">Medium</button>
+                <button type="button" class="contrast-btn" onclick="setContrast('soft')" aria-label="Set contrast to Soft mode">Soft</button>
             </div>
         </nav>
 
@@ -124,7 +129,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="../js/shortcuts.js"></script>
-    <script src="../js/app.js"></script>
+    <script src="../js/shortcuts.js" defer></script>
+    <script src="../js/app.js" defer></script>
 </body>
 </html>

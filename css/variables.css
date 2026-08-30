@@ -12,8 +12,8 @@
 
     --fg-0: #fbf1c7;
     --fg-1: #ebdbb2;
-    --fg-4: #bdae93; /* Gruvbox fg3 - WCAG AA compliant (>6:1 contrast) */
-    --gray: #a89984; /* Gruvbox fg4 - WCAG AA compliant (>4.8:1 contrast) */
+    --fg-4: #d5c4a1; /* Gruvbox fg2 - WCAG AAA compliant (>7.5:1 contrast on #282828, >5.5:1 on #3c3836) */
+    --gray: #bdae93; /* Gruvbox fg3 - WCAG AA compliant (>6.0:1 contrast on #282828, >4.7:1 on #3c3836) */
 
     --red: #fb4934;
     --green: #b8bb26;

@@ -73,6 +73,12 @@
     }
     </script>
 
+    <!-- Preconnect & Preload Optimization -->
+    <link rel="preconnect" href="https://api.github.com" crossorigin>
+    <link rel="preload" href="css/variables.css" as="style">
+    <link rel="preload" href="css/main.css" as="style">
+    <link rel="preload" href="css/components.css" as="style">
+
     <!-- Modular CSS Stylesheets -->
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/main.css">
@@ -95,9 +101,9 @@
             </div>
             <div class="contrast-switcher" role="group" aria-label="Background Contrast Modes">
                 <span class="contrast-label">Contrast:</span>
-                <button class="contrast-btn" onclick="setContrast('hard')" aria-label="Set contrast to Hard mode">Hard</button>
-                <button class="contrast-btn active" onclick="setContrast('medium')" aria-label="Set contrast to Medium mode">Medium</button>
-                <button class="contrast-btn" onclick="setContrast('soft')" aria-label="Set contrast to Soft mode">Soft</button>
+                <button type="button" class="contrast-btn" onclick="setContrast('hard')" aria-label="Set contrast to Hard mode">Hard</button>
+                <button type="button" class="contrast-btn active" onclick="setContrast('medium')" aria-label="Set contrast to Medium mode">Medium</button>
+                <button type="button" class="contrast-btn" onclick="setContrast('soft')" aria-label="Set contrast to Soft mode">Soft</button>
             </div>
         </nav>
 
@@ -131,13 +137,14 @@
                     </div>
                     <span class="terminal-quote">⚡ <span id="nix-quote">Hyprland Wayland compositor loaded</span></span>
                     <div class="host-tabs" role="tablist" aria-label="Fleet Machines">
-                        <button class="tab-btn active" id="tab-junixos" role="tab" aria-selected="true" aria-controls="specs-container" onclick="switchHost('junixos')">🖥️ junixos</button>
-                        <button class="tab-btn" id="tab-junixbook" role="tab" aria-selected="false" aria-controls="specs-container" onclick="switchHost('junixbook')">💻 junixbook</button>
+                        <button type="button" class="tab-btn active" id="tab-junixos" role="tab" aria-selected="true" aria-controls="specs-container" onclick="switchHost('junixos')">🖥️ junixos</button>
+                        <button type="button" class="tab-btn" id="tab-junixbook" role="tab" aria-selected="false" aria-controls="specs-container" onclick="switchHost('junixbook')">💻 junixbook</button>
                     </div>
                 </div>
                 <div class="terminal-body">
                     <!-- Clean Vector Rainbow NixOS Snowflake (Interactive Easter Egg) -->
                     <svg class="nix-logo" id="snowflake-btn" viewBox="0 0 24 24" onclick="triggerSnowflakeEgg(event)" onkeydown="if(event.key==='Enter'||event.key===' ')triggerSnowflakeEgg(event)" tabindex="0" role="button" title="Click me for a Nix fortune! (or press 's')" aria-label="Interactive NixOS Snowflake (Click or press 's' for fortunes)">
+                        <title>Interactive NixOS Snowflake</title>
                         <!-- Arm 1 (Top Left): Aqua -->
                         <path d="M7.352 1.592l-1.364.002L5.32 2.75l1.557 2.713-3.137-.008-1.32 2.34H14.11l-1.353-2.332-3.192-.006-2.214-3.865z" fill="#83a598"/>
                         <!-- Arm 2 (Top Right): Green -->
@@ -152,8 +159,32 @@
                         <path d="M9.882 16.18l1.354 2.332 3.192.006 2.215 3.865 1.363-.002.668-1.156-1.557-2.713 3.137.008 1.32-2.34H9.881Z" fill="#d3869b"/>
                     </svg>
                     
-                    <!-- Dynamic Fastfetch Specs -->
-                    <div class="fetch-specs" id="specs-container" role="tabpanel" aria-live="polite"></div>
+                    <!-- Dynamic Fastfetch Specs (Pre-rendered for Instant Paint & Zero CLS) -->
+                    <div class="fetch-specs" id="specs-container" role="tabpanel" aria-labelledby="tab-junixos" aria-live="polite">
+                        <div class="fetch-header">julian@junixos</div>
+                        <div class="fetch-divider" aria-hidden="true">-----------------------------</div>
+                        <div class="spec-line"><span class="spec-key">OS:</span><span class="spec-val">NixOS (x86_64)</span></div>
+                        <div class="spec-line"><span class="spec-key">Host:</span><span class="spec-val">Desktop Workstation</span></div>
+                        <div class="spec-line"><span class="spec-key">Kernel:</span><span class="spec-val">Linux (CachyOS)</span></div>
+                        <div class="spec-line"><span class="spec-key">Shell:</span><span class="spec-val">zsh</span></div>
+                        <div class="spec-line"><span class="spec-key">WM:</span><span class="spec-val accent">Hyprland (Wayland)</span></div>
+                        <div class="spec-line"><span class="spec-key">Terminal:</span><span class="spec-val">kitty</span></div>
+                        <div class="spec-line"><span class="spec-key">Font:</span><span class="spec-val">FiraCode Nerd Font</span></div>
+                        <div class="spec-line"><span class="spec-key">Theme:</span><span class="spec-val">gruvbox-dark-gtk</span></div>
+                        <div class="spec-line"><span class="spec-key">Cursor:</span><span class="spec-val">BreezeX-RosePine-Linux</span></div>
+                        <div class="spec-line"><span class="spec-key">CPU:</span><span class="spec-val">Intel Core i5-13600KF</span></div>
+                        <div class="spec-line"><span class="spec-key">GPU:</span><span class="spec-val">AMD Radeon RX 9070</span></div>
+                        <div class="fetch-palette" aria-hidden="true">
+                            <span class="palette-block" style="background:#282828"></span>
+                            <span class="palette-block" style="background:#fb4934"></span>
+                            <span class="palette-block" style="background:#b8bb26"></span>
+                            <span class="palette-block" style="background:#fabd2f"></span>
+                            <span class="palette-block" style="background:#83a598"></span>
+                            <span class="palette-block" style="background:#d3869b"></span>
+                            <span class="palette-block" style="background:#8ec07c"></span>
+                            <span class="palette-block" style="background:#ebdbb2"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -211,7 +242,7 @@
             <div class="tree-container">
                 <div class="tree-header">
                     <span id="tree-stats-text">📂 NixOS-Dotfiles (18 directories, 87 files)</span>
-                    <button class="btn-tree-toggle" onclick="toggleAllTreeFolders()" aria-label="Toggle expand and collapse on all repository folders">Expand / Collapse All</button>
+                    <button type="button" class="btn-tree-toggle" onclick="toggleAllTreeFolders()" aria-label="Toggle expand and collapse on all repository folders">Expand / Collapse All</button>
                 </div>
                 <div class="tree-body">
                     <ul class="tree-root" id="tree-root-container">
@@ -455,19 +486,19 @@
                     Modularized under <code>custom.*</code>. Toggle options to preview generated NixOS declarations:
                 </p>
                 <div class="playground-actions">
-                    <button class="btn-action" onclick="randomizeOptions(false)" title="Keyboard shortcut: 'r'" aria-label="Randomize options">🎲 Randomize</button>
-                    <button class="btn-action" onclick="copyNixCode()" aria-label="Copy Nix configuration snippet to clipboard">📋 Copy Config</button>
+                    <button type="button" class="btn-action" onclick="randomizeOptions(false)" title="Keyboard shortcut: 'r'" aria-label="Randomize options">🎲 Randomize</button>
+                    <button type="button" class="btn-action" onclick="copyNixCode()" aria-label="Copy Nix configuration snippet to clipboard">📋 Copy Config</button>
                 </div>
             </div>
             <div class="playground-container">
                 <div class="toggles-panel">
                     <div class="toggle-group-title">Desktop &amp; Gaming</div>
                     <label class="toggle-item">
-                        <input type="checkbox" id="chk-hyprland" onchange="updateLiveConfig()" aria-label="custom.desktop.hyprland.enable">
+                        <input type="checkbox" id="chk-hyprland" checked onchange="updateLiveConfig()" aria-label="custom.desktop.hyprland.enable">
                         <span>custom.desktop.hyprland.enable</span>
                     </label>
                     <label class="toggle-item">
-                        <input type="checkbox" id="chk-gaming" onchange="updateLiveConfig()" aria-label="custom.desktop.gaming.enable">
+                        <input type="checkbox" id="chk-gaming" checked onchange="updateLiveConfig()" aria-label="custom.desktop.gaming.enable">
                         <span>custom.desktop.gaming.enable</span>
                     </label>
                     <label class="toggle-item">
@@ -481,13 +512,13 @@
                         <span>custom.system.boot.silent.enable</span>
                     </label>
                     <label class="toggle-item">
-                        <input type="checkbox" id="chk-android" onchange="updateLiveConfig()" aria-label="custom.system.android.enable">
+                        <input type="checkbox" id="chk-android" checked onchange="updateLiveConfig()" aria-label="custom.system.android.enable">
                         <span>custom.system.android.enable</span>
                     </label>
 
                     <div class="toggle-group-title">Services, Backup &amp; Network</div>
                     <label class="toggle-item">
-                        <input type="checkbox" id="chk-backup" onchange="updateLiveConfig()" aria-label="custom.services.backup.enable">
+                        <input type="checkbox" id="chk-backup" checked onchange="updateLiveConfig()" aria-label="custom.services.backup.enable">
                         <span>custom.services.backup.enable</span>
                     </label>
                     <label class="toggle-item">
@@ -499,7 +530,7 @@
                         <span>custom.services.jellyfin.enable</span>
                     </label>
                     <label class="toggle-item">
-                        <input type="checkbox" id="chk-zapret" onchange="updateLiveConfig()" aria-label="custom.services.zapret.enable">
+                        <input type="checkbox" id="chk-zapret" checked onchange="updateLiveConfig()" aria-label="custom.services.zapret.enable">
                         <span>custom.services.zapret.enable</span>
                     </label>
                     <label class="toggle-item">
@@ -508,7 +539,38 @@
                     </label>
                 </div>
                 <div class="live-code-preview">
-                    <pre><code id="code-preview"></code></pre>
+                    <pre><code id="code-preview"><span class="code-nix-comment"># hosts/junixos/configuration.nix snippet</span>
+{
+  <span class="code-nix-key">custom</span> = {
+    <span class="code-nix-key">system</span> = {
+      <span class="code-nix-key">kernel</span> = <span class="code-nix-str">"cachyos"</span>;
+      <span class="code-nix-key">boot.silent.enable</span> = <span class="code-nix-val">false</span>;
+      <span class="code-nix-key">android.enable</span>     = <span class="code-nix-val">true</span>;
+    };
+
+    <span class="code-nix-key">desktop</span> = {
+      <span class="code-nix-key">hyprland.enable</span>    = <span class="code-nix-val">true</span>;
+      <span class="code-nix-key">gaming</span> = {
+        <span class="code-nix-key">enable</span>           = <span class="code-nix-val">true</span>;
+        <span class="code-nix-key">arkServer.enable</span> = <span class="code-nix-val">false</span>;
+      };
+    };
+
+    <span class="code-nix-key">services</span> = {
+      <span class="code-nix-key">backup</span> = {
+        <span class="code-nix-key">enable</span>             = <span class="code-nix-val">true</span>;
+        <span class="code-nix-key">autoTriggerOnPlug</span>  = <span class="code-nix-val">true</span>;
+      };
+      <span class="code-nix-key">hotspot</span> = {
+        <span class="code-nix-key">enable</span>             = <span class="code-nix-val">false</span>;
+        <span class="code-nix-key">ssid</span>               = <span class="code-nix-str">"6+7"</span>;
+      };
+      <span class="code-nix-key">jellyfin.enable</span>       = <span class="code-nix-val">false</span>;
+      <span class="code-nix-key">zapret.enable</span>         = <span class="code-nix-val">true</span>;
+      <span class="code-nix-key">isolatedGaming.enable</span> = <span class="code-nix-val">false</span>;
+    };
+  };
+}</code></pre>
                 </div>
             </div>
         </section>
@@ -519,13 +581,13 @@
             <div class="cmd-terminal">
                 <div class="cmd-header">
                     <div class="cmd-tabs">
-                        <button class="cmd-tab-btn active" id="btn-tab-clone" onclick="switchCmd('clone')" aria-label="Show Git Clone command">Clone Repository</button>
-                        <button class="cmd-tab-btn" id="btn-tab-rebuild" onclick="switchCmd('rebuild')" aria-label="Show NixOS Rebuild command">NixOS Rebuild Flake</button>
+                        <button type="button" class="cmd-tab-btn active" id="btn-tab-clone" onclick="switchCmd('clone')" aria-label="Show Git Clone command">Clone Repository</button>
+                        <button type="button" class="cmd-tab-btn" id="btn-tab-rebuild" onclick="switchCmd('rebuild')" aria-label="Show NixOS Rebuild command">NixOS Rebuild Flake</button>
                     </div>
                 </div>
                 <div class="cmd-body">
                     <code class="cmd-text" id="cmd-display">git clone https://github.com/Irgendeinwer/NixOS-Dotfiles.git</code>
-                    <button class="btn-copy-small" onclick="copyCurrentCommand()" aria-label="Copy command to clipboard">Copy Command</button>
+                    <button type="button" class="btn-copy-small" onclick="copyCurrentCommand()" aria-label="Copy command to clipboard">Copy Command</button>
                 </div>
             </div>
         </section>
@@ -584,12 +646,12 @@
         <span id="toast-msg">Copied to clipboard!</span>
     </div>
 
-    <!-- Modular Interactive JavaScript -->
-    <script src="js/fleet.js"></script>
-    <script src="js/config-generator.js"></script>
-    <script src="js/github.js"></script>
-    <script src="js/tree.js"></script>
-    <script src="js/shortcuts.js"></script>
-    <script src="js/app.js"></script>
+    <!-- Modular Interactive JavaScript (Deferred) -->
+    <script src="js/fleet.js" defer></script>
+    <script src="js/config-generator.js" defer></script>
+    <script src="js/github.js" defer></script>
+    <script src="js/tree.js" defer></script>
+    <script src="js/shortcuts.js" defer></script>
+    <script src="js/app.js" defer></script>
 </body>
 </html>
