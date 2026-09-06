@@ -1,7 +1,7 @@
 {
   "repoName": "NixOS-Dotfiles",
   "totalDirectories": 17,
-  "totalFiles": 87,
+  "totalFiles": 90,
   "tree": [
     {
       "name": ".github",
@@ -342,6 +342,12 @@
               "fileType": "nix"
             },
             {
+              "name": "hardening.nix",
+              "path": "modules/nixos/hardening.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
               "name": "hypr.nix",
               "path": "modules/nixos/hypr.nix",
               "type": "file",
@@ -380,6 +386,18 @@
             {
               "name": "plymouth.nix",
               "path": "modules/nixos/plymouth.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "power.nix",
+              "path": "modules/nixos/power.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "secureboot.nix",
+              "path": "modules/nixos/secureboot.nix",
               "type": "file",
               "fileType": "nix"
             },
