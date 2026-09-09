@@ -1,7 +1,7 @@
 {
   "repoName": "NixOS-Dotfiles",
-  "totalDirectories": 17,
-  "totalFiles": 90,
+  "totalDirectories": 18,
+  "totalFiles": 92,
   "tree": [
     {
       "name": ".github",
@@ -190,6 +190,25 @@
               ]
             },
             {
+              "name": "scripts",
+              "path": "modules/home-manager/scripts",
+              "type": "directory",
+              "children": [
+                {
+                  "name": "listen.sh",
+                  "path": "modules/home-manager/scripts/listen.sh",
+                  "type": "file",
+                  "fileType": "config"
+                },
+                {
+                  "name": "lrclib-upload.py",
+                  "path": "modules/home-manager/scripts/lrclib-upload.py",
+                  "type": "file",
+                  "fileType": "other"
+                }
+              ]
+            },
+            {
               "name": "default.nix",
               "path": "modules/home-manager/default.nix",
               "type": "file",
@@ -214,10 +233,10 @@
               "fileType": "nix"
             },
             {
-              "name": "listen.sh",
-              "path": "modules/home-manager/listen.sh",
+              "name": "lrclib-upload.nix",
+              "path": "modules/home-manager/lrclib-upload.nix",
               "type": "file",
-              "fileType": "config"
+              "fileType": "nix"
             },
             {
               "name": "mpv.nix",
