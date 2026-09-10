@@ -1,7 +1,7 @@
 {
   "repoName": "NixOS-Dotfiles",
   "totalDirectories": 18,
-  "totalFiles": 92,
+  "totalFiles": 95,
   "tree": [
     {
       "name": ".github",
@@ -437,6 +437,12 @@
               "path": "modules/nixos/virt.nix",
               "type": "file",
               "fileType": "nix"
+            },
+            {
+              "name": "vscode.nix",
+              "path": "modules/nixos/vscode.nix",
+              "type": "file",
+              "fileType": "nix"
             }
           ]
         },
@@ -545,6 +551,12 @@
           "type": "directory",
           "children": [
             {
+              "name": "ai.nix",
+              "path": "modules/services/ai.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
               "name": "ArchiSteamFarm.nix",
               "path": "modules/services/ArchiSteamFarm.nix",
               "type": "file",
@@ -637,6 +649,12 @@
       "path": "secrets",
       "type": "directory",
       "children": [
+        {
+          "name": "ai.yaml",
+          "path": "secrets/ai.yaml",
+          "type": "file",
+          "fileType": "config"
+        },
         {
           "name": "common.yaml",
           "path": "secrets/common.yaml",
