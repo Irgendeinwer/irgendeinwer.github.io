@@ -173,7 +173,10 @@
 
     <span class="code-nix-key">desktop</span> = {
       <span class="code-nix-key">hyprland.enable</span>    = <span class="code-nix-val">true</span>;
-      <span class="code-nix-key">gaming.enable</span>      = <span class="code-nix-val">true</span>;
+      <span class="code-nix-key">gaming</span> = {
+        <span class="code-nix-key">enable</span>           = <span class="code-nix-val">true</span>;
+        <span class="code-nix-key">isolated.enable</span>  = <span class="code-nix-val">false</span>;
+      };
     };
 
     <span class="code-nix-key">services</span> = {
@@ -183,7 +186,6 @@
         <span class="code-nix-key">autoTriggerOnPlug</span> = <span class="code-nix-val">true</span>;
       };
       <span class="code-nix-key">zapret.enable</span>         = <span class="code-nix-val">true</span>;
-      <span class="code-nix-key">isolatedGaming.enable</span> = <span class="code-nix-val">false</span>;
     };
   };
 }</code></pre>

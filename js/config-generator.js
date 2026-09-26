@@ -37,6 +37,7 @@ function updateLiveConfig() {
       <span class="code-nix-key">hyprland.enable</span>    = <span class="code-nix-val">${hypr}</span>;
       <span class="code-nix-key">gaming</span> = {
         <span class="code-nix-key">enable</span>           = <span class="code-nix-val">${gaming}</span>;
+        <span class="code-nix-key">isolated.enable</span>  = <span class="code-nix-val">${isolated}</span>;
         <span class="code-nix-key">arkServer.enable</span> = <span class="code-nix-val">${ark}</span>;
       };
     };
@@ -52,7 +53,6 @@ function updateLiveConfig() {
       };
       <span class="code-nix-key">jellyfin.enable</span>       = <span class="code-nix-val">${jellyfin}</span>;
       <span class="code-nix-key">zapret.enable</span>         = <span class="code-nix-val">${zapret}</span>;
-      <span class="code-nix-key">isolatedGaming.enable</span> = <span class="code-nix-val">${isolated}</span>;
     };
   };
 }`;
