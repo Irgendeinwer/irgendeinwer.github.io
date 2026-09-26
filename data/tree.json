@@ -1,7 +1,7 @@
 {
   "repoName": "NixOS-Dotfiles",
   "totalDirectories": 18,
-  "totalFiles": 95,
+  "totalFiles": 96,
   "tree": [
     {
       "name": ".github",
@@ -297,8 +297,20 @@
                   "path": "modules/nixos/pkgs/messaging.nix",
                   "type": "file",
                   "fileType": "nix"
+                },
+                {
+                  "name": "office.nix",
+                  "path": "modules/nixos/pkgs/office.nix",
+                  "type": "file",
+                  "fileType": "nix"
                 }
               ]
+            },
+            {
+              "name": "amdgpu.nix",
+              "path": "modules/nixos/amdgpu.nix",
+              "type": "file",
+              "fileType": "nix"
             },
             {
               "name": "android.nix",
@@ -337,12 +349,6 @@
               "fileType": "nix"
             },
             {
-              "name": "flakes.nix",
-              "path": "modules/nixos/flakes.nix",
-              "type": "file",
-              "fileType": "nix"
-            },
-            {
               "name": "fonts.nix",
               "path": "modules/nixos/fonts.nix",
               "type": "file",
@@ -369,6 +375,12 @@
             {
               "name": "hypr.nix",
               "path": "modules/nixos/hypr.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "isolated-gaming.nix",
+              "path": "modules/nixos/isolated-gaming.nix",
               "type": "file",
               "fileType": "nix"
             },
@@ -532,6 +544,12 @@
           "type": "directory",
           "children": [
             {
+              "name": "lix.nix",
+              "path": "modules/overlays/lix.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
               "name": "obs-move-transition.nix",
               "path": "modules/overlays/obs-move-transition.nix",
               "type": "file",
@@ -581,20 +599,8 @@
               "fileType": "nix"
             },
             {
-              "name": "isolated-gaming.nix",
-              "path": "modules/services/isolated-gaming.nix",
-              "type": "file",
-              "fileType": "nix"
-            },
-            {
               "name": "jellyfin.nix",
               "path": "modules/services/jellyfin.nix",
-              "type": "file",
-              "fileType": "nix"
-            },
-            {
-              "name": "lact.nix",
-              "path": "modules/services/lact.nix",
               "type": "file",
               "fileType": "nix"
             },
