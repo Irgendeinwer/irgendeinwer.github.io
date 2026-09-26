@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <!-- Background Dot Pattern -->
+    <pattern id="dot-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="1.5" fill="#32302f" />
+    </pattern>
+
+    <!-- Drop Shadow for Terminal Card -->
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+
+    <!-- Ambient Glow behind Technical Architecture -->
+    <radialGradient id="arch-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8ec07c" stop-opacity="0.22"/>
+      <stop offset="55%" stop-color="#fabd2f" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#282828" stop-opacity="0"/>
+    </radialGradient>
+
+    <style>
+      .mono-title { font-family: 'JetBrains Mono', 'Fira Code', 'FiraCode Nerd Font', monospace, sans-serif; font-weight: 900; }
+      .mono-bold  { font-family: 'JetBrains Mono', 'Fira Code', 'FiraCode Nerd Font', monospace, sans-serif; font-weight: 700; }
+      .mono-med   { font-family: 'JetBrains Mono', 'Fira Code', 'FiraCode Nerd Font', monospace, sans-serif; font-weight: 600; }
+      .mono-reg   { font-family: 'JetBrains Mono', 'Fira Code', 'FiraCode Nerd Font', monospace, sans-serif; font-weight: 400; }
+    </style>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1200" height="630" fill="#1d2021"/>
+  <rect width="1200" height="630" fill="url(#dot-grid)"/>
+
+  <!-- Main Terminal Window Card -->
+  <g filter="url(#card-shadow)">
+    <rect x="50" y="45" width="1100" height="540" rx="16" fill="#282828" stroke="#3c3836" stroke-width="2"/>
+    
+    <!-- Window Title Bar -->
+    <path d="M 50,61 A 16,16 0 0 1 66,45 L 1134,45 A 16,16 0 0 1 1150,61 L 1150,96 L 50,96 Z" fill="#1d2021"/>
+    <line x1="50" y1="96" x2="1150" y2="96" stroke="#3c3836" stroke-width="1.5"/>
+
+    <!-- Window Control Buttons -->
+    <circle cx="80" cy="71" r="6.5" fill="#fb4934"/>
+    <circle cx="102" cy="71" r="6.5" fill="#fabd2f"/>
+    <circle cx="124" cy="71" r="6.5" fill="#b8bb26"/>
+
+    <!-- Terminal Header Info -->
+    <text x="600" y="76" text-anchor="middle" class="mono-med" font-size="13" fill="#a89984">julian@hub: ~/blog/practical-nixos-workstation-hardening</text>
+  </g>
+
+  <!-- ================= LEFT COLUMN: CONTENT ================= -->
+  <!-- Pill Badge -->
+  <g transform="translate(90, 126)">
+    <rect width="245" height="26" rx="5" fill="#8ec07c" fill-opacity="0.15" stroke="#8ec07c" stroke-opacity="0.4" stroke-width="1"/>
+    <!-- Inline Vector Shield Icon -->
+    <path d="M 22,6.5 L 30,9.5 L 30,16 C 30,19.5 22,21.5 22,21.5 C 22,21.5 14,19.5 14,16 L 14,9.5 Z" fill="#8ec07c" fill-opacity="0.4" stroke="#8ec07c" stroke-width="1.2" stroke-linejoin="round"/>
+    <text x="135" y="17.5" text-anchor="middle" class="mono-bold" font-size="11.5" fill="#8ec07c" letter-spacing="0.5">SYSTEM SECURITY &amp; HARDENING</text>
+  </g>
+
+  <!-- Article Heading -->
+  <text x="90" y="202" class="mono-title" font-size="44" fill="#ebdbb2" letter-spacing="-0.5">Practical Workstation</text>
+  <text x="90" y="248" class="mono-title" font-size="44" fill="#8ec07c" letter-spacing="-0.5">Hardening on NixOS<tspan fill="#fe8019">.</tspan></text>
+  <text x="90" y="286" class="mono-med" font-size="15" fill="#a89984">IOMMU DMA protection, sysctls &amp; avoiding the hibernation trap</text>
+
+  <!-- Spec / Code Box -->
+  <g transform="translate(90, 318)">
+    <rect width="560" height="135" rx="8" fill="#1d2021" stroke="#3c3836" stroke-width="1.2"/>
+    <text x="20" y="30" class="mono-bold" font-size="13" fill="#fabd2f"># modules/nixos/hardening.nix</text>
+    
+    <text x="20" y="58" class="mono-reg" font-size="13" fill="#ebdbb2"><tspan fill="#fe8019">boot.kernelParams</tspan> = [ <tspan fill="#b8bb26">"intel_iommu=on"</tspan> <tspan fill="#b8bb26">"iommu.strict=1"</tspan> ];</text>
+    <text x="20" y="84" class="mono-reg" font-size="13" fill="#ebdbb2"><tspan fill="#83a598">services.hardware.bolt.enable</tspan> = <tspan fill="#b8bb26">true</tspan>; <tspan fill="#a89984"># Thunderbolt DMA auth</tspan></text>
+    <text x="20" y="110" class="mono-reg" font-size="13" fill="#ebdbb2"><tspan fill="#8ec07c">✓ Result:</tspan> Preserves encrypted suspend-then-hibernate</text>
+  </g>
+
+  <!-- Tag Badges -->
+  <g transform="translate(90, 480)" class="mono-reg" font-size="12">
+    <rect x="0" y="0" width="80" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="40" y="17.5" text-anchor="middle" fill="#8ec07c">#security</text>
+
+    <rect x="90" y="0" width="95" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="137.5" y="17.5" text-anchor="middle" fill="#fabd2f">#iommu-dma</text>
+
+    <rect x="195" y="0" width="75" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="232.5" y="17.5" text-anchor="middle" fill="#83a598">#sysctl</text>
+
+    <rect x="280" y="0" width="70" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="315" y="17.5" text-anchor="middle" fill="#d3869b">#nixos</text>
+
+    <rect x="360" y="0" width="90" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="405" y="17.5" text-anchor="middle" fill="#fe8019">#hardening</text>
+  </g>
+
+  <!-- ================= RIGHT COLUMN: TECHNICAL ARCHITECTURE DIAGRAM ================= -->
+  <!-- Ambient Radial Glow -->
+  <circle cx="910" cy="335" r="185" fill="url(#arch-glow)"/>
+  <circle cx="910" cy="335" r="160" fill="none" stroke="#504945" stroke-width="1.2" stroke-dasharray="4 6" opacity="0.3"/>
+
+  <g transform="translate(725, 126)">
+    <!-- 1. Top Enclave: Kernel Ring 0 Protected Space -->
+    <g transform="translate(5, 0)">
+      <rect x="0" y="0" width="360" height="106" rx="10" fill="#1d2021" stroke="#8ec07c" stroke-width="1.8"/>
+      
+      <!-- Header bar inside top card -->
+      <path d="M 0,10 A 10,10 0 0 1 10,0 L 350,0 A 10,10 0 0 1 360,10 L 360,28 L 0,28 Z" fill="#282828"/>
+      <line x1="0" y1="28" x2="360" y2="28" stroke="#3c3836" stroke-width="1"/>
+      
+      <!-- Title -->
+      <circle cx="16" cy="14" r="4" fill="#8ec07c"/>
+      <text x="28" y="18" class="mono-bold" font-size="11" fill="#8ec07c" letter-spacing="0.5">RING 0 KERNEL ENCLAVE</text>
+      <text x="344" y="18" text-anchor="end" class="mono-med" font-size="9.5" fill="#b8bb26">PROTECTED</text>
+
+      <!-- Content lines -->
+      <text x="16" y="50" class="mono-reg" font-size="11" fill="#ebdbb2"><tspan fill="#fe8019">kptr_restrict</tspan> = 2 <tspan fill="#504945">|</tspan> <tspan fill="#a89984">proc/kallsyms masked</tspan></text>
+      <text x="16" y="71" class="mono-reg" font-size="11" fill="#ebdbb2"><tspan fill="#fe8019">kexec_disabled</tspan> = 1 <tspan fill="#504945">|</tspan> <tspan fill="#a89984">live swap blocked</tspan></text>
+      <text x="16" y="92" class="mono-reg" font-size="10.5" fill="#8ec07c">✓ yama.ptrace_scope = 1 (parent only)</text>
+    </g>
+
+    <!-- Connecting Bus Lines between Enclave & IOMMU -->
+    <line x1="105" y1="106" x2="105" y2="136" stroke="#8ec07c" stroke-width="2"/>
+    <line x1="265" y1="106" x2="265" y2="136" stroke="#83a598" stroke-width="2"/>
+    <polygon points="105,108 101,116 109,116" fill="#8ec07c"/>
+    <polygon points="265,108 261,116 269,116" fill="#83a598"/>
+
+    <!-- 2. Middle Layer: Strict Hardware IOMMU Barrier -->
+    <g transform="translate(0, 136)">
+      <rect x="0" y="0" width="370" height="78" rx="8" fill="#282828" stroke="#fabd2f" stroke-width="1.8"/>
+      
+      <!-- Decorative circuit/barrier stripes on left/right -->
+      <rect x="0" y="0" width="8" height="78" rx="3" fill="#fabd2f"/>
+      <rect x="362" y="0" width="8" height="78" rx="3" fill="#fabd2f"/>
+
+      <!-- IOMMU content -->
+      <text x="22" y="25" class="mono-bold" font-size="12" fill="#fabd2f">⚡ STRICT IOMMU / VT-d BARRIER</text>
+      <text x="348" y="25" text-anchor="end" class="mono-med" font-size="10" fill="#b8bb26">ACTIVE</text>
+      
+      <line x1="22" y1="36" x2="348" y2="36" stroke="#3c3836" stroke-width="1"/>
+      
+      <text x="22" y="53" class="mono-reg" font-size="10.5" fill="#ebdbb2"><tspan fill="#83a598">iommu.strict</tspan>=1 <tspan fill="#504945">•</tspan> <tspan fill="#83a598">iommu.passthrough</tspan>=0</text>
+      <text x="22" y="69" class="mono-med" font-size="10" fill="#a89984">Hardware Page-Table DMA Translation Enforced</text>
+    </g>
+
+    <!-- Connecting Bus Lines from IOMMU to Peripherals -->
+    <line x1="95" y1="214" x2="95" y2="242" stroke="#fabd2f" stroke-width="2"/>
+    <line x1="275" y1="214" x2="275" y2="242" stroke="#b8bb26" stroke-width="2"/>
+    <circle cx="95" cy="228" r="3" fill="#fabd2f"/>
+    <circle cx="275" cy="228" r="3" fill="#b8bb26"/>
+
+    <!-- 3. Bottom Layer: Two Peripherals / Subsystems -->
+    <!-- Left Box: Thunderbolt 4 / USB4 DMA Authorization -->
+    <g transform="translate(0, 242)">
+      <rect x="0" y="0" width="180" height="116" rx="8" fill="#1d2021" stroke="#3c3836" stroke-width="1.4"/>
+      <!-- Pill title -->
+      <rect x="10" y="10" width="160" height="22" rx="4" fill="#32302f"/>
+      <polygon points="28,13 22,21 26.5,21 24.5,27 31,18 26.5,18" fill="#fabd2f"/>
+      <text x="96" y="25" text-anchor="middle" class="mono-bold" font-size="10.5" fill="#fabd2f">BOLT / USB4 DMA</text>
+      
+      <text x="12" y="51" class="mono-reg" font-size="9.5" fill="#a89984">Direct DMA:</text>
+      <text x="168" y="51" text-anchor="end" class="mono-bold" font-size="9.5" fill="#fb4934">BLOCKED ✗</text>
+
+      <text x="12" y="70" class="mono-reg" font-size="9.5" fill="#a89984">Auth Daemon:</text>
+      <text x="168" y="70" text-anchor="end" class="mono-med" font-size="9.5" fill="#8ec07c">boltd active</text>
+
+      <line x1="12" y1="81" x2="168" y2="81" stroke="#282828" stroke-width="1"/>
+      <text x="90" y="100" text-anchor="middle" class="mono-reg" font-size="9" fill="#ebdbb2">PCIe tunnel isolation</text>
+    </g>
+
+    <!-- Right Box: Encrypted Hibernation & Swap -->
+    <g transform="translate(190, 242)">
+      <rect x="0" y="0" width="180" height="116" rx="8" fill="#1d2021" stroke="#3c3836" stroke-width="1.4"/>
+      <!-- Pill title -->
+      <rect x="10" y="10" width="160" height="22" rx="4" fill="#32302f"/>
+      <path d="M 24,14 L 24,11.5 C 24,9 30,9 30,11.5 L 30,14" fill="none" stroke="#8ec07c" stroke-width="1.4" stroke-linecap="round"/>
+      <rect x="21" y="14" width="12" height="9" rx="2" fill="#8ec07c"/>
+      <text x="96" y="25" text-anchor="middle" class="mono-bold" font-size="10.5" fill="#8ec07c">ENCRYPTED SLEEP</text>
+
+      <text x="12" y="51" class="mono-reg" font-size="9.5" fill="#a89984">Lifecycle:</text>
+      <text x="168" y="51" text-anchor="end" class="mono-med" font-size="9.5" fill="#8ec07c">suspend-then-hib</text>
+
+      <text x="12" y="70" class="mono-reg" font-size="9.5" fill="#a89984">LUKS Swap:</text>
+      <text x="168" y="70" text-anchor="end" class="mono-bold" font-size="9.5" fill="#b8bb26">TAMPER-PROOF ✓</text>
+
+      <line x1="12" y1="81" x2="168" y2="81" stroke="#282828" stroke-width="1"/>
+      <text x="90" y="100" text-anchor="middle" class="mono-reg" font-size="9" fill="#fabd2f">nohibernate avoided</text>
+    </g>
+  </g>
+</svg>
