@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Dynamic Browser Theme Color -->
+    <meta name="theme-color" content="#282828" id="meta-theme-color">
+
+    <!-- SEO Metadata -->
+    <title>Practical Workstation Hardening on NixOS (and the Hibernation Trap) | Irgendeinwer</title>
+    <meta name="title" content="Practical Workstation Hardening on NixOS (and the Hibernation Trap) | Irgendeinwer">
+    <meta name="description" content="Why security.protectKernelImage breaks suspend-then-hibernate on NixOS, and how to configure strict IOMMU, DMA protection, and sysctl hardening without breaking desktop usability.">
+    <meta name="author" content="Irgendeinwer">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://irgendeinwer.github.io/blog/practical-nixos-workstation-hardening">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" href="../favicon.ico" sizes="any">
+
+    <!-- Open Graph & Twitter Cards -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://irgendeinwer.github.io/blog/practical-nixos-workstation-hardening">
+    <meta property="og:title" content="Practical Workstation Hardening on NixOS (and the Hibernation Trap) | Irgendeinwer">
+    <meta property="og:description" content="Why security.protectKernelImage breaks suspend-then-hibernate on NixOS, and how to configure strict IOMMU, DMA protection, and sysctl hardening without breaking desktop usability.">
+    <meta property="og:site_name" content="Irgendeinwer">
+    <meta property="og:image" content="https://irgendeinwer.github.io/assets/og-image.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Practical Workstation Hardening on NixOS">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Practical Workstation Hardening on NixOS (and the Hibernation Trap) | Irgendeinwer">
+    <meta name="twitter:description" content="Why security.protectKernelImage breaks suspend-then-hibernate on NixOS, and how to configure strict IOMMU, DMA protection, and sysctl hardening without breaking desktop usability.">
+    <meta name="twitter:image" content="https://irgendeinwer.github.io/assets/og-image.png">
+    <meta name="twitter:image:alt" content="Practical Workstation Hardening on NixOS">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Practical Workstation Hardening on NixOS (and the Hibernation Trap)",
+      "description": "Why security.protectKernelImage breaks suspend-then-hibernate on NixOS, and how to configure strict IOMMU, DMA protection, and sysctl hardening without breaking desktop usability.",
+      "image": "https://irgendeinwer.github.io/assets/og-image.png",
+      "author": {
+        "@type": "Person",
+        "name": "Irgendeinwer",
+        "url": "https://github.com/irgendeinwer"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Irgendeinwer"
+      },
+      "datePublished": "2026-09-26",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://irgendeinwer.github.io/blog/practical-nixos-workstation-hardening"
+      }
+    }
+    </script>
+
+    <!-- Preload Stylesheets -->
+    <link rel="preload" href="../css/variables.css" as="style">
+    <link rel="preload" href="../css/main.css" as="style">
+    <link rel="preload" href="../css/components.css" as="style">
+
+    <!-- Modular Stylesheets -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+</head>
+<body data-contrast="medium">
+
+    <div class="container">
+        <!-- Top Nav -->
+        <nav class="top-nav" aria-label="Navigation">
+            <div class="nav-links">
+                <a href="../" class="nav-pill" title="Return to developer hub">
+                    <span>← ~/hub</span>
+                </a>
+                <a href="./" class="nav-pill" title="All articles">
+                    <span><svg class="svg-icon svg-folder-icon" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M1.5 2.5A1.5 1.5 0 0 0 0 4v8A1.5 1.5 0 0 0 1.5 13.5h13a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H7.707l-1.354-1.354A1.5 1.5 0 0 0 5.293 2.5H1.5z"/></svg> blog</span>
+                </a>
+                <div class="nav-status">
+                    <span class="status-indicator" aria-hidden="true"></span>
+                    <span>hardening.md</span>
+                </div>
+            </div>
+            <div class="contrast-switcher" role="group" aria-label="Background Contrast Modes">
+                <span class="contrast-label">Contrast:</span>
+                <button type="button" class="contrast-btn" onclick="setContrast('hard')" aria-label="Set contrast to Hard mode">Hard</button>
+                <button type="button" class="contrast-btn active" onclick="setContrast('medium')" aria-label="Set contrast to Medium mode">Medium</button>
+                <button type="button" class="contrast-btn" onclick="setContrast('soft')" aria-label="Set contrast to Soft mode">Soft</button>
+            </div>
+        </nav>
+
+        <!-- Article Header -->
+        <header>
+            <div class="prompt-line">julian@hub:<span class="path">~/blog</span>$ <span class="cmd">cat hardening.md</span></div>
+            <h1>Practical Workstation Hardening on <span class="title-nowrap">NixOS<span class="accent">.</span></span></h1>
+            
+            <div class="post-meta">
+                <span><svg class="svg-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="1.5"/><line x1="5" y1="1.5" x2="5" y2="3.5"/><line x1="11" y1="1.5" x2="11" y2="3.5"/><line x1="2" y1="6" x2="14" y2="6"/></svg> September 2026</span>
+                <span><svg class="svg-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8.5" r="5.5"/><polyline points="8 5.5 8 8.5 10.5 8.5"/></svg> 4 min read</span>
+                <span style="color: var(--aqua);">#NixOS #Security #Linux</span>
+            </div>
+        </header>
+
+        <!-- Article Content -->
+        <main class="prose">
+            <p>
+                When hardening a NixOS workstation or laptop, the standard advice is often to enable <code>security.protectKernelImage = true</code>. But if you rely on encrypted hibernation or <code>suspend-then-hibernate</code> on a laptop, doing so quietly breaks your sleep lifecycle.
+            </p>
+            <p>
+                Below is a breakdown of what that option actually changes, why it kills sleep, and the targeted flags I use instead to harden workstations without breaking daily desktop usability.
+            </p>
+
+            <h2>The <code>protectKernelImage</code> Trap</h2>
+            <p>
+                If you look up how <code>security.protectKernelImage</code> is implemented in nixpkgs (defined in <code>nixos/modules/security/misc.nix</code>), you will find it literally consists of just two lines:
+            </p>
+
+            <pre><code><span class="code-nix-comment"># nixos/modules/security/misc.nix</span>
+(lib.mkIf config.security.protectKernelImage {
+  <span class="code-nix-comment"># Disable hibernation (allows replacing the running kernel)</span>
+  <span class="code-nix-key">boot.kernelParams</span> = [ <span class="code-nix-str">"nohibernate"</span> ];
+  <span class="code-nix-comment"># Prevent replacing the running kernel image w/o reboot</span>
+  <span class="code-nix-key">boot.kernel.sysctl."kernel.kexec_load_disabled"</span> = lib.mkDefault <span class="code-nix-val">true</span>;
+})</code></pre>
+
+            <p>
+                That is the entire implementation. It passes <code>nohibernate</code> to the kernel, and disables <code>kexec</code> via sysctl.
+            </p>
+            <p>
+                The underlying security rationale for <code>nohibernate</code> is straightforward: resuming from an unauthenticated swap partition allows an attacker with offline disk write access to patch ring-0 memory and replace the running kernel. But if your swap partition is already hosted on an encrypted LUKS volume, that offline tampering vector is mitigated, making the blanket ban on hibernation an unnecessary loss of functionality.
+            </p>
+            <p>
+                The practical problem: on a laptop with full-disk encryption (LUKS), regular suspend leaves disk keys resident in plaintext in volatile RAM. <code>suspend-then-hibernate</code> solves this by sleeping initially for quick resume, then automatically writing RAM to encrypted swap and powering off after an inactivity timeout (e.g. 1 hour).
+            </p>
+            <p>
+                If <code>nohibernate</code> is in your kernel parameters, systemd will suspend, wait for the timeout, attempt to hibernate, fail, and wake right back up with fans spinning in your bag.
+            </p>
+            <p>
+                Instead of using the toggle, we can set <code>kernel.kexec_load_disabled = 1</code> directly in sysctls and keep hibernation intact.
+            </p>
+
+            <h2>Targeted Kernel Sysctls</h2>
+            <p>
+                These are the baseline sysctl restrictions I apply across all machines in <code>modules/nixos/hardening.nix</code>:
+            </p>
+
+            <pre><code>boot.kernel.sysctl = {
+  <span class="code-nix-comment"># Hide kernel pointer addresses from unprivileged users (/proc/kallsyms)</span>
+  <span class="code-nix-str">"kernel.kptr_restrict"</span> = <span class="code-nix-val">2</span>;
+
+  <span class="code-nix-comment"># Restrict dmesg buffer access to root</span>
+  <span class="code-nix-str">"kernel.dmesg_restrict"</span> = <span class="code-nix-val">1</span>;
+
+  <span class="code-nix-comment"># Prevent loading a new kernel via kexec without a full reboot</span>
+  <span class="code-nix-str">"kernel.kexec_load_disabled"</span> = <span class="code-nix-val">1</span>;
+
+  <span class="code-nix-comment"># Restrict eBPF to root and harden JIT compiler against spray attacks</span>
+  <span class="code-nix-str">"kernel.unprivileged_bpf_disabled"</span> = <span class="code-nix-val">1</span>;
+  <span class="code-nix-str">"net.core.bpf_jit_harden"</span> = <span class="code-nix-val">2</span>;
+
+  <span class="code-nix-comment"># Prevent processes from ptracing non-child processes (Yama LSM)</span>
+  <span class="code-nix-str">"kernel.yama.ptrace_scope"</span> = <span class="code-nix-val">1</span>;
+};</code></pre>
+
+            <p>
+                These flags restrict address space leaks, stop local privilege escalation chains that rely on unprivileged eBPF, and prevent unauthorized memory dumping between user processes, all without impacting desktop software like Steam, PipeWire, or browser sandboxes.
+            </p>
+
+            <h2>DMA Isolation: IOMMU &amp; Thunderbolt</h2>
+            <p>
+                Direct Memory Access (DMA) attacks allow external peripherals on high-speed buses (Thunderbolt, USB4, PCIe) to read physical RAM directly, bypassing OS access controls.
+            </p>
+            <p>
+                To enforce strict hardware-level DMA isolation:
+            </p>
+
+            <pre><code>boot.kernelParams = [
+  <span class="code-nix-str">"intel_iommu=on"</span>
+  <span class="code-nix-str">"amd_iommu=force_isolation"</span>
+  <span class="code-nix-str">"iommu=force"</span>
+  <span class="code-nix-str">"iommu.strict=1"</span>
+  <span class="code-nix-str">"iommu.passthrough=0"</span>
+];
+
+<span class="code-nix-comment"># Require explicit user session authorization for Thunderbolt devices</span>
+services.hardware.bolt.enable = <span class="code-nix-val">true</span>;</code></pre>
+
+            <p>
+                <code>iommu.strict=1</code> forces synchronous unmapping of device memory, preventing devices from accessing buffers after an I/O operation finishes. <code>services.hardware.bolt</code> runs the <code>boltd</code> daemon, ensuring external Thunderbolt docks and PCIe devices can only communicate once authorized.
+            </p>
+
+            <h2>Network Privacy: <code>stable</code> vs. <code>random</code> MAC</h2>
+            <p>
+                A common recommendation for Wi-Fi privacy is setting NetworkManager's MAC address policy to <code>random</code>.
+            </p>
+            <p>
+                In practice, <code>"random"</code> generates a new MAC every single time the interface associates. On home or office Wi-Fi, this pollutes your router's DHCP leases, breaks static IP reservations, and triggers captive portal logins repeatedly on hotel networks.
+            </p>
+            <p>
+                The cleaner option is <code>stable</code>:
+            </p>
+
+            <pre><code>networking.networkmanager.wifi.macAddress = <span class="code-nix-str">"stable"</span>;</code></pre>
+
+            <p>
+                With <code>stable</code>, NetworkManager hashes the connection profile's <code>stable-id</code> (which defaults to the connection's UUID) together with a machine-specific secret key. Because NetworkManager automatically generates a separate connection profile for each Wi-Fi network you save, you get a unique pseudorandom MAC across different networks without churning addresses on reconnects. (If you explicitly want the derivation keyed to the network SSID across cloned profiles, NetworkManager also offers <code>stable-ssid</code>).
+            </p>
+
+            <h2>Initrd Emergency Lockdown and Auto-Reboot</h2>
+            <p>
+                In NixOS, stage-1 systemd already defaults to locking down emergency access (<code>boot.initrd.systemd.emergencyAccess = false</code>). When a LUKS unlock or mount operation fails, systemd locks the console rather than dropping into an unauthenticated root prompt. However, without further configuration, the machine simply hangs indefinitely at <code>emergency.target</code>. On classic scripted stage 1, failures halt at an interactive error prompt.
+            </p>
+            <p>
+                NixOS provides the native <code>boot.panic_on_fail</code> parameter to handle this across both initrd architectures:
+            </p>
+            <ul>
+                <li><strong>Systemd Stage 1:</strong> Nixpkgs ships an internal <code>panic-on-fail.service</code> hooked into <code>emergency.target</code>. When <code>boot.panic_on_fail</code> is present on the kernel command line, reaching the emergency target triggers <code>echo c &gt; /proc/sysrq-trigger</code> to crash the kernel immediately.</li>
+                <li><strong>Scripted Stage 1:</strong> The failure handler exits PID 1 with status 1, causing an immediate kernel panic.</li>
+            </ul>
+            <p>
+                Combined with <code>panic=10</code>, the kernel automatically reboots 10 seconds after the panic rather than staying powered on and stalled in the initrd:
+            </p>
+
+            <pre><code>boot.kernelParams = [
+  <span class="code-nix-str">"boot.panic_on_fail"</span>
+  <span class="code-nix-str">"panic=10"</span>
+];</code></pre>
+
+            <p>
+                <strong>Important:</strong> Keep this behind an option that defaults to <code>false</code>. Only enable it after your LUKS keys, TPM2 enrollment, and bootloader configuration are fully tested and stable, otherwise a minor config typo will send your machine into an unrecoverable reboot loop.
+            </p>
+
+            <h2>The Module: <code>modules/nixos/hardening.nix</code></h2>
+            <p>
+                Here is the complete, self-contained module in my configuration:
+            </p>
+
+            <pre><code>{ <span class="code-nix-key">config</span>, <span class="code-nix-key">lib</span>, ... }:
+<span class="code-nix-builtin">let</span>
+  <span class="code-nix-key">cfg</span> = config.custom.system.security.hardening;
+<span class="code-nix-builtin">in</span>
+{
+  <span class="code-nix-key">options.custom.system.security.hardening</span> = {
+    <span class="code-nix-key">enable</span> = lib.mkEnableOption <span class="code-nix-str">"system security hardening"</span>;
+
+    <span class="code-nix-key">lockdownEmergencyShell</span> = lib.mkOption {
+      <span class="code-nix-key">type</span> = lib.types.bool;
+      <span class="code-nix-key">default</span> = <span class="code-nix-val">false</span>;
+      <span class="code-nix-key">description</span> = <span class="code-nix-str">"Disable emergency rescue shells in initrd (reboots on boot failure)."</span>;
+    };
+  };
+
+  <span class="code-nix-key">config</span> = lib.mkIf cfg.enable {
+    <span class="code-nix-comment"># Hardware DMA isolation</span>
+    <span class="code-nix-key">boot.kernelParams</span> = [
+      <span class="code-nix-str">"intel_iommu=on"</span>
+      <span class="code-nix-str">"amd_iommu=force_isolation"</span>
+      <span class="code-nix-str">"iommu=force"</span>
+      <span class="code-nix-str">"iommu.strict=1"</span>
+      <span class="code-nix-str">"iommu.passthrough=0"</span>
+    ] ++ lib.optionals cfg.lockdownEmergencyShell [
+      <span class="code-nix-str">"boot.panic_on_fail"</span>
+      <span class="code-nix-str">"panic=10"</span>
+    ];
+
+    <span class="code-nix-key">boot.initrd.systemd.emergencyAccess</span> = lib.mkIf cfg.lockdownEmergencyShell (lib.mkForce <span class="code-nix-val">false</span>);
+
+    <span class="code-nix-comment"># Thunderbolt / USB4 DMA device authorization</span>
+    <span class="code-nix-key">services.hardware.bolt.enable</span> = <span class="code-nix-val">true</span>;
+
+    <span class="code-nix-comment"># Kernel memory and execution hardening</span>
+    <span class="code-nix-key">boot.kernel.sysctl</span> = {
+      <span class="code-nix-str">"kernel.kptr_restrict"</span> = <span class="code-nix-val">2</span>;
+      <span class="code-nix-str">"kernel.dmesg_restrict"</span> = <span class="code-nix-val">1</span>;
+      <span class="code-nix-str">"kernel.kexec_load_disabled"</span> = <span class="code-nix-val">1</span>;
+      <span class="code-nix-str">"kernel.unprivileged_bpf_disabled"</span> = <span class="code-nix-val">1</span>;
+      <span class="code-nix-str">"net.core.bpf_jit_harden"</span> = <span class="code-nix-val">2</span>;
+      <span class="code-nix-str">"kernel.yama.ptrace_scope"</span> = <span class="code-nix-val">1</span>;
+    };
+
+    <span class="code-nix-comment"># Stable per-connection MAC address derivation</span>
+    <span class="code-nix-key">networking.networkmanager.wifi.macAddress</span> = <span class="code-nix-str">"stable"</span>;
+  };
+}</code></pre>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>
+                <a href="./">← Back to Articles</a> • Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a> • Built by <a href="https://github.com/irgendeinwer">Irgendeinwer</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/shortcuts.js" defer></script>
+    <script src="../js/app.js" defer></script>
+</body>
+</html>

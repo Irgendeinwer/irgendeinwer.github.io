@@ -19,6 +19,12 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://irgendeinwer.github.io/blog/practical-nixos-workstation-hardening</loc>
+    <lastmod>2026-09-26</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://irgendeinwer.github.io/blog/building-declarative-nixos-fleet</loc>
     <lastmod>2026-08-30</lastmod>
     <priority>0.8</priority>
