@@ -8,19 +8,25 @@
   </url>
   <url>
     <loc>https://irgendeinwer.github.io/blog/</loc>
-    <lastmod>2026-08-30</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://irgendeinwer.github.io/blog/cachyos-kernel-on-nixos</loc>
-    <lastmod>2026-08-30</lastmod>
+    <loc>https://irgendeinwer.github.io/blog/declarative-secure-boot-lanzaboote-nixos</loc>
+    <lastmod>2026-09-27</lastmod>
     <priority>0.85</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://irgendeinwer.github.io/blog/practical-nixos-workstation-hardening</loc>
     <lastmod>2026-09-26</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://irgendeinwer.github.io/blog/cachyos-kernel-on-nixos</loc>
+    <lastmod>2026-08-30</lastmod>
     <priority>0.85</priority>
     <changefreq>monthly</changefreq>
   </url>

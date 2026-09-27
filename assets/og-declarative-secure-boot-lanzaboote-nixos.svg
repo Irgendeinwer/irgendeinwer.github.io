@@ -1,0 +1,215 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <!-- Background Dot Pattern -->
+    <pattern id="dot-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="1.5" fill="#32302f" />
+    </pattern>
+
+    <!-- Drop Shadow for Terminal Card -->
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+
+    <!-- Ambient Glow behind Graphic -->
+    <radialGradient id="secure-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8ec07c" stop-opacity="0.25"/>
+      <stop offset="45%" stop-color="#83a598" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#282828" stop-opacity="0"/>
+    </radialGradient>
+
+    <style>
+      .mono-title { font-family: 'JetBrains Mono', 'Fira Code', 'FiraCode Nerd Font', monospace, sans-serif; font-weight: 900; }
+      .mono-bold  { font-family: 'JetBrains Mono', 'Fira Code', 'FiraCode Nerd Font', monospace, sans-serif; font-weight: 700; }
+      .mono-med   { font-family: 'JetBrains Mono', 'Fira Code', 'FiraCode Nerd Font', monospace, sans-serif; font-weight: 600; }
+      .mono-reg   { font-family: 'JetBrains Mono', 'Fira Code', 'FiraCode Nerd Font', monospace, sans-serif; font-weight: 400; }
+    </style>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1200" height="630" fill="#1d2021"/>
+  <rect width="1200" height="630" fill="url(#dot-grid)"/>
+
+  <!-- Main Terminal Window Card -->
+  <g filter="url(#card-shadow)">
+    <rect x="50" y="45" width="1100" height="540" rx="16" fill="#282828" stroke="#3c3836" stroke-width="2"/>
+    
+    <!-- Window Title Bar -->
+    <path d="M 50,61 A 16,16 0 0 1 66,45 L 1134,45 A 16,16 0 0 1 1150,61 L 1150,96 L 50,96 Z" fill="#1d2021"/>
+    <line x1="50" y1="96" x2="1150" y2="96" stroke="#3c3836" stroke-width="1.5"/>
+
+    <!-- Window Control Buttons -->
+    <circle cx="80" cy="71" r="6.5" fill="#fb4934"/>
+    <circle cx="102" cy="71" r="6.5" fill="#fabd2f"/>
+    <circle cx="124" cy="71" r="6.5" fill="#b8bb26"/>
+
+    <!-- Terminal Header Info -->
+    <text x="600" y="76" text-anchor="middle" class="mono-med" font-size="13" fill="#a89984">julian@hub: ~/blog/declarative-secure-boot-lanzaboote-nixos</text>
+  </g>
+
+  <!-- ================= LEFT COLUMN: CONTENT ================= -->
+  <!-- Pill Badge -->
+  <g transform="translate(90, 126)">
+    <rect width="235" height="26" rx="5" fill="#8ec07c" fill-opacity="0.15" stroke="#8ec07c" stroke-opacity="0.4" stroke-width="1"/>
+    <path d="M 22,6.5 L 30,9.5 L 30,16 C 30,19.5 22,21.5 22,21.5 C 22,21.5 14,19.5 14,16 L 14,9.5 Z" fill="#8ec07c" fill-opacity="0.35" stroke="#8ec07c" stroke-width="1.2" stroke-linejoin="round"/>
+    <circle cx="22" cy="14" r="1.8" fill="#1d2021"/>
+    <text x="130" y="17.5" text-anchor="middle" class="mono-bold" font-size="11.5" fill="#8ec07c" letter-spacing="0.5">UEFI SECURITY &amp; PKI</text>
+  </g>
+
+  <!-- Article Heading -->
+  <text x="90" y="200" class="mono-title" font-size="40" fill="#ebdbb2" letter-spacing="-0.5">Declarative UEFI</text>
+  <text x="90" y="244" class="mono-title" font-size="40" fill="#8ec07c" letter-spacing="-0.5">Secure Boot with Lanzaboote<tspan fill="#fe8019">.</tspan></text>
+  <text x="90" y="282" class="mono-med" font-size="14.5" fill="#a89984">Hardware boot verification, custom PKI keys &amp; generation rollbacks</text>
+
+  <!-- Spec / Code Box -->
+  <g transform="translate(90, 314)">
+    <rect width="560" height="142" rx="8" fill="#1d2021" stroke="#3c3836" stroke-width="1.2"/>
+    <text x="20" y="28" class="mono-bold" font-size="13" fill="#fabd2f"># modules/nixos/secureboot.nix</text>
+    
+    <text x="20" y="54" class="mono-reg" font-size="12.5" fill="#ebdbb2"><tspan fill="#fe8019">boot.loader.systemd-boot.enable</tspan> = lib.mkForce <tspan fill="#b8bb26">false</tspan>;</text>
+    <text x="20" y="78" class="mono-reg" font-size="12.5" fill="#ebdbb2"><tspan fill="#fe8019">boot.lanzaboote</tspan> = { <tspan fill="#83a598">enable</tspan> = <tspan fill="#b8bb26">true</tspan>; <tspan fill="#83a598">pkiBundle</tspan> = <tspan fill="#b8bb26">"/var/lib/sbctl"</tspan>; };</text>
+    <text x="20" y="104" class="mono-reg" font-size="12" fill="#a89984">$ sbctl enroll-keys -m  <tspan fill="#fabd2f"># Includes MS UEFI CA (Option ROMs)</tspan></text>
+    <text x="20" y="126" class="mono-reg" font-size="12" fill="#8ec07c">✓ Result: Authenticated boot chain without breaking generations</text>
+  </g>
+
+  <!-- Tag Badges -->
+  <g transform="translate(90, 482)" class="mono-reg" font-size="12">
+    <rect x="0" y="0" width="105" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="52.5" y="17.5" text-anchor="middle" fill="#8ec07c">#secureboot</text>
+
+    <rect x="115" y="0" width="105" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="167.5" y="17.5" text-anchor="middle" fill="#fabd2f">#lanzaboote</text>
+
+    <rect x="230" y="0" width="70" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="265" y="17.5" text-anchor="middle" fill="#83a598">#pki</text>
+
+    <rect x="310" y="0" width="75" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="347.5" y="17.5" text-anchor="middle" fill="#d3869b">#nixos</text>
+
+    <rect x="395" y="0" width="95" height="26" rx="5" fill="#32302f" stroke="#504945"/>
+    <text x="442.5" y="17.5" text-anchor="middle" fill="#fe8019">#silentboot</text>
+  </g>
+
+  <!-- ================= RIGHT COLUMN: GRAPHIC ================= -->
+  <!-- Ambient Radial Glow -->
+  <circle cx="905" cy="335" r="185" fill="url(#secure-glow)"/>
+  <circle cx="905" cy="335" r="165" fill="none" stroke="#504945" stroke-width="1.2" stroke-dasharray="5 7" opacity="0.35"/>
+  <circle cx="905" cy="335" r="200" fill="none" stroke="#3c3836" stroke-width="1" stroke-dasharray="3 8" opacity="0.25"/>
+
+  <!-- Motherboard Circuit Traces Radiating Outward -->
+  <g stroke="#3c3836" stroke-width="1.5" fill="none">
+    <!-- Top Left Trace -->
+    <path d="M 770,250 L 720,250 L 695,225"/>
+    <!-- Bottom Left Trace -->
+    <path d="M 770,420 L 720,420 L 695,445"/>
+    <!-- Top Right Trace -->
+    <path d="M 1040,250 L 1090,250 L 1115,225"/>
+    <!-- Bottom Right Trace -->
+    <path d="M 1040,420 L 1090,420 L 1115,445"/>
+  </g>
+  <!-- Solder Pad Terminals -->
+  <circle cx="695" cy="225" r="3" fill="#8ec07c"/>
+  <circle cx="695" cy="445" r="3" fill="#fabd2f"/>
+  <circle cx="1115" cy="225" r="3" fill="#83a598"/>
+  <circle cx="1115" cy="445" r="3" fill="#b8bb26"/>
+
+  <!-- ================= SECURITY PROCESSOR PACKAGE ================= -->
+  <g id="security-processor">
+    <!-- IC Gold Contact Pins -->
+    <g fill="#fabd2f">
+      <!-- Top Pins -->
+      <rect x="830" y="212" width="8" height="14" rx="1.5"/>
+      <rect x="855" y="212" width="8" height="14" rx="1.5"/>
+      <rect x="880" y="212" width="8" height="14" rx="1.5"/>
+      <rect x="922" y="212" width="8" height="14" rx="1.5"/>
+      <rect x="947" y="212" width="8" height="14" rx="1.5"/>
+      <rect x="972" y="212" width="8" height="14" rx="1.5"/>
+
+      <!-- Bottom Pins -->
+      <rect x="830" y="444" width="8" height="14" rx="1.5"/>
+      <rect x="855" y="444" width="8" height="14" rx="1.5"/>
+      <rect x="880" y="444" width="8" height="14" rx="1.5"/>
+      <rect x="922" y="444" width="8" height="14" rx="1.5"/>
+      <rect x="947" y="444" width="8" height="14" rx="1.5"/>
+      <rect x="972" y="444" width="8" height="14" rx="1.5"/>
+
+      <!-- Left Pins -->
+      <rect x="781" y="260" width="14" height="8" rx="1.5"/>
+      <rect x="781" y="285" width="14" height="8" rx="1.5"/>
+      <rect x="781" y="310" width="14" height="8" rx="1.5"/>
+      <rect x="781" y="352" width="14" height="8" rx="1.5"/>
+      <rect x="781" y="377" width="14" height="8" rx="1.5"/>
+      <rect x="781" y="402" width="14" height="8" rx="1.5"/>
+
+      <!-- Right Pins -->
+      <rect x="1015" y="260" width="14" height="8" rx="1.5"/>
+      <rect x="1015" y="285" width="14" height="8" rx="1.5"/>
+      <rect x="1015" y="310" width="14" height="8" rx="1.5"/>
+      <rect x="1015" y="352" width="14" height="8" rx="1.5"/>
+      <rect x="1015" y="377" width="14" height="8" rx="1.5"/>
+      <rect x="1015" y="402" width="14" height="8" rx="1.5"/>
+    </g>
+
+    <!-- Outer Chip Carrier Substrate -->
+    <rect x="795" y="225" width="220" height="220" rx="14" fill="#1d2021" stroke="#8ec07c" stroke-width="2.5"/>
+
+    <!-- Pin 1 Corner Index Marker -->
+    <circle cx="815" cy="245" r="5" fill="#282828" stroke="#504945" stroke-width="1.2"/>
+    <circle cx="815" cy="245" r="2.2" fill="#8ec07c"/>
+
+    <!-- Inner Silicon Die / Heat Spreader -->
+    <rect x="822" y="252" width="166" height="166" rx="8" fill="#282828" stroke="#3c3836" stroke-width="1.5"/>
+
+    <!-- Chip Header -->
+    <text x="905" y="274" text-anchor="middle" class="mono-bold" font-size="11" fill="#8ec07c" letter-spacing="1.2">UEFI SECURITY ENCLAVE</text>
+    <line x1="836" y1="282" x2="974" y2="282" stroke="#3c3836" stroke-width="1"/>
+
+    <!-- ================= CENTRAL CRYPTOGRAPHIC LOCK SHIELD ================= -->
+    <g transform="translate(905, 332)">
+      <!-- Outer Shield Path -->
+      <path d="M 0,-38 L 38,-24 L 38,10 C 38,34 0,48 0,48 C 0,48 -38,34 -38,10 L -38,-24 Z" 
+            fill="#1d2021" stroke="#fabd2f" stroke-width="2.5" stroke-linejoin="round"/>
+
+      <!-- Inner Accent Shield Contour -->
+      <path d="M 0,-31 L 30,-20 L 30,8 C 30,27 0,39 0,39 C 0,39 -30,27 -30,8 L -30,-20 Z" 
+            fill="none" stroke="#fabd2f" stroke-width="1" stroke-dasharray="2 3" opacity="0.45"/>
+
+      <!-- Hardened Padlock Shackle -->
+      <path d="M -8,-3 V -14 C -8,-20 8,-20 8,-14 V -3" 
+            fill="none" stroke="#8ec07c" stroke-width="3.2" stroke-linecap="round"/>
+
+      <!-- Padlock Body -->
+      <rect x="-14" y="-3" width="28" height="22" rx="4" fill="#8ec07c" stroke="#1d2021" stroke-width="1"/>
+
+      <!-- Precision Keyhole -->
+      <circle cx="0" cy="5" r="2.4" fill="#1d2021"/>
+      <polygon points="-1.5,5.5 1.5,5.5 2.2,13 -2.2,13" fill="#1d2021"/>
+    </g>
+
+    <!-- Chip Footer & Verification Badge -->
+    <line x1="836" y1="390" x2="974" y2="390" stroke="#3c3836" stroke-width="1"/>
+    <text x="905" y="405" text-anchor="middle" class="mono-bold" font-size="11.5" fill="#ebdbb2" letter-spacing="0.5">LANZABOOTE</text>
+    <text x="905" y="414" text-anchor="middle" class="mono-med" font-size="8.5" fill="#b8bb26">✓ ROOT OF TRUST</text>
+  </g>
+
+  <!-- ================= PERIPHERAL STATUS PILLS ================= -->
+  <!-- Top-Right: User Mode Badge -->
+  <g transform="translate(975, 172)">
+    <rect width="125" height="26" rx="5" fill="#1d2021" stroke="#3c3836" stroke-width="1.2"/>
+    <circle cx="14" cy="13" r="3.5" fill="#b8bb26"/>
+    <text x="26" y="16.5" class="mono-bold" font-size="10.5" fill="#ebdbb2">USER MODE</text>
+  </g>
+
+  <!-- Bottom-Left: PKI State Badge -->
+  <g transform="translate(710, 472)">
+    <rect width="130" height="26" rx="5" fill="#1d2021" stroke="#3c3836" stroke-width="1.2"/>
+    <circle cx="14" cy="13" r="3.5" fill="#8ec07c"/>
+    <text x="26" y="16.5" class="mono-bold" font-size="10.5" fill="#ebdbb2">NVRAM PKI / db</text>
+  </g>
+
+  <!-- Bottom-Right: MS Option ROM CA Badge -->
+  <g transform="translate(975, 472)">
+    <rect width="135" height="26" rx="5" fill="#1d2021" stroke="#3c3836" stroke-width="1.2"/>
+    <circle cx="14" cy="13" r="3.5" fill="#fabd2f"/>
+    <text x="26" y="16.5" class="mono-bold" font-size="10.5" fill="#ebdbb2">MS UEFI CA (-m)</text>
+  </g>
+</svg>

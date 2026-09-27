@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Dynamic Browser Theme Color -->
+    <meta name="theme-color" content="#282828" id="meta-theme-color">
+
+    <!-- SEO Metadata -->
+    <title>Declarative UEFI Secure Boot on NixOS with Lanzaboote | Irgendeinwer</title>
+    <meta name="title" content="Declarative UEFI Secure Boot on NixOS with Lanzaboote | Irgendeinwer">
+    <meta name="description" content="Hardware-rooted boot verification, custom PKI keys, and rollback safety across NixOS generations using Lanzaboote and sbctl.">
+    <meta name="author" content="Irgendeinwer">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://irgendeinwer.github.io/blog/declarative-secure-boot-lanzaboote-nixos">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" href="../favicon.ico" sizes="any">
+
+    <!-- Open Graph & Twitter Cards -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://irgendeinwer.github.io/blog/declarative-secure-boot-lanzaboote-nixos">
+    <meta property="og:title" content="Declarative UEFI Secure Boot on NixOS with Lanzaboote | Irgendeinwer">
+    <meta property="og:description" content="Hardware-rooted boot verification, custom PKI keys, and rollback safety across NixOS generations using Lanzaboote and sbctl.">
+    <meta property="og:site_name" content="Irgendeinwer">
+    <meta property="og:image" content="https://irgendeinwer.github.io/assets/og-declarative-secure-boot-lanzaboote-nixos.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Declarative UEFI Secure Boot on NixOS with Lanzaboote">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Declarative UEFI Secure Boot on NixOS with Lanzaboote | Irgendeinwer">
+    <meta name="twitter:description" content="Hardware-rooted boot verification, custom PKI keys, and rollback safety across NixOS generations using Lanzaboote and sbctl.">
+    <meta name="twitter:image" content="https://irgendeinwer.github.io/assets/og-declarative-secure-boot-lanzaboote-nixos.png">
+    <meta name="twitter:image:alt" content="Declarative UEFI Secure Boot on NixOS with Lanzaboote">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Declarative UEFI Secure Boot on NixOS with Lanzaboote",
+      "description": "Hardware-rooted boot verification, custom PKI keys, and rollback safety across NixOS generations using Lanzaboote and sbctl.",
+      "image": "https://irgendeinwer.github.io/assets/og-declarative-secure-boot-lanzaboote-nixos.png",
+      "author": {
+        "@type": "Person",
+        "name": "Irgendeinwer",
+        "url": "https://github.com/irgendeinwer"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Irgendeinwer"
+      },
+      "datePublished": "2026-09-27",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://irgendeinwer.github.io/blog/declarative-secure-boot-lanzaboote-nixos"
+      }
+    }
+    </script>
+
+    <!-- Preload Stylesheets -->
+    <link rel="preload" href="../css/variables.css" as="style">
+    <link rel="preload" href="../css/main.css" as="style">
+    <link rel="preload" href="../css/components.css" as="style">
+
+    <!-- Modular Stylesheets -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+</head>
+<body data-contrast="medium">
+
+    <div class="container">
+        <!-- Top Nav -->
+        <nav class="top-nav" aria-label="Navigation">
+            <div class="nav-links">
+                <a href="../" class="nav-pill" title="Return to developer hub">
+                    <span>← ~/hub</span>
+                </a>
+                <a href="./" class="nav-pill" title="All articles">
+                    <span><svg class="svg-icon svg-folder-icon" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M1.5 2.5A1.5 1.5 0 0 0 0 4v8A1.5 1.5 0 0 0 1.5 13.5h13a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H7.707l-1.354-1.354A1.5 1.5 0 0 0 5.293 2.5H1.5z"/></svg> blog</span>
+                </a>
+                <div class="nav-status">
+                    <span class="status-indicator" aria-hidden="true"></span>
+                    <span>secureboot.md</span>
+                </div>
+            </div>
+            <div class="contrast-switcher" role="group" aria-label="Background Contrast Modes">
+                <span class="contrast-label">Contrast:</span>
+                <button type="button" class="contrast-btn" onclick="setContrast('hard')" aria-label="Set contrast to Hard mode">Hard</button>
+                <button type="button" class="contrast-btn active" onclick="setContrast('medium')" aria-label="Set contrast to Medium mode">Medium</button>
+                <button type="button" class="contrast-btn" onclick="setContrast('soft')" aria-label="Set contrast to Soft mode">Soft</button>
+            </div>
+        </nav>
+
+        <!-- Article Header -->
+        <header>
+            <div class="prompt-line">julian@hub:<span class="path">~/blog</span>$ <span class="cmd">cat secureboot.md</span></div>
+            <h1>Declarative UEFI Secure Boot with <span class="title-nowrap">Lanzaboote<span class="accent">.</span></span></h1>
+            
+            <div class="post-meta">
+                <span><svg class="svg-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="1.5"/><line x1="5" y1="1.5" x2="5" y2="3.5"/><line x1="11" y1="1.5" x2="11" y2="3.5"/><line x1="2" y1="6" x2="14" y2="6"/></svg> September 2026</span>
+                <span><svg class="svg-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8.5" r="5.5"/><polyline points="8 5.5 8 8.5 10.5 8.5"/></svg> 4 min read</span>
+                <span style="color: var(--aqua);">#NixOS #Security #UEFI #Linux</span>
+            </div>
+        </header>
+
+        <!-- Article Content -->
+        <main class="prose">
+            <p>
+                On distributions like Fedora or Ubuntu, Secure Boot works out of the box because you boot a Microsoft-signed <code>shimx64.efi</code> that verifies the distro's pre-compiled kernel.
+            </p>
+            <p>
+                On NixOS, this falls apart on your first rebuild. Every custom kernel parameter, out-of-tree driver, or initrd change creates a unique derivation in <code>/nix/store</code>. Your motherboard's factory key database has no idea what that binary is, so POST immediately halts with an invalid signature error.
+            </p>
+            <p>
+                Manually running <code>sbsign</code> on <code>/boot</code> after every rebuild gets tedious quickly, and it falls apart the moment you roll back to an older generation. <a href="https://github.com/nix-community/lanzaboote" target="_blank" rel="noopener noreferrer">Lanzaboote</a> solves this by replacing standard <code>systemd-boot</code> with a signing toolchain that signs every generation during <code>nixos-rebuild switch</code> using your own keys enrolled in UEFI NVRAM.
+            </p>
+
+            <h2>How Lanzaboote Works</h2>
+            <p>
+                Lanzaboote consists of two main pieces:
+            </p>
+            <ul>
+                <li><code>lanzaboote_stub.efi</code>: A Rust-based UEFI stub that bundles the kernel, initrd, and cmdline into a single bootable EFI file.</li>
+                <li><code>lzbt</code>: The installer run during NixOS system activation. It signs the stub with your local keys and writes entries to your ESP.</li>
+            </ul>
+            <p>
+                During <code>nixos-rebuild switch</code>, Lanzaboote runs a command like this:
+            </p>
+
+            <pre><code>lzbt-systemd install \
+  --system x86_64-linux \
+  --systemd /nix/store/...-systemd-261.2 \
+  --allow-unsigned false \
+  --public-key=/var/lib/sbctl/keys/db/db.pem \
+  --private-key=/var/lib/sbctl/keys/db/db.key \
+  /boot /nix/var/nix/profiles/system-*-link</code></pre>
+
+            <p>
+                Notice the last argument: <code>/nix/var/nix/profiles/system-*-link</code>. Instead of only signing the current generation, <code>lzbt</code> loops over all profile links on disk. When you reboot into an older generation, its EFI binary is already signed and waiting in <code>/boot/EFI/Linux/</code>.
+            </p>
+            <p>
+                Because private keys cannot live in the world-readable <code>/nix/store</code>, Lanzaboote reads them from <code>/var/lib/sbctl</code>, which stays locked down to root (<code>0700</code>).
+            </p>
+
+            <h2>Make Sure Your ESP Is at Least 1GB</h2>
+            <p>
+                Many default Linux installers allocate a 100MB or 256MB EFI partition. Because Lanzaboote keeps signed stubs for multiple generations under <code>/boot/EFI/Linux/</code>, you will quickly hit <code>No space left on device</code> during a rebuild.
+            </p>
+            <p>
+                In my Disko partition layout (<code>hosts/junixos/disk-config.nix</code>), I give the ESP 1GB:
+            </p>
+
+            <pre><code><span class="code-nix-comment"># hosts/junixos/disk-config.nix</span>
+<span class="code-nix-key">ESP</span> = {
+  <span class="code-nix-key">priority</span> = <span class="code-nix-val">1</span>;
+  <span class="code-nix-key">name</span> = <span class="code-nix-str">"ESP"</span>;
+  <span class="code-nix-key">start</span> = <span class="code-nix-str">"1M"</span>;
+  <span class="code-nix-key">end</span> = <span class="code-nix-str">"1G"</span>;
+  <span class="code-nix-key">type</span> = <span class="code-nix-str">"EF00"</span>;
+  <span class="code-nix-key">content</span> = {
+    <span class="code-nix-key">type</span> = <span class="code-nix-str">"filesystem"</span>;
+    <span class="code-nix-key">format</span> = <span class="code-nix-str">"vfat"</span>;
+    <span class="code-nix-key">mountpoint</span> = <span class="code-nix-str">"/boot"</span>;
+    <span class="code-nix-key">mountOptions</span> = [ <span class="code-nix-str">"umask=0077"</span> ];
+  };
+};</code></pre>
+
+            <p>
+                1GB leaves plenty of breathing room for a dozen kernel generations.
+            </p>
+
+            <h2>NixOS Configuration</h2>
+            <p>
+                Here is the module I use in <code>modules/nixos/secureboot.nix</code>:
+            </p>
+
+            <pre><code>{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+<span class="code-nix-builtin">let</span>
+  <span class="code-nix-key">cfg</span> = config.custom.system.boot.secureboot;
+<span class="code-nix-builtin">in</span>
+{
+  <span class="code-nix-key">options.custom.system.boot.secureboot</span> = {
+    <span class="code-nix-key">enable</span> = lib.mkEnableOption <span class="code-nix-str">"UEFI Secure Boot using Lanzaboote"</span>;
+
+    <span class="code-nix-key">pkiBundle</span> = lib.mkOption {
+      <span class="code-nix-key">type</span> = lib.types.path;
+      <span class="code-nix-key">default</span> = <span class="code-nix-str">"/var/lib/sbctl"</span>;
+      <span class="code-nix-key">description</span> = <span class="code-nix-str">"Directory where Secure Boot keys and database certificates are stored."</span>;
+    };
+  };
+
+  <span class="code-nix-key">config</span> = lib.mkIf cfg.enable {
+    <span class="code-nix-key">environment.systemPackages</span> = [ pkgs.sbctl ];
+
+    <span class="code-nix-comment"># Lanzaboote provides its own systemd-boot binary</span>
+    <span class="code-nix-key">boot.loader.systemd-boot.enable</span> = lib.mkForce <span class="code-nix-val">false</span>;
+
+    <span class="code-nix-key">boot.lanzaboote</span> = {
+      <span class="code-nix-key">enable</span> = <span class="code-nix-val">true</span>;
+      <span class="code-nix-key">pkiBundle</span> = cfg.pkiBundle;
+    };
+  };
+}</code></pre>
+
+            <p>
+                Lanzaboote uses Nixpkgs's <code>boot.loader.external</code> under the hood, which sets <code>boot.loader.systemd-boot.enable = lib.mkDefault false;</code>. However, stock <code>configuration.nix</code> files (and base host profiles) almost always have <code>boot.loader.systemd-boot.enable = true;</code> explicitly set. Because an explicit <code>true</code> beats <code>mkDefault false</code>, both bootloaders attempt to define <code>system.build.installBootLoader</code>, causing an evaluation collision. Setting <code>lib.mkForce false;</code> ensures Lanzaboote takes precedence without having to rip <code>systemd-boot</code> out of shared base modules.
+            </p>
+            <p>
+                Add the flake input to <code>flake.nix</code>:
+            </p>
+
+            <pre><code><span class="code-nix-comment"># flake.nix</span>
+{
+  <span class="code-nix-key">inputs</span> = {
+    <span class="code-nix-key">nixpkgs.url</span> = <span class="code-nix-str">"github:nixos/nixpkgs/nixos-unstable"</span>;
+    <span class="code-nix-key">lanzaboote</span> = {
+      <span class="code-nix-key">url</span> = <span class="code-nix-str">"github:nix-community/lanzaboote"</span>;
+      <span class="code-nix-key">inputs.nixpkgs.follows</span> = <span class="code-nix-str">"nixpkgs"</span>;
+    };
+  };
+
+  <span class="code-nix-key">outputs</span> = { <span class="code-nix-key">self</span>, <span class="code-nix-key">nixpkgs</span>, <span class="code-nix-key">lanzaboote</span>, ... }@<span class="code-nix-key">inputs</span>: {
+    <span class="code-nix-key">nixosConfigurations."junixos"</span> = nixpkgs.lib.nixosSystem {
+      <span class="code-nix-key">specialArgs</span> = { <span class="code-nix-builtin">inherit</span> inputs; };
+      <span class="code-nix-key">modules</span> = [
+        inputs.lanzaboote.nixosModules.lanzaboote
+        <span class="code-nix-str">./hosts/junixos/configuration.nix</span>
+      ];
+    };
+  };
+}</code></pre>
+
+            <p>
+                And enable it in your host config (<code>hosts/junixos/configuration.nix</code>):
+            </p>
+
+            <pre><code><span class="code-nix-key">custom.system.boot.secureboot.enable</span> = <span class="code-nix-val">true</span>;</code></pre>
+
+            <h2>Key Enrollment and the Discrete GPU Trap</h2>
+            <p>
+                Do not flip Secure Boot to "Enabled" in your BIOS yet. If you turn on enforcement before keys are enrolled and binaries are signed, the machine will refuse to boot.
+            </p>
+
+            <p>
+                First, reboot into your UEFI firmware setup, find the Secure Boot section, and clear the existing keys. This puts the board into <strong>Setup Mode</strong>. Save and boot back into NixOS.
+            </p>
+
+            <p>
+                Verify Setup Mode with <code>sbctl</code>:
+            </p>
+
+            <pre><code>$ sbctl status
+Installed:   ✗ Not installed
+Setup Mode:  ✓ Enabled
+Secure Boot: ✗ Disabled</code></pre>
+
+            <p>
+                Create your keys:
+            </p>
+
+            <pre><code>$ sudo sbctl create-keys</code></pre>
+
+            <p>
+                Now enroll them. If you have a dedicated graphics card (AMD Radeon or NVIDIA), you <strong>must</strong> pass <code>-m</code>:
+            </p>
+
+            <pre><code>$ sudo sbctl enroll-keys -m</code></pre>
+
+            <p>
+                This is the easiest way to soft-brick a desktop setup. Discrete GPUs use an Option ROM signed by Microsoft's 3rd-party UEFI CA so the card can display video during POST. If you enroll keys without <code>-m</code>, your motherboard drops Microsoft keys from <code>db</code>. On the next boot, the firmware refuses to execute the GPU's Option ROM, leaving you with spinning fans, a black screen, a VGA error LED, and no video output at all. Recovering means opening your case and clearing the CMOS jumper.
+            </p>
+            <p>
+                Passing <code>-m</code> keeps the Microsoft 3rd-party certificate in <code>db</code> while keeping you as the sole owner of the Platform Key (PK).
+            </p>
+
+            <h2>Switching and Enforcing</h2>
+            <p>
+                Rebuild your system so Lanzaboote can sign everything:
+            </p>
+
+            <pre><code>$ sudo nixos-rebuild switch --flake .#junixos</code></pre>
+
+            <p>
+                Check that all EFI files are signed before rebooting:
+            </p>
+
+            <pre><code>$ sudo sbctl verify
+Verifying file database and EFI images in /boot...
+✓ /boot/EFI/BOOT/BOOTX64.EFI is signed
+✓ /boot/EFI/systemd/systemd-bootx64.efi is signed
+✓ /boot/EFI/Linux/nixos-generation-<generation>-<hash>.efi is signed</code></pre>
+
+            <p>
+                Once everything shows green, reboot into UEFI setup, enable Secure Boot, and boot back up. You can confirm it is running with:
+            </p>
+
+            <pre><code>$ sbctl status
+Installed:	✓ sbctl is installed
+Owner GUID:	<owner-uuid>
+Setup Mode:	✓ Disabled
+Secure Boot:	✓ Enabled
+Vendor Keys:	microsoft</code></pre>
+
+            <h2>Silent Boot and Generation Rollbacks</h2>
+            <p>
+                I pair Lanzaboote with Plymouth silent boot in <code>modules/nixos/plymouth.nix</code>:
+            </p>
+
+            <pre><code><span class="code-nix-comment"># modules/nixos/plymouth.nix</span>
+<span class="code-nix-key">boot</span> = {
+  <span class="code-nix-key">plymouth</span> = {
+    <span class="code-nix-key">enable</span> = <span class="code-nix-val">true</span>;
+    <span class="code-nix-key">theme</span> = <span class="code-nix-str">"rings_2"</span>;
+    <span class="code-nix-key">themePackages</span> = [ (pkgs.adi1090x-plymouth-themes.override { selected_themes = [ <span class="code-nix-str">"rings_2"</span> ]; }) ];
+  };
+
+  <span class="code-nix-key">consoleLogLevel</span> = <span class="code-nix-val">0</span>;
+  <span class="code-nix-key">initrd.verbose</span> = <span class="code-nix-val">false</span>;
+  <span class="code-nix-key">kernelParams</span> = [
+    <span class="code-nix-str">"quiet"</span>
+    <span class="code-nix-str">"splash"</span>
+    <span class="code-nix-str">"loglevel=3"</span>
+    <span class="code-nix-str">"rd.systemd.show_status=false"</span>
+    <span class="code-nix-str">"rd.udev.log_level=3"</span>
+    <span class="code-nix-str">"udev.log_priority=3"</span>
+  ];
+
+  <span class="code-nix-key">loader.timeout</span> = <span class="code-nix-val">0</span>;
+};</code></pre>
+
+            <p>
+                With <code>loader.timeout = 0</code>, the signed stub boots straight into the Plymouth splash without any menu flicker.
+            </p>
+            <p>
+                If a new kernel breaks display output or panics, hold <kbd>Space</kbd> or <kbd>Esc</kbd> during POST to bring up the <code>systemd-boot</code> menu. Because <code>lzbt</code> signs previous generation links during activation, generation <code>N-1</code> boots without any signature complaints.
+            </p>
+
+            <h2>TPM2 PCR 7 Note</h2>
+            <p>
+                If you use a TPM2 chip for automatic disk unlocking, keep your recovery passphrase nearby. PCR 7 measures your Secure Boot state and certificate databases. When you enroll custom keys, PCR 7 changes, and your TPM will refuse to release the key on the first reboot. Once booted with your custom keys, re-bind your TPM to the new PCR state.
+            </p>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>
+                <a href="./">← Back to Articles</a> • Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a> • Built by <a href="https://github.com/irgendeinwer">Irgendeinwer</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/shortcuts.js" defer></script>
+    <script src="../js/app.js" defer></script>
+</body>
+</html>
