@@ -105,7 +105,7 @@
             <h1>Running CachyOS Kernels on NixOS Without <span class="title-nowrap">Compiling<span class="accent">.</span></span></h1>
             
             <div class="post-meta">
-                <span><svg class="svg-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="1.5"/><line x1="5" y1="1.5" x2="5" y2="3.5"/><line x1="11" y1="1.5" x2="11" y2="3.5"/><line x1="2" y1="6" x2="14" y2="6"/></svg> August 2026</span>
+                <span><svg class="svg-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="1.5"/><line x1="5" y1="1.5" x2="5" y2="3.5"/><line x1="11" y1="1.5" x2="11" y2="3.5"/><line x1="2" y1="6" x2="14" y2="6"/></svg> September 2026</span>
                 <span><svg class="svg-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8.5" r="5.5"/><polyline points="8 5.5 8 8.5 10.5 8.5"/></svg> 4 min read</span>
                 <span style="color: var(--aqua);">#NixOS #CachyOS #LinuxGaming</span>
             </div>
@@ -174,7 +174,7 @@
     (lib.mkIf (cfg == <span class="code-nix-str">"cachyos"</span>) {
       <span class="code-nix-comment"># Use the pre-built CachyOS kernel</span>
       <span class="code-nix-key">boot.kernelPackages</span> =
-        inputs.nix-cachyos-kernel.legacyPackages.${pkgs.stdenv.hostPlatform.system}.linuxPackages-cachyos-latest;
+        inputs.nix-cachyos-kernel.legacyPackages.${pkgs.stdenv.hostPlatform.system}.linuxPackages-cachyos-bore;
 
       <span class="code-nix-comment"># Binary cache substituter and public key</span>
       <span class="code-nix-key">nix.settings</span> = {
