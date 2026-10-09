@@ -1,7 +1,7 @@
 {
   "repoName": "NixOS-Dotfiles",
   "totalDirectories": 18,
-  "totalFiles": 96,
+  "totalFiles": 104,
   "tree": [
     {
       "name": ".github",
@@ -37,6 +37,18 @@
         {
           "name": "atmos.wav",
           "path": "assets/atmos.wav",
+          "type": "file",
+          "fileType": "media"
+        },
+        {
+          "name": "icon.png",
+          "path": "assets/icon.png",
+          "type": "file",
+          "fileType": "media"
+        },
+        {
+          "name": "icon.svg",
+          "path": "assets/icon.svg",
           "type": "file",
           "fileType": "media"
         },
@@ -209,8 +221,32 @@
               ]
             },
             {
+              "name": "btop.nix",
+              "path": "modules/home-manager/btop.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "cava.nix",
+              "path": "modules/home-manager/cava.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "common.nix",
+              "path": "modules/home-manager/common.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
               "name": "default.nix",
               "path": "modules/home-manager/default.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "fastfetch.nix",
+              "path": "modules/home-manager/fastfetch.nix",
               "type": "file",
               "fileType": "nix"
             },
@@ -227,6 +263,12 @@
               "fileType": "nix"
             },
             {
+              "name": "kitty.nix",
+              "path": "modules/home-manager/kitty.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
               "name": "listen.nix",
               "path": "modules/home-manager/listen.nix",
               "type": "file",
@@ -235,6 +277,12 @@
             {
               "name": "lrclib-upload.nix",
               "path": "modules/home-manager/lrclib-upload.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "mako.nix",
+              "path": "modules/home-manager/mako.nix",
               "type": "file",
               "fileType": "nix"
             },
@@ -253,6 +301,12 @@
             {
               "name": "virtual-surround.nix",
               "path": "modules/home-manager/virtual-surround.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "zathura.nix",
+              "path": "modules/home-manager/zathura.nix",
               "type": "file",
               "fileType": "nix"
             },
@@ -517,12 +571,6 @@
                   "fileType": "nix"
                 }
               ]
-            },
-            {
-              "name": "keybinds.nix",
-              "path": "modules/nixvim/keybinds.nix",
-              "type": "file",
-              "fileType": "nix"
             },
             {
               "name": "nixvim.nix",
