@@ -1,7 +1,7 @@
 {
   "repoName": "NixOS-Dotfiles",
-  "totalDirectories": 18,
-  "totalFiles": 104,
+  "totalDirectories": 20,
+  "totalFiles": 110,
   "tree": [
     {
       "name": ".github",
@@ -41,12 +41,6 @@
           "fileType": "media"
         },
         {
-          "name": "icon.png",
-          "path": "assets/icon.png",
-          "type": "file",
-          "fileType": "media"
-        },
-        {
           "name": "icon.svg",
           "path": "assets/icon.svg",
           "type": "file",
@@ -67,6 +61,19 @@
       ]
     },
     {
+      "name": "docs",
+      "path": "docs",
+      "type": "directory",
+      "children": [
+        {
+          "name": "recovery.md",
+          "path": "docs/recovery.md",
+          "type": "file",
+          "fileType": "doc"
+        }
+      ]
+    },
+    {
       "name": "hosts",
       "path": "hosts",
       "type": "directory",
@@ -79,6 +86,12 @@
             {
               "name": "configuration.nix",
               "path": "hosts/junixbook/configuration.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "disk-config.nix",
+              "path": "hosts/junixbook/disk-config.nix",
               "type": "file",
               "fileType": "nix"
             },
@@ -145,6 +158,25 @@
               "type": "directory",
               "children": [
                 {
+                  "name": "scripts",
+                  "path": "modules/home-manager/hypr/scripts",
+                  "type": "directory",
+                  "children": [
+                    {
+                      "name": "power-menu.sh",
+                      "path": "modules/home-manager/hypr/scripts/power-menu.sh",
+                      "type": "file",
+                      "fileType": "config"
+                    },
+                    {
+                      "name": "window-switcher.sh",
+                      "path": "modules/home-manager/hypr/scripts/window-switcher.sh",
+                      "type": "file",
+                      "fileType": "config"
+                    }
+                  ]
+                },
+                {
                   "name": "hyprcursor.nix",
                   "path": "modules/home-manager/hypr/hyprcursor.nix",
                   "type": "file",
@@ -188,8 +220,8 @@
               "type": "directory",
               "children": [
                 {
-                  "name": "gruvbox-material.rasi",
-                  "path": "modules/home-manager/rofi/gruvbox-material.rasi",
+                  "name": "layout.rasi",
+                  "path": "modules/home-manager/rofi/layout.rasi",
                   "type": "file",
                   "fileType": "config"
                 },
@@ -293,8 +325,26 @@
               "fileType": "nix"
             },
             {
+              "name": "notify-failure.nix",
+              "path": "modules/home-manager/notify-failure.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "qt.nix",
+              "path": "modules/home-manager/qt.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
               "name": "sops.nix",
               "path": "modules/home-manager/sops.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "theme.nix",
+              "path": "modules/home-manager/theme.nix",
               "type": "file",
               "fileType": "nix"
             },
@@ -457,6 +507,12 @@
               "fileType": "nix"
             },
             {
+              "name": "notify-failure.nix",
+              "path": "modules/nixos/notify-failure.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
               "name": "obs-studio.nix",
               "path": "modules/nixos/obs-studio.nix",
               "type": "file",
@@ -499,8 +555,8 @@
               "fileType": "nix"
             },
             {
-              "name": "virt.nix",
-              "path": "modules/nixos/virt.nix",
+              "name": "theme.nix",
+              "path": "modules/nixos/theme.nix",
               "type": "file",
               "fileType": "nix"
             },
@@ -587,31 +643,6 @@
           ]
         },
         {
-          "name": "overlays",
-          "path": "modules/overlays",
-          "type": "directory",
-          "children": [
-            {
-              "name": "lix.nix",
-              "path": "modules/overlays/lix.nix",
-              "type": "file",
-              "fileType": "nix"
-            },
-            {
-              "name": "obs-move-transition.nix",
-              "path": "modules/overlays/obs-move-transition.nix",
-              "type": "file",
-              "fileType": "nix"
-            },
-            {
-              "name": "pnpm.nix",
-              "path": "modules/overlays/pnpm.nix",
-              "type": "file",
-              "fileType": "nix"
-            }
-          ]
-        },
-        {
           "name": "services",
           "path": "modules/services",
           "type": "directory",
@@ -685,6 +716,25 @@
             {
               "name": "zapret.nix",
               "path": "modules/services/zapret.nix",
+              "type": "file",
+              "fileType": "nix"
+            }
+          ]
+        },
+        {
+          "name": "theme",
+          "path": "modules/theme",
+          "type": "directory",
+          "children": [
+            {
+              "name": "gruvbox-material-mix-dark-medium.nix",
+              "path": "modules/theme/gruvbox-material-mix-dark-medium.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "lib.nix",
+              "path": "modules/theme/lib.nix",
               "type": "file",
               "fileType": "nix"
             }
