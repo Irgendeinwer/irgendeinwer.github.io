@@ -1,7 +1,7 @@
 {
   "repoName": "NixOS-Dotfiles",
   "totalDirectories": 20,
-  "totalFiles": 110,
+  "totalFiles": 112,
   "tree": [
     {
       "name": ".github",
@@ -249,6 +249,12 @@
                   "path": "modules/home-manager/scripts/lrclib-upload.py",
                   "type": "file",
                   "fileType": "other"
+                },
+                {
+                  "name": "zip2opus.sh",
+                  "path": "modules/home-manager/scripts/zip2opus.sh",
+                  "type": "file",
+                  "fileType": "config"
                 }
               ]
             },
@@ -357,6 +363,12 @@
             {
               "name": "zathura.nix",
               "path": "modules/home-manager/zathura.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "zip2opus.nix",
+              "path": "modules/home-manager/zip2opus.nix",
               "type": "file",
               "fileType": "nix"
             },
