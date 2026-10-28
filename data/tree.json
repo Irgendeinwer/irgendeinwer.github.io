@@ -1,7 +1,7 @@
 {
   "repoName": "NixOS-Dotfiles",
-  "totalDirectories": 20,
-  "totalFiles": 112,
+  "totalDirectories": 22,
+  "totalFiles": 118,
   "tree": [
     {
       "name": ".github",
@@ -34,6 +34,31 @@
       "path": "assets",
       "type": "directory",
       "children": [
+        {
+          "name": "presets",
+          "path": "assets/presets",
+          "type": "directory",
+          "children": [
+            {
+              "name": "generate-royal-butterchurn.cjs",
+              "path": "assets/presets/generate-royal-butterchurn.cjs",
+              "type": "file",
+              "fileType": "other"
+            },
+            {
+              "name": "royal-mashup-remix.butterchurn.ts",
+              "path": "assets/presets/royal-mashup-remix.butterchurn.ts",
+              "type": "file",
+              "fileType": "other"
+            },
+            {
+              "name": "royal-mashup-remix.milk",
+              "path": "assets/presets/royal-mashup-remix.milk",
+              "type": "file",
+              "fileType": "other"
+            }
+          ]
+        },
         {
           "name": "atmos.wav",
           "path": "assets/atmos.wav",
@@ -361,6 +386,12 @@
               "fileType": "nix"
             },
             {
+              "name": "visualizer-presets.nix",
+              "path": "modules/home-manager/visualizer-presets.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
               "name": "zathura.nix",
               "path": "modules/home-manager/zathura.nix",
               "type": "file",
@@ -649,6 +680,25 @@
             {
               "name": "options.nix",
               "path": "modules/nixvim/options.nix",
+              "type": "file",
+              "fileType": "nix"
+            }
+          ]
+        },
+        {
+          "name": "overlays",
+          "path": "modules/overlays",
+          "type": "directory",
+          "children": [
+            {
+              "name": "feishin-royal-mashup.patch",
+              "path": "modules/overlays/feishin-royal-mashup.patch",
+              "type": "file",
+              "fileType": "other"
+            },
+            {
+              "name": "feishin.nix",
+              "path": "modules/overlays/feishin.nix",
               "type": "file",
               "fileType": "nix"
             }
