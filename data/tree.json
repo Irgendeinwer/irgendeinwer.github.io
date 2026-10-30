@@ -1,7 +1,7 @@
 {
   "repoName": "NixOS-Dotfiles",
   "totalDirectories": 22,
-  "totalFiles": 118,
+  "totalFiles": 120,
   "tree": [
     {
       "name": ".github",
@@ -46,6 +46,12 @@
               "fileType": "other"
             },
             {
+              "name": "generate-royal-profile.py",
+              "path": "assets/presets/generate-royal-profile.py",
+              "type": "file",
+              "fileType": "other"
+            },
+            {
               "name": "royal-mashup-remix.butterchurn.ts",
               "path": "assets/presets/royal-mashup-remix.butterchurn.ts",
               "type": "file",
@@ -56,6 +62,12 @@
               "path": "assets/presets/royal-mashup-remix.milk",
               "type": "file",
               "fileType": "other"
+            },
+            {
+              "name": "royal-presets.nix",
+              "path": "assets/presets/royal-presets.nix",
+              "type": "file",
+              "fileType": "nix"
             }
           ]
         },
