@@ -1,26 +1,13 @@
 {
   "repoName": "NixOS-Dotfiles",
-  "totalDirectories": 23,
-  "totalFiles": 121,
+  "totalDirectories": 22,
+  "totalFiles": 120,
   "tree": [
     {
       "name": ".github",
       "path": ".github",
       "type": "directory",
       "children": [
-        {
-          "name": "scripts",
-          "path": ".github/scripts",
-          "type": "directory",
-          "children": [
-            {
-              "name": "check-gtk2-allowlist.sh",
-              "path": ".github/scripts/check-gtk2-allowlist.sh",
-              "type": "file",
-              "fileType": "config"
-            }
-          ]
-        },
         {
           "name": "workflows",
           "path": ".github/workflows",
