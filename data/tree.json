@@ -1,7 +1,7 @@
 {
   "repoName": "NixOS-Dotfiles",
-  "totalDirectories": 22,
-  "totalFiles": 120,
+  "totalDirectories": 27,
+  "totalFiles": 147,
   "tree": [
     {
       "name": ".github",
@@ -90,6 +90,12 @@
           "fileType": "config"
         },
         {
+          "name": "nightly-icon.png",
+          "path": "assets/nightly-icon.png",
+          "type": "file",
+          "fileType": "media"
+        },
+        {
           "name": "oal_dflt.wav",
           "path": "assets/oal_dflt.wav",
           "type": "file",
@@ -172,6 +178,25 @@
             {
               "name": "home.nix",
               "path": "hosts/junixos/home.nix",
+              "type": "file",
+              "fileType": "nix"
+            }
+          ]
+        },
+        {
+          "name": "junixsrv",
+          "path": "hosts/junixsrv",
+          "type": "directory",
+          "children": [
+            {
+              "name": "configuration.nix",
+              "path": "hosts/junixsrv/configuration.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "home.nix",
+              "path": "hosts/junixsrv/home.nix",
               "type": "file",
               "fileType": "nix"
             }
@@ -466,6 +491,19 @@
               ]
             },
             {
+              "name": "scripts",
+              "path": "modules/nixos/scripts",
+              "type": "directory",
+              "children": [
+                {
+                  "name": "remote-builder-mdns.py",
+                  "path": "modules/nixos/scripts/remote-builder-mdns.py",
+                  "type": "file",
+                  "fileType": "other"
+                }
+              ]
+            },
+            {
               "name": "amdgpu.nix",
               "path": "modules/nixos/amdgpu.nix",
               "type": "file",
@@ -492,6 +530,12 @@
             {
               "name": "bluetooth.nix",
               "path": "modules/nixos/bluetooth.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "container.nix",
+              "path": "modules/nixos/container.nix",
               "type": "file",
               "fileType": "nix"
             },
@@ -588,6 +632,12 @@
             {
               "name": "power.nix",
               "path": "modules/nixos/power.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "remote-builder.nix",
+              "path": "modules/nixos/remote-builder.nix",
               "type": "file",
               "fileType": "nix"
             },
@@ -703,6 +753,12 @@
           "type": "directory",
           "children": [
             {
+              "name": "android-mic.nix",
+              "path": "modules/overlays/android-mic.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
               "name": "feishin-royal-mashup.patch",
               "path": "modules/overlays/feishin-royal-mashup.patch",
               "type": "file",
@@ -722,6 +778,55 @@
           "type": "directory",
           "children": [
             {
+              "name": "scripts",
+              "path": "modules/services/scripts",
+              "type": "directory",
+              "children": [
+                {
+                  "name": "nightly-activate.sh",
+                  "path": "modules/services/scripts/nightly-activate.sh",
+                  "type": "file",
+                  "fileType": "config"
+                },
+                {
+                  "name": "nightly-finish.sh",
+                  "path": "modules/services/scripts/nightly-finish.sh",
+                  "type": "file",
+                  "fileType": "config"
+                },
+                {
+                  "name": "nightly-gcroots.sh",
+                  "path": "modules/services/scripts/nightly-gcroots.sh",
+                  "type": "file",
+                  "fileType": "config"
+                },
+                {
+                  "name": "nightly-log.sh",
+                  "path": "modules/services/scripts/nightly-log.sh",
+                  "type": "file",
+                  "fileType": "config"
+                },
+                {
+                  "name": "nightly-notify.sh",
+                  "path": "modules/services/scripts/nightly-notify.sh",
+                  "type": "file",
+                  "fileType": "config"
+                },
+                {
+                  "name": "nightly-signals.sh",
+                  "path": "modules/services/scripts/nightly-signals.sh",
+                  "type": "file",
+                  "fileType": "config"
+                },
+                {
+                  "name": "nightly-summary.sh",
+                  "path": "modules/services/scripts/nightly-summary.sh",
+                  "type": "file",
+                  "fileType": "config"
+                }
+              ]
+            },
+            {
               "name": "ai.nix",
               "path": "modules/services/ai.nix",
               "type": "file",
@@ -736,6 +841,12 @@
             {
               "name": "backup.nix",
               "path": "modules/services/backup.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "build-server.nix",
+              "path": "modules/services/build-server.nix",
               "type": "file",
               "fileType": "nix"
             },
@@ -823,6 +934,25 @@
       ]
     },
     {
+      "name": "pkgs",
+      "path": "pkgs",
+      "type": "directory",
+      "children": [
+        {
+          "name": "without-userns.c",
+          "path": "pkgs/without-userns.c",
+          "type": "file",
+          "fileType": "other"
+        },
+        {
+          "name": "without-userns.nix",
+          "path": "pkgs/without-userns.nix",
+          "type": "file",
+          "fileType": "nix"
+        }
+      ]
+    },
+    {
       "name": "secrets",
       "path": "secrets",
       "type": "directory",
@@ -844,6 +974,73 @@
           "path": "secrets/junixos.yaml",
           "type": "file",
           "fileType": "config"
+        },
+        {
+          "name": "junixsrv.yaml",
+          "path": "secrets/junixsrv.yaml",
+          "type": "file",
+          "fileType": "config"
+        }
+      ]
+    },
+    {
+      "name": "tests",
+      "path": "tests",
+      "type": "directory",
+      "children": [
+        {
+          "name": "build-server-options.nix",
+          "path": "tests/build-server-options.nix",
+          "type": "file",
+          "fileType": "nix"
+        },
+        {
+          "name": "container-options.nix",
+          "path": "tests/container-options.nix",
+          "type": "file",
+          "fileType": "nix"
+        },
+        {
+          "name": "nightly-flow.sh",
+          "path": "tests/nightly-flow.sh",
+          "type": "file",
+          "fileType": "config"
+        },
+        {
+          "name": "nightly-gcroots.sh",
+          "path": "tests/nightly-gcroots.sh",
+          "type": "file",
+          "fileType": "config"
+        },
+        {
+          "name": "nightly-log.sh",
+          "path": "tests/nightly-log.sh",
+          "type": "file",
+          "fileType": "config"
+        },
+        {
+          "name": "nightly-notify.sh",
+          "path": "tests/nightly-notify.sh",
+          "type": "file",
+          "fileType": "config"
+        },
+        {
+          "name": "remote-builder-mdns.py",
+          "path": "tests/remote-builder-mdns.py",
+          "type": "file",
+          "fileType": "other"
+        },
+        {
+          "name": "remote-builder-options.nix",
+          "path": "tests/remote-builder-options.nix",
+          "type": "file",
+          "fileType": "nix"
+        },
+        {
+          "name": "without-userns.c",
+          "path": "tests/without-userns.c",
+          "type": "file",
+          "fileType": "other"
         }
       ]
     },
