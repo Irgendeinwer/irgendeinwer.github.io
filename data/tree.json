@@ -1,7 +1,7 @@
 {
   "repoName": "NixOS-Dotfiles",
   "totalDirectories": 27,
-  "totalFiles": 147,
+  "totalFiles": 146,
   "tree": [
     {
       "name": ".github",
@@ -752,12 +752,6 @@
           "path": "modules/overlays",
           "type": "directory",
           "children": [
-            {
-              "name": "android-mic.nix",
-              "path": "modules/overlays/android-mic.nix",
-              "type": "file",
-              "fileType": "nix"
-            },
             {
               "name": "feishin-royal-mashup.patch",
               "path": "modules/overlays/feishin-royal-mashup.patch",
