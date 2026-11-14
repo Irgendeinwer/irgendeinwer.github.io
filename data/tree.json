@@ -1,7 +1,7 @@
 {
   "repoName": "NixOS-Dotfiles",
   "totalDirectories": 27,
-  "totalFiles": 146,
+  "totalFiles": 147,
   "tree": [
     {
       "name": ".github",
@@ -668,6 +668,12 @@
             {
               "name": "vscode.nix",
               "path": "modules/nixos/vscode.nix",
+              "type": "file",
+              "fileType": "nix"
+            },
+            {
+              "name": "xbox-controller.nix",
+              "path": "modules/nixos/xbox-controller.nix",
               "type": "file",
               "fileType": "nix"
             }
